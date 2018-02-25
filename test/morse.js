@@ -1,12 +1,12 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { MorseCharacter } = require('../').Morse;
+const { Character } = require('../').Morse;
 
 describe('Morse', function () {
   describe('MorseCharacter', function () {
     it('constructor - Basic', function () {
-      const ch = new MorseCharacter('.');
+      const ch = new Character('.');
       assert.strictEqual(ch.toString(), 'E');
       assert.strictEqual(ch.toMorseString(), '.');
 
@@ -17,7 +17,7 @@ describe('Morse', function () {
     });
 
     it('constructor - Extended', function () {
-      const ch = new MorseCharacter('--.');
+      const ch = new Character('--.');
       assert.strictEqual(ch.toString(), 'G');
       assert.strictEqual(ch.toMorseString(), '--.');
 
@@ -28,7 +28,7 @@ describe('Morse', function () {
     });
 
     it('constructor - Empty', function () {
-      const ch = new MorseCharacter();
+      const ch = new Character();
       assert.strictEqual(ch.toString(), '');
       assert.strictEqual(ch.toMorseString(), '');
 
@@ -38,7 +38,7 @@ describe('Morse', function () {
     });
 
     it('dot/dash - Basic', function () {
-      const ch = new MorseCharacter();
+      const ch = new Character();
       ch.dash();
       assert.strictEqual(ch.toString(), 'T');
       assert.strictEqual(ch.toMorseString(), '-');
@@ -58,7 +58,7 @@ describe('Morse', function () {
     });
 
     it('dot/dash - Additive', function () {
-      const ch = new MorseCharacter('-.');
+      const ch = new Character('-.');
       assert.strictEqual(ch.toString(), 'N');
       assert.strictEqual(ch.toMorseString(), '-.');
 
@@ -77,7 +77,7 @@ describe('Morse', function () {
     });
 
     it('toString - No match', function () {
-      const ch = new MorseCharacter('-.-.-');
+      const ch = new Character('-.-.-');
       assert.strictEqual(ch.toString(), '');
       assert.strictEqual(ch.toMorseString(), '-.-.-');
 
@@ -88,7 +88,7 @@ describe('Morse', function () {
     });
 
     it('getPotentialMatches - No potential matches', function () {
-      const ch = new MorseCharacter('...--');
+      const ch = new Character('...--');
       assert.strictEqual(ch.toString(), '3');
       assert.strictEqual(ch.toMorseString(), '...--');
 
