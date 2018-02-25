@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { BrailleCharacter, BrailleDot, BrailleType } = require('../').braille;
+const { BrailleCharacter, BrailleDot, BrailleType } = require('../').Braille;
 
 describe('Braille', function () {
   describe('BrailleCharacter', function () {
@@ -102,6 +102,14 @@ describe('Braille', function () {
       partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 7);
       assert.strictEqual(partial[0], '2');
+    });
+
+    it('clear - Basic', function () {
+      const ch = new BrailleCharacter(BrailleDot.UpperLeft);
+      assert.strictEqual(ch.toString(), 'A/1');
+
+      ch.clear();
+      assert.strictEqual(ch.toString(), '');
     });
   });
 });

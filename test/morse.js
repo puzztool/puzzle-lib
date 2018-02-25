@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { MorseCharacter } = require('../').morse;
+const { MorseCharacter } = require('../').Morse;
 
 describe('Morse', function () {
   describe('MorseCharacter', function () {
