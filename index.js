@@ -1,2 +1,2 @@
-exports.braille = require('./lib/braille');
-exports.morse = require('./lib/morse');
+exports.Braille = require('./lib/braille');
+exports.Morse = require('./lib/morse');
