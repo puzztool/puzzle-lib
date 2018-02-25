@@ -4,7 +4,7 @@ const assert = require('assert');
 const { Character } = require('../').Morse;
 
 describe('Morse', function () {
-  describe('MorseCharacter', function () {
+  describe('Character', function () {
     it('constructor - Basic', function () {
       const ch = new Character('.');
       assert.strictEqual(ch.toString(), 'E');
