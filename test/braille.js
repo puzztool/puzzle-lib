@@ -1,12 +1,12 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { BrailleCharacter, BrailleDot, BrailleType } = require('../').Braille;
+const { Category, Character, Dot } = require('../').Braille;
 
 describe('Braille', function () {
   describe('BrailleCharacter', function () {
     it('constructor - Letter/Number', function () {
-      const ch = new BrailleCharacter(BrailleDot.UpperLeft);
+      const ch = new Character(Dot.UpperLeft);
       assert.strictEqual(ch.toString(), 'A/1');
 
       const exact = ch.getExactMatches();
@@ -20,7 +20,7 @@ describe('Braille', function () {
     });
 
     it('constructor - Letter', function () {
-      const ch = new BrailleCharacter(BrailleDot.LowerLeft | BrailleDot.UpperLeft);
+      const ch = new Character(Dot.LowerLeft | Dot.UpperLeft);
       assert.strictEqual(ch.toString(), 'K');
 
       const exact = ch.getExactMatches();
@@ -33,7 +33,7 @@ describe('Braille', function () {
     });
 
     it('constructor - Empty', function () {
-      const ch = new BrailleCharacter();
+      const ch = new Character();
       assert.strictEqual(ch.toString(), '');
 
       const exact = ch.getExactMatches();
@@ -45,7 +45,7 @@ describe('Braille', function () {
     });
 
     it('toggle - Basic', function () {
-      const ch = new BrailleCharacter(BrailleDot.UpperLeft);
+      const ch = new Character(Dot.UpperLeft);
       assert.strictEqual(ch.toString(), 'A/1');
 
       let exact = ch.getExactMatches();
@@ -57,7 +57,7 @@ describe('Braille', function () {
       assert.strictEqual(partial.length, 27);
       assert.strictEqual(partial[0], 'B');
 
-      ch.toggle(BrailleDot.LowerLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight | BrailleDot.MiddleRight);
+      ch.toggle(Dot.LowerLeft | Dot.MiddleLeft | Dot.UpperRight | Dot.MiddleRight);
       assert.strictEqual(ch.toString(), 'Q');
 
       exact = ch.getExactMatches();
@@ -67,7 +67,7 @@ describe('Braille', function () {
       partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 0);
 
-      ch.toggle(BrailleDot.LowerLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight);
+      ch.toggle(Dot.LowerLeft | Dot.MiddleLeft | Dot.UpperRight);
       assert.strictEqual(ch.toString(), 'E/5');
 
       exact = ch.getExactMatches();
@@ -80,8 +80,8 @@ describe('Braille', function () {
       assert.strictEqual(partial[0], 'D');
     });
 
-    it('type - Basic', function () {
-      const ch = new BrailleCharacter(BrailleDot.UpperLeft, BrailleType.Letter);
+    it('category - Basic', function () {
+      const ch = new Character(Dot.UpperLeft, Category.Letter);
       assert.strictEqual(ch.toString(), 'A');
 
       let exact = ch.getExactMatches();
@@ -92,7 +92,7 @@ describe('Braille', function () {
       assert.strictEqual(partial.length, 20);
       assert.strictEqual(partial[0], 'B');
 
-      ch.type = BrailleType.Number;
+      ch.category = Category.Number;
       assert.strictEqual(ch.toString(), '1');
 
       exact = ch.getExactMatches();
@@ -105,7 +105,7 @@ describe('Braille', function () {
     });
 
     it('clear - Basic', function () {
-      const ch = new BrailleCharacter(BrailleDot.UpperLeft);
+      const ch = new Character(Dot.UpperLeft);
       assert.strictEqual(ch.toString(), 'A/1');
 
       ch.clear();
