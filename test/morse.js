@@ -12,8 +12,8 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 30);
-      assert.strictEqual(partial[0], 'A');
-      assert.strictEqual(partial[1], 'F');
+      assert.strictEqual(partial[0].toString(), 'A');
+      assert.strictEqual(partial[1].toString(), 'F');
     });
 
     it('constructor - Extended', function () {
@@ -23,8 +23,8 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 5);
-      assert.strictEqual(partial[0], 'Q');
-      assert.strictEqual(partial[1], 'Z');
+      assert.strictEqual(partial[0].toString(), 'Q');
+      assert.strictEqual(partial[1].toString(), 'Z');
     });
 
     it('constructor - Empty', function () {
@@ -34,7 +34,7 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 61);
-      assert.strictEqual(partial[0], 'A');
+      assert.strictEqual(partial[0].toString(), 'A');
     });
 
     it('dot/dash - Basic', function () {
@@ -53,8 +53,8 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 5);
-      assert.strictEqual(partial[0], 'Q');
-      assert.strictEqual(partial[1], 'Z');
+      assert.strictEqual(partial[0].toString(), 'Q');
+      assert.strictEqual(partial[1].toString(), 'Z');
     });
 
     it('dot/dash - Additive', function () {
@@ -72,8 +72,8 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 2);
-      assert.strictEqual(partial[0], '!');
-      assert.strictEqual(partial[1], ';');
+      assert.strictEqual(partial[0].toString(), '!');
+      assert.strictEqual(partial[1].toString(), ';');
     });
 
     it('toString - No match', function () {
@@ -83,8 +83,8 @@ describe('Morse', function () {
 
       const partial = ch.getPotentialMatches();
       assert.strictEqual(partial.length, 2);
-      assert.strictEqual(partial[0], '!');
-      assert.strictEqual(partial[1], ';');
+      assert.strictEqual(partial[0].toString(), '!');
+      assert.strictEqual(partial[1].toString(), ';');
     });
 
     it('getPotentialMatches - No potential matches', function () {
