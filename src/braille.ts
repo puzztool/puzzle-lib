@@ -89,7 +89,7 @@ export namespace Braille {
     All = 0xFF,
   }
 
-  class Entry {
+  export class Entry {
     public readonly encoding: Encoding;
     public readonly category: Category;
     public readonly display: string;
