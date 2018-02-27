@@ -3,6 +3,10 @@
   "version": "0.0.4",
   "description": "Library of puzzle-solving algorithms",
   "main": "./built/index.js",
+  "types": "./built/index.d.ts",
+  "files": [
+    "built/"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "tslint ./src/**/*",

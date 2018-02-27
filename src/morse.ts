@@ -1,5 +1,5 @@
 export namespace Morse {
-  class Entry {
+  export class Entry {
     public readonly encoding: number;
     public readonly display: string;
 
@@ -125,7 +125,7 @@ export namespace Morse {
       this.addToList(0x0669, "@");
     }
 
-    public lookup(input: any) {
+    public lookup(input: string | number) {
       if (typeof input !== "number") {
         input = Data.parse(input);
       }
@@ -149,26 +149,26 @@ export namespace Morse {
   }
 
   export class Character {
-    private _lookup: any;
-    private _morse: string[];
+    private _morse: string;
+    private _lookup: LookupResult;
 
     constructor(str: string) {
-      this._morse = str ? str.split("") : [];
+      this._morse = str || "";
       this.invalidateLookup();
     }
 
     public dot() {
-      this._morse.push(".");
+      this._morse += ".";
       this.invalidateLookup();
     }
 
     public dash() {
-      this._morse.push("-");
+      this._morse += "-";
       this.invalidateLookup();
     }
 
     public backspace() {
-      this._morse.pop();
+      this._morse.substring(0, -1);
       this.invalidateLookup();
     }
 
@@ -177,7 +177,7 @@ export namespace Morse {
     }
 
     public toMorseString() {
-      return this._morse.join("");
+      return this._morse;
     }
 
     public toString() {
