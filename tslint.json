@@ -5,15 +5,15 @@
   ],
   "jsRules": {},
   "rules": {
+    "max-classes-per-file": [ false ],
+    "no-bitwise": false,
+    "no-namespace": false,
     "variable-name": [
       true,
       "ban-keywords",
       "check-format",
       "allow-leading-underscore"
-    ],
-    "no-bitwise": false,
-    "no-namespace": false,
-    "max-classes-per-file": [ false ]
+    ]
   },
   "rulesDirectory": []
 }
