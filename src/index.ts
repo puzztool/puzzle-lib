@@ -1,2 +1,2 @@
-export * from "./braille";
-export * from "./morse";
+export * from "./Braille";
+export * from "./Morse";

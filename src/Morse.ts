@@ -8,6 +8,25 @@ export namespace Morse {
       this.display = display;
     }
 
+    public toMorseString() {
+      let encoding = this.encoding;
+      let morseChars = "";
+
+      while (encoding !== 0) {
+        if ((encoding & 0b11) === 0b01) {
+          morseChars += ".";
+        } else if ((this.encoding & 0b11) === 0b10) {
+          morseChars += "-";
+        } else {
+          throw new Error("Invalid morse bits");
+        }
+
+        encoding >>>= 2;
+      }
+
+      return morseChars;
+    }
+
     public toString() {
       return this.display;
     }
@@ -39,24 +58,6 @@ export namespace Morse {
 
       bits >>>= 2;
       return bits;
-    }
-
-    private static toMorseString(morseBits: number) {
-      const morseChars = [];
-
-      while (morseBits !== 0) {
-        if ((morseBits & 0b11) === 0b01) {
-          morseChars.push(".");
-        } else if ((morseBits & 0b11) === 0b10) {
-          morseChars.push("-");
-        } else {
-          throw new Error("Invalid morse bits");
-        }
-
-        morseBits >>>= 2;
-      }
-
-      return morseChars.join("");
     }
 
     private readonly _data: Entry[] = [];
@@ -143,14 +144,14 @@ export namespace Morse {
       return result;
     }
 
-    private addToList(encoding, display) {
+    private addToList(encoding: number, display: string) {
       this._data.push(new Entry(encoding, display));
     }
   }
 
   export class Character {
     private _morse: string;
-    private _lookup: LookupResult;
+    private _lookup: LookupResult | null;
 
     constructor(str: string) {
       this._morse = str || "";

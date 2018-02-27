@@ -3,7 +3,14 @@
     "outDir": "./built",
     "target": "es5",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true
   },
   "include": [
     "./src/**/*"

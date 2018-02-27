@@ -200,7 +200,7 @@ export namespace Braille {
   export class Character {
     private _encoding: Encoding;
     private _category: Category;
-    private _lookup: LookupResult;
+    private _lookup: LookupResult | null;
 
     constructor(encoding: Encoding = Encoding.None, category: Category = Category.All) {
       this._encoding = encoding;
@@ -228,7 +228,11 @@ export namespace Braille {
       return this._encoding === Encoding.None;
     }
 
-    public toggle(mask: Encoding) {
+    public get(mask: Dot | Encoding) {
+      return (this._encoding & mask) === mask;
+    }
+
+    public toggle(mask: Dot | Encoding) {
       this._encoding ^= mask;
       this.invalidateLookup();
     }
