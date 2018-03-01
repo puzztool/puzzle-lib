@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "tslint ./src/**/*",
+    "lint": "semistandard && tslint ./src/**/*",
     "prepare": "npm run build",
     "test": "npm run lint && npm run build && npm run test-only",
     "test-only": "mocha"
