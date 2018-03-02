@@ -1,6 +1,6 @@
-import { BrailleEntry } from "./BrailleEntry";
+import BrailleEntry from "./BrailleEntry";
 
-export class BrailleLookupResult {
+class BrailleLookupResult {
   public readonly exact: BrailleEntry[] = [];
   public readonly partial: BrailleEntry[] = [];
 
@@ -8,3 +8,5 @@ export class BrailleLookupResult {
     return this.exact.map((value) => value.toString()).join("/");
   }
 }
+
+export default BrailleLookupResult;

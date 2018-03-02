@@ -1,13 +1,15 @@
-import { BrailleCharacter } from "./BrailleCharacter";
-import { BrailleData } from "./BrailleData";
-import { BrailleCategory, BrailleDot, BrailleEncoding } from "./BrailleEnums";
+import BrailleCategory from "./BrailleCategory";
+import BrailleCharacter from "./BrailleCharacter";
+import BrailleData from "./BrailleData";
+import BrailleDot from "./BrailleDot";
+import BrailleEncoding from "./BrailleEncoding";
 
 interface IBrailleStreamState {
   numberMode: boolean;
   previousWhitespace: boolean;
 }
 
-export class BrailleStream {
+class BrailleStream {
   private readonly _chars: number[] = [];
   private readonly _state: IBrailleStreamState;
   private _currentStr: string;
@@ -77,3 +79,5 @@ export class BrailleStream {
     }
   }
 }
+
+export default BrailleStream;

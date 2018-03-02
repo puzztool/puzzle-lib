@@ -1,14 +1,6 @@
-export enum BrailleDot {
-  None,
-  UpperLeft = 1 << 1,
-  MiddleLeft = 1 << 2,
-  LowerLeft = 1 << 3,
-  UpperRight = 1 << 4,
-  MiddleRight = 1 << 5,
-  LowerRight = 1 << 6,
-}
+import BrailleDot from "./BrailleDot";
 
-export enum BrailleEncoding {
+enum BrailleEncoding {
   None,
 
   // Letters (first decade)
@@ -79,13 +71,4 @@ export enum BrailleEncoding {
   PunctuationSlash = BrailleDot.LowerLeft | BrailleDot.UpperRight,
 }
 
-export enum BrailleCategory {
-  None,
-
-  Letter = 1 << 1,
-  Number = 1 << 2,
-  Formatting = 1 << 3,
-  Punctuation = 1 << 4,
-
-  All = 0xFF,
-}
+export default BrailleEncoding;
