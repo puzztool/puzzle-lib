@@ -1,7 +1,7 @@
-import { MorseEntry } from "./MorseEntry";
-import { MorseLookupResult } from "./MorseLookupResult";
+import MorseEntry from "./MorseEntry";
+import MorseLookupResult from "./MorseLookupResult";
 
-export class MorseData {
+class MorseData {
   public static readonly instance: MorseData = new MorseData();
 
   private static parse(morse: string) {
@@ -112,3 +112,5 @@ export class MorseData {
     this._data.push(new MorseEntry(encoding, display));
   }
 }
+
+export default MorseData;

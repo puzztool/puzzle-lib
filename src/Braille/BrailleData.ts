@@ -1,8 +1,9 @@
-import { BrailleEntry } from "./BrailleEntry";
-import { BrailleCategory, BrailleEncoding } from "./BrailleEnums";
-import { BrailleLookupResult } from "./BrailleLookupResult";
+import BrailleCategory from "./BrailleCategory";
+import BrailleEncoding from "./BrailleEncoding";
+import BrailleEntry from "./BrailleEntry";
+import BrailleLookupResult from "./BrailleLookupResult";
 
-export class BrailleData {
+class BrailleData {
   public static readonly instance: BrailleData = new BrailleData();
   private readonly _entries: BrailleEntry[] = [];
 
@@ -84,3 +85,5 @@ export class BrailleData {
     this._entries.push(new BrailleEntry(encoding, category, display));
   }
 }
+
+export default BrailleData;

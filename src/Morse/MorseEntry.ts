@@ -1,4 +1,4 @@
-export class MorseEntry {
+class MorseEntry {
   public readonly encoding: number;
   public readonly display: string;
 
@@ -30,3 +30,5 @@ export class MorseEntry {
     return this.display;
   }
 }
+
+export default MorseEntry;

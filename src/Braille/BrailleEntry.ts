@@ -1,6 +1,7 @@
-import { BrailleCategory, BrailleEncoding } from "./BrailleEnums";
+import BrailleCategory from "./BrailleCategory";
+import BrailleEncoding from "./BrailleEncoding";
 
-export class BrailleEntry {
+class BrailleEntry {
   public readonly encoding: BrailleEncoding;
   public readonly category: BrailleCategory;
   public readonly display: string;
@@ -15,3 +16,5 @@ export class BrailleEntry {
     return this.display;
   }
 }
+
+export default BrailleEntry;

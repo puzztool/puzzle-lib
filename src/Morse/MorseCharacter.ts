@@ -1,8 +1,8 @@
-import { MorseData } from "./MorseData";
-import { MorseEntry } from "./MorseEntry";
-import { MorseLookupResult } from "./MorseLookupResult";
+import MorseData from "./MorseData";
+import MorseEntry from "./MorseEntry";
+import MorseLookupResult from "./MorseLookupResult";
 
-export class MorseCharacter {
+class MorseCharacter {
   private _morse: string;
   private _lookup: MorseLookupResult | null;
 
@@ -70,3 +70,5 @@ export class MorseCharacter {
     this._lookup = null;
   }
 }
+
+export default MorseCharacter;

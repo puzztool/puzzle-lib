@@ -1,9 +1,11 @@
-import { BrailleData } from "./BrailleData";
-import { BrailleEntry } from "./BrailleEntry";
-import { BrailleCategory, BrailleDot, BrailleEncoding } from "./BrailleEnums";
-import { BrailleLookupResult } from "./BrailleLookupResult";
+import BrailleCategory from "./BrailleCategory";
+import BrailleData from "./BrailleData";
+import BrailleDot from "./BrailleDot";
+import BrailleEncoding from "./BrailleEncoding";
+import BrailleEntry from "./BrailleEntry";
+import BrailleLookupResult from "./BrailleLookupResult";
 
-export class BrailleCharacter {
+class BrailleCharacter {
   private _encoding: BrailleEncoding;
   private _category: BrailleCategory;
   private _lookup: BrailleLookupResult | null;
@@ -75,3 +77,5 @@ export class BrailleCharacter {
     this._lookup = null;
   }
 }
+
+export default BrailleCharacter;
