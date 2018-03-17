@@ -5,5 +5,7 @@ export { default as BrailleEncoding } from "./Braille/BrailleEncoding";
 export { default as BrailleEntry } from "./Braille/BrailleEntry";
 export { default as BrailleStream } from "./Braille/BrailleStream";
 
+export { default as CaesarString } from "./CaesarCipher/CaesarString";
+
 export { default as MorseEntry } from "./Morse/MorseEntry";
 export { default as MorseCharacter } from "./Morse/MorseCharacter";
