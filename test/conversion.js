@@ -1,0 +1,118 @@
+/* global describe, it */
+
+const assert = require('assert');
+const { CharacterConversion } = require('../');
+
+describe('Conversions', function () {
+  describe('CharacterConversion', function () {
+    it('getAsciiTable - Basic tests', function () {
+      const table = CharacterConversion.getAsciiTable();
+      const entry0 = table[0];
+      assert.strictEqual(entry0.binary, '0110000');
+      assert.strictEqual(entry0.ternary, '01210');
+      assert.strictEqual(entry0.octal, '060');
+      assert.strictEqual(entry0.decimal, '048');
+      assert.strictEqual(entry0.hexidecimal, '30');
+
+      const entry9 = table[9];
+      assert.strictEqual(entry9.binary, '0111001');
+      assert.strictEqual(entry9.ternary, '02010');
+      assert.strictEqual(entry9.octal, '071');
+      assert.strictEqual(entry9.decimal, '057');
+      assert.strictEqual(entry9.hexidecimal, '39');
+
+      const entryA = table[10];
+      assert.strictEqual(entryA.binary, '1000001');
+      assert.strictEqual(entryA.ternary, '02102');
+      assert.strictEqual(entryA.octal, '101');
+      assert.strictEqual(entryA.decimal, '065');
+      assert.strictEqual(entryA.hexidecimal, '41');
+
+      const entryZ = table[35];
+      assert.strictEqual(entryZ.binary, '1011010');
+      assert.strictEqual(entryZ.ternary, '10100');
+      assert.strictEqual(entryZ.octal, '132');
+      assert.strictEqual(entryZ.decimal, '090');
+      assert.strictEqual(entryZ.hexidecimal, '5a');
+
+      const entrya = table[36];
+      assert.strictEqual(entrya.binary, '1100001');
+      assert.strictEqual(entrya.ternary, '10121');
+      assert.strictEqual(entrya.octal, '141');
+      assert.strictEqual(entrya.decimal, '097');
+      assert.strictEqual(entrya.hexidecimal, '61');
+
+      const entryz = table[61];
+      assert.strictEqual(entryz.binary, '1111010');
+      assert.strictEqual(entryz.ternary, '11112');
+      assert.strictEqual(entryz.octal, '172');
+      assert.strictEqual(entryz.decimal, '122');
+      assert.strictEqual(entryz.hexidecimal, '7a');
+    });
+
+    it('getOrdinalTable - Basic tests', function () {
+      const table = CharacterConversion.getOrdinalTable();
+      const entryA = table[0];
+      assert.strictEqual(entryA.binary, '00001');
+      assert.strictEqual(entryA.ternary, '001');
+      assert.strictEqual(entryA.octal, '01');
+      assert.strictEqual(entryA.decimal, '01');
+      assert.strictEqual(entryA.hexidecimal, '01');
+
+      const entryZ = table[25];
+      assert.strictEqual(entryZ.binary, '11010');
+      assert.strictEqual(entryZ.ternary, '222');
+      assert.strictEqual(entryZ.octal, '32');
+      assert.strictEqual(entryZ.decimal, '26');
+      assert.strictEqual(entryZ.hexidecimal, '1a');
+    });
+
+    it('toAscii - Basic tests', function () {
+      assert.strictEqual(CharacterConversion.toAscii('0'), 48);
+      assert.strictEqual(CharacterConversion.toAscii('9'), 57);
+      assert.strictEqual(CharacterConversion.toAscii('A'), 65);
+      assert.strictEqual(CharacterConversion.toAscii('Z'), 90);
+      assert.strictEqual(CharacterConversion.toAscii('a'), 97);
+      assert.strictEqual(CharacterConversion.toAscii('z'), 122);
+    });
+
+    it('toAscii - Invalid tests', function () {
+      assert.strictEqual(CharacterConversion.toAscii(String.fromCharCode(128)), -1);
+      assert.strictEqual(CharacterConversion.toAscii(String.fromCharCode(256)), -1);
+    });
+
+    it('toAscii - Error tests', function () {
+      assert.throws(() => CharacterConversion.toAscii(), /A single character is required/);
+      assert.throws(() => CharacterConversion.toAscii(null), /A single character is required/);
+      assert.throws(() => CharacterConversion.toAscii(''), /A single character is required/);
+      assert.throws(() => CharacterConversion.toAscii('ab'), /A single character is required/);
+      assert.throws(() => CharacterConversion.toAscii(0), /A single character is required/);
+      assert.throws(() => CharacterConversion.toAscii(false), /A single character is required/);
+    });
+
+    it('toOrdinal - Basic tests', function () {
+      assert.strictEqual(CharacterConversion.toOrdinal('A'), 1);
+      assert.strictEqual(CharacterConversion.toOrdinal('Z'), 26);
+      assert.strictEqual(CharacterConversion.toOrdinal('a'), 1);
+      assert.strictEqual(CharacterConversion.toOrdinal('z'), 26);
+    });
+
+    it('toOrdinal - Invalid tests', function () {
+      assert.strictEqual(CharacterConversion.toOrdinal('0'), -1);
+      assert.strictEqual(CharacterConversion.toOrdinal('9'), -1);
+      assert.strictEqual(CharacterConversion.toOrdinal('@'), -1);
+      assert.strictEqual(CharacterConversion.toOrdinal('['), -1);
+      assert.strictEqual(CharacterConversion.toOrdinal('`'), -1);
+      assert.strictEqual(CharacterConversion.toOrdinal('{'), -1);
+    });
+
+    it('toOrdinal - Error tests', function () {
+      assert.throws(() => CharacterConversion.toOrdinal(), /A single character is required/);
+      assert.throws(() => CharacterConversion.toOrdinal(null), /A single character is required/);
+      assert.throws(() => CharacterConversion.toOrdinal(''), /A single character is required/);
+      assert.throws(() => CharacterConversion.toOrdinal('ab'), /A single character is required/);
+      assert.throws(() => CharacterConversion.toOrdinal(0), /A single character is required/);
+      assert.throws(() => CharacterConversion.toOrdinal(false), /A single character is required/);
+    });
+  });
+});
