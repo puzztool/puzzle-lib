@@ -8,63 +8,71 @@ describe('Conversions', function () {
     it('getAsciiTable - Basic tests', function () {
       const table = CharacterConversion.getAsciiTable();
       const entry0 = table[0];
+      assert.strictEqual(entry0.character, '0');
       assert.strictEqual(entry0.binary, '0110000');
       assert.strictEqual(entry0.ternary, '01210');
       assert.strictEqual(entry0.octal, '060');
       assert.strictEqual(entry0.decimal, '048');
-      assert.strictEqual(entry0.hexidecimal, '30');
+      assert.strictEqual(entry0.hexadecimal, '30');
 
       const entry9 = table[9];
+      assert.strictEqual(entry9.character, '9');
       assert.strictEqual(entry9.binary, '0111001');
       assert.strictEqual(entry9.ternary, '02010');
       assert.strictEqual(entry9.octal, '071');
       assert.strictEqual(entry9.decimal, '057');
-      assert.strictEqual(entry9.hexidecimal, '39');
+      assert.strictEqual(entry9.hexadecimal, '39');
 
       const entryA = table[10];
+      assert.strictEqual(entryA.character, 'A');
       assert.strictEqual(entryA.binary, '1000001');
       assert.strictEqual(entryA.ternary, '02102');
       assert.strictEqual(entryA.octal, '101');
       assert.strictEqual(entryA.decimal, '065');
-      assert.strictEqual(entryA.hexidecimal, '41');
+      assert.strictEqual(entryA.hexadecimal, '41');
 
       const entryZ = table[35];
+      assert.strictEqual(entryZ.character, 'Z');
       assert.strictEqual(entryZ.binary, '1011010');
       assert.strictEqual(entryZ.ternary, '10100');
       assert.strictEqual(entryZ.octal, '132');
       assert.strictEqual(entryZ.decimal, '090');
-      assert.strictEqual(entryZ.hexidecimal, '5a');
+      assert.strictEqual(entryZ.hexadecimal, '5a');
 
       const entrya = table[36];
+      assert.strictEqual(entrya.character, 'a');
       assert.strictEqual(entrya.binary, '1100001');
       assert.strictEqual(entrya.ternary, '10121');
       assert.strictEqual(entrya.octal, '141');
       assert.strictEqual(entrya.decimal, '097');
-      assert.strictEqual(entrya.hexidecimal, '61');
+      assert.strictEqual(entrya.hexadecimal, '61');
 
       const entryz = table[61];
+      assert.strictEqual(entryz.character, 'z');
       assert.strictEqual(entryz.binary, '1111010');
       assert.strictEqual(entryz.ternary, '11112');
       assert.strictEqual(entryz.octal, '172');
       assert.strictEqual(entryz.decimal, '122');
-      assert.strictEqual(entryz.hexidecimal, '7a');
+      assert.strictEqual(entryz.hexadecimal, '7a');
     });
 
     it('getOrdinalTable - Basic tests', function () {
       const table = CharacterConversion.getOrdinalTable();
       const entryA = table[0];
+      assert.strictEqual(entryA.character, 'A');
       assert.strictEqual(entryA.binary, '00001');
       assert.strictEqual(entryA.ternary, '001');
       assert.strictEqual(entryA.octal, '01');
       assert.strictEqual(entryA.decimal, '01');
-      assert.strictEqual(entryA.hexidecimal, '01');
+      assert.strictEqual(entryA.hexadecimal, '01');
 
       const entryZ = table[25];
+      assert.strictEqual(entryZ.character, 'Z');
       assert.strictEqual(entryZ.binary, '11010');
       assert.strictEqual(entryZ.ternary, '222');
       assert.strictEqual(entryZ.octal, '32');
       assert.strictEqual(entryZ.decimal, '26');
-      assert.strictEqual(entryZ.hexidecimal, '1a');
+      assert.strictEqual(entryZ.hexadecimal, '1a');
     });
 
     it('toAscii - Basic tests', function () {
