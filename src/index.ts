@@ -16,3 +16,7 @@ export { default as CharacterTableEntry } from "./Conversion/CharacterTableEntry
 // Morse exports
 export { default as MorseEntry } from "./Morse/MorseEntry";
 export { default as MorseCharacter } from "./Morse/MorseCharacter";
+
+export { default as SemaphoreDirection } from "./Semaphore/SemaphoreDirection";
+export { default as SemaphoreCharacter } from "./Semaphore/SemaphoreCharacter";
+export { default as SemaphoreDegrees } from "./Semaphore/SemaphoreDegrees";
