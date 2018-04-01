@@ -1,10 +1,10 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CaesarString } = require('../');
+const { CaesarString, VigenereString } = require('../');
 
-describe('CaesarCipher', function () {
-  describe('String', function () {
+describe('Cipher', function () {
+  describe('CaesarString', function () {
     it('getRotation - Basic tests', function () {
       const str = new CaesarString('abc');
 
@@ -67,6 +67,52 @@ describe('CaesarCipher', function () {
 
       str.update('bcd');
       assert.strictEqual(str.getRotation(13), 'opq');
+    });
+  });
+
+  describe('VigenereString', function () {
+    it('encrypt - Basic tests', function () {
+      const str = new VigenereString('ATTACKATDAWN', 'LEMON');
+      assert.strictEqual(str.encrypt(), 'LXFOPVEFRNHR');
+
+      str.update('ATTACKATDAWN', 'LEMONLEMON');
+      assert.strictEqual(str.encrypt(), 'LXFOPVEFRNHR');
+
+      str.update('ATTACK AT DAWN', 'LEMON');
+      assert.strictEqual(str.encrypt(), 'LXFOPV EF RNHR');
+    });
+
+    it('decrypt - Basic tests', function () {
+      const str = new VigenereString('LXFOPVEFRNHR', 'LEMON');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.update('LXFOPVEFRNHR', 'LEMONLEMON');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.update('LXFOPV EF RNHR', 'LEMON');
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+    });
+
+    it('encrypt/decrypt - Empty', function () {
+      const str = new VigenereString();
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      str.update('ATTACKATDAWN');
+      assert.strictEqual(str.encrypt(), 'ATTACKATDAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.update('ATTACK AT DAWN');
+      assert.strictEqual(str.encrypt(), 'ATTACK AT DAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+
+      str.update('', 'LEMON');
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      str.update();
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
     });
   });
 });
