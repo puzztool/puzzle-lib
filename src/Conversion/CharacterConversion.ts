@@ -1,4 +1,4 @@
-import CharacterTableEntry from "./CharacterTableEntry";
+import CharacterTableEntry from './CharacterTableEntry';
 
 class CharacterConversion {
   public static getAsciiTable() {
@@ -18,8 +18,8 @@ class CharacterConversion {
   }
 
   public static toAscii(ch: string) {
-    if (typeof ch !== "string" || ch.length !== 1) {
-      throw new Error("A single character is required");
+    if (typeof ch !== 'string' || ch.length !== 1) {
+      throw new Error('A single character is required');
     }
 
     const ascii = ch.charCodeAt(0);
@@ -31,18 +31,18 @@ class CharacterConversion {
   }
 
   public static toOrdinal(ch: string) {
-    if (typeof ch !== "string" || ch.length !== 1) {
-      throw new Error("A single character is required");
+    if (typeof ch !== 'string' || ch.length !== 1) {
+      throw new Error('A single character is required');
     }
 
     const chCode = ch.charCodeAt(0);
 
-    let ordinalCode = chCode - "a".charCodeAt(0);
+    let ordinalCode = chCode - 'a'.charCodeAt(0);
     if (ordinalCode >= 0 && ordinalCode < 26) {
       return ordinalCode + 1;
     }
 
-    ordinalCode = chCode - "A".charCodeAt(0);
+    ordinalCode = chCode - 'A'.charCodeAt(0);
     if (ordinalCode >= 0 && ordinalCode < 26) {
       return ordinalCode + 1;
     }

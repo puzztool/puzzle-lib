@@ -1,12 +1,12 @@
-import MorseData from "./MorseData";
-import MorseEntry from "./MorseEntry";
-import MorseLookupResult from "./MorseLookupResult";
+import MorseData from './MorseData';
+import MorseEntry from './MorseEntry';
+import MorseLookupResult from './MorseLookupResult';
 
 class MorseCharacter {
   private _morse: string;
   private _lookup: MorseLookupResult | null;
 
-  constructor(str: string = "") {
+  constructor(str: string = '') {
     this._morse = str;
     this.invalidateLookup();
   }
@@ -19,17 +19,17 @@ class MorseCharacter {
   }
 
   public clear() {
-    this._morse = "";
+    this._morse = '';
     this.invalidateLookup();
   }
 
   public dot() {
-    this._morse += ".";
+    this._morse += '.';
     this.invalidateLookup();
   }
 
   public dash() {
-    this._morse += "-";
+    this._morse += '-';
     this.invalidateLookup();
   }
 
@@ -51,7 +51,7 @@ class MorseCharacter {
 
   public toString() {
     const exact = this.ensureLookup().exact;
-    return exact ? exact.toString() : "";
+    return exact ? exact.toString() : '';
   }
 
   public valid() {

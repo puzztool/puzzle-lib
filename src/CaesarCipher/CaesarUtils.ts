@@ -1,7 +1,7 @@
 class CaesarUtils {
   public static rotateLetter(ch: string, rot: number) {
     if (ch.length !== 1) {
-      throw new Error("Expected a single character");
+      throw new Error('Expected a single character');
     }
 
     rot %= this.alphaLength;
@@ -22,10 +22,10 @@ class CaesarUtils {
     return String.fromCharCode((((code - base) + rot) % this.alphaLength) + base);
   }
 
-  private static upperA: number = "A".charCodeAt(0);
-  private static upperZ: number = "Z".charCodeAt(0);
-  private static lowerA: number = "a".charCodeAt(0);
-  private static lowerZ: number = "z".charCodeAt(0);
+  private static upperA: number = 'A'.charCodeAt(0);
+  private static upperZ: number = 'Z'.charCodeAt(0);
+  private static lowerA: number = 'a'.charCodeAt(0);
+  private static lowerZ: number = 'z'.charCodeAt(0);
   private static alphaLength: number = 26;
 }
 

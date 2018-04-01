@@ -6,6 +6,12 @@
   "jsRules": {},
   "rules": {
     "no-bitwise": false,
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape",
+      "avoid-template"
+    ],
     "variable-name": [
       true,
       "ban-keywords",

@@ -1,8 +1,8 @@
-import BrailleCategory from "./BrailleCategory";
-import BrailleCharacter from "./BrailleCharacter";
-import BrailleData from "./BrailleData";
-import BrailleDot from "./BrailleDot";
-import BrailleEncoding from "./BrailleEncoding";
+import BrailleCategory from './BrailleCategory';
+import BrailleCharacter from './BrailleCharacter';
+import BrailleData from './BrailleData';
+import BrailleDot from './BrailleDot';
+import BrailleEncoding from './BrailleEncoding';
 
 interface IBrailleStreamState {
   numberMode: boolean;
@@ -43,7 +43,7 @@ class BrailleStream {
   }
 
   private invalidate() {
-    this._currentStr = "";
+    this._currentStr = '';
     this._processPosition = 0;
   }
 
@@ -55,13 +55,13 @@ class BrailleStream {
         case BrailleEncoding.None:
           this._state.numberMode = false;
           this._state.previousWhitespace = true;
-          this._currentStr += " ";
+          this._currentStr += ' ';
           break;
 
         case BrailleEncoding.FormattingNumber:
           this._state.numberMode = true;
           this._state.previousWhitespace = false;
-          this._currentStr += "#";
+          this._currentStr += '#';
           break;
 
         default:

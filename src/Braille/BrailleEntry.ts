@@ -1,5 +1,5 @@
-import BrailleCategory from "./BrailleCategory";
-import BrailleEncoding from "./BrailleEncoding";
+import BrailleCategory from './BrailleCategory';
+import BrailleEncoding from './BrailleEncoding';
 
 class BrailleEntry {
   public readonly encoding: BrailleEncoding;

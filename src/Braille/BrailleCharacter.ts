@@ -1,9 +1,9 @@
-import BrailleCategory from "./BrailleCategory";
-import BrailleData from "./BrailleData";
-import BrailleDot from "./BrailleDot";
-import BrailleEncoding from "./BrailleEncoding";
-import BrailleEntry from "./BrailleEntry";
-import BrailleLookupResult from "./BrailleLookupResult";
+import BrailleCategory from './BrailleCategory';
+import BrailleData from './BrailleData';
+import BrailleDot from './BrailleDot';
+import BrailleEncoding from './BrailleEncoding';
+import BrailleEntry from './BrailleEntry';
+import BrailleLookupResult from './BrailleLookupResult';
 
 class BrailleCharacter {
   private _encoding: BrailleEncoding;
