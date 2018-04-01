@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
-    "target": "es5",
     "declaration": true,
-    "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "outDir": "./built",
+    "sourceMap": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "target": "es5",
   },
   "include": [
     "./src/**/*"
