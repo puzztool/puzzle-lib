@@ -9,15 +9,15 @@ class MorseEntry {
 
   public toMorseString() {
     let encoding = this.encoding;
-    let morseChars = "";
+    let morseChars = '';
 
     while (encoding !== 0) {
       if ((encoding & 0b11) === 0b01) {
-        morseChars += ".";
+        morseChars += '.';
       } else if ((this.encoding & 0b11) === 0b10) {
-        morseChars += "-";
+        morseChars += '-';
       } else {
-        throw new Error("Invalid morse bits");
+        throw new Error('Invalid morse bits');
       }
 
       encoding >>>= 2;

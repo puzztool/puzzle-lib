@@ -1,4 +1,4 @@
-import SemaphoreDirection from "./SemaphoreDirection";
+import SemaphoreDirection from './SemaphoreDirection';
 
 class SemaphoreDegrees {
   public static FromDegrees(degrees: number) {
@@ -7,7 +7,7 @@ class SemaphoreDegrees {
     }
 
     if (degrees % 45 !== 0 || degrees < 0) {
-      throw new Error("Invalid degrees");
+      throw new Error('Invalid degrees');
     }
     const position = degrees / 45;
     return SemaphoreDirection.North << position;

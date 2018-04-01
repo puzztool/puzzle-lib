@@ -1,8 +1,8 @@
-import leftPad = require("left-pad");
+import leftPad = require('left-pad');
 
 class CharacterTableEntry {
   private static getValue(value: number, base: number, maxValue: number) {
-    return leftPad(value.toString(base), Math.ceil(Math.log(maxValue) / Math.log(base)), "0");
+    return leftPad(value.toString(base), Math.ceil(Math.log(maxValue) / Math.log(base)), '0');
   }
 
   public readonly character: string;

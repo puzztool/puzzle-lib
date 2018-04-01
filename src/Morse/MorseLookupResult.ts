@@ -1,4 +1,4 @@
-import MorseEntry from "./MorseEntry";
+import MorseEntry from './MorseEntry';
 
 class MorseLookupResult {
   public exact: MorseEntry;

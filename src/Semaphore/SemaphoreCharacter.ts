@@ -1,5 +1,5 @@
-import SemaphoreData from "./SemaphoreData";
-import SemaphoreDirection from "./SemaphoreDirection";
+import SemaphoreData from './SemaphoreData';
+import SemaphoreDirection from './SemaphoreDirection';
 
 class SemaphoreCharacter {
   private _semaphore: string;
@@ -9,13 +9,13 @@ class SemaphoreCharacter {
   }
 
   public clear() {
-    this._semaphore = "";
+    this._semaphore = '';
   }
 
   public setDirections(first: SemaphoreDirection, second: SemaphoreDirection) {
     this.clear();
     const lookup = SemaphoreData.instance.lookup(first, second);
-    this._semaphore = (lookup === null) ? "" : lookup;
+    this._semaphore = (lookup === null) ? '' : lookup;
   }
 
   public toString() {

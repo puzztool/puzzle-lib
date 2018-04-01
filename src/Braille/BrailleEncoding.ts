@@ -1,4 +1,4 @@
-import BrailleDot from "./BrailleDot";
+import BrailleDot from './BrailleDot';
 
 enum BrailleEncoding {
   None,

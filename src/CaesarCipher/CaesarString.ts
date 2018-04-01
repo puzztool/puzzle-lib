@@ -1,9 +1,9 @@
-import CaesarUtils from "./CaesarUtils";
+import CaesarUtils from './CaesarUtils';
 
 class CaesarString {
   private _str: string;
 
-  constructor(str: string = "") {
+  constructor(str: string = '') {
     this._str = str;
   }
 
@@ -14,7 +14,7 @@ class CaesarString {
       rotStr.push(CaesarUtils.rotateLetter(ch, rot));
     }
 
-    return rotStr.join("");
+    return rotStr.join('');
   }
 
   public getRotations() {
