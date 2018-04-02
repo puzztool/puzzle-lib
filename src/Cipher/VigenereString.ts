@@ -1,12 +1,28 @@
 import CaesarUtils from './CaesarUtils';
 
 class VigenereString {
-  private _str: string;
+  private _text: string;
   private _key: string;
 
-  constructor(str: string = '', key: string = '') {
-    this._str = str;
+  constructor(text: string = '', key: string = '') {
+    this._text = text;
     this._key = key;
+  }
+
+  get text() {
+    return this._text;
+  }
+
+  set text(value: string) {
+    this._text = value;
+  }
+
+  get key() {
+    return this._key;
+  }
+
+  set key(value: string) {
+    this._key = value;
   }
 
   public encrypt() {
@@ -17,16 +33,11 @@ class VigenereString {
     return this.convert(true);
   }
 
-  public update(str: string = '', key: string = '') {
-    this._str = str;
-    this._key = key;
-  }
-
   private convert(decrypt: boolean = false) {
     const rotStr = [];
     let keyIndex = 0;
 
-    for (const ch of this._str) {
+    for (const ch of this._text) {
       if (CaesarUtils.isAlpha(ch)) {
         rotStr.push(CaesarUtils.rotateLetterWithKey(ch, this._key, keyIndex++, decrypt));
       } else {

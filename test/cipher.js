@@ -28,11 +28,11 @@ describe('Cipher', function () {
       assert.strictEqual(str.getRotation(0), '');
       assert.strictEqual(str.getRotation(13), '');
 
-      str.update('a');
+      str.text = 'a';
       assert.strictEqual(str.getRotation(0), 'a');
       assert.strictEqual(str.getRotation(13), 'n');
 
-      str.update('');
+      str.text = '';
       assert.strictEqual(str.getRotation(0), '');
       assert.strictEqual(str.getRotation(13), '');
     });
@@ -54,10 +54,10 @@ describe('Cipher', function () {
       const str = new CaesarString();
       assert.strictEqual(str.getRotations().length, 26);
 
-      str.update('a');
+      str.text = 'a';
       assert.strictEqual(str.getRotations().length, 26);
 
-      str.update('');
+      str.text = '';
       assert.strictEqual(str.getRotations().length, 26);
     });
 
@@ -65,7 +65,7 @@ describe('Cipher', function () {
       const str = new CaesarString('abc');
       assert.strictEqual(str.getRotation(13), 'nop');
 
-      str.update('bcd');
+      str.text = 'bcd';
       assert.strictEqual(str.getRotation(13), 'opq');
     });
   });
@@ -75,10 +75,10 @@ describe('Cipher', function () {
       const str = new VigenereString('ATTACKATDAWN', 'LEMON');
       assert.strictEqual(str.encrypt(), 'LXFOPVEFRNHR');
 
-      str.update('ATTACKATDAWN', 'LEMONLEMON');
+      str.key = 'LEMONLEMON';
       assert.strictEqual(str.encrypt(), 'LXFOPVEFRNHR');
 
-      str.update('ATTACK AT DAWN', 'LEMON');
+      str.text = 'ATTACK AT DAWN';
       assert.strictEqual(str.encrypt(), 'LXFOPV EF RNHR');
     });
 
@@ -86,10 +86,10 @@ describe('Cipher', function () {
       const str = new VigenereString('LXFOPVEFRNHR', 'LEMON');
       assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
-      str.update('LXFOPVEFRNHR', 'LEMONLEMON');
+      str.key = 'LEMONLEMON';
       assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
-      str.update('LXFOPV EF RNHR', 'LEMON');
+      str.text = 'LXFOPV EF RNHR';
       assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
     });
 
@@ -98,19 +98,20 @@ describe('Cipher', function () {
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
 
-      str.update('ATTACKATDAWN');
+      str.text = 'ATTACKATDAWN';
       assert.strictEqual(str.encrypt(), 'ATTACKATDAWN');
       assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
-      str.update('ATTACK AT DAWN');
+      str.text = 'ATTACK AT DAWN';
       assert.strictEqual(str.encrypt(), 'ATTACK AT DAWN');
       assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
 
-      str.update('', 'LEMON');
+      str.text = '';
+      str.key = 'LEMON';
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
 
-      str.update();
+      str.key = '';
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
     });
