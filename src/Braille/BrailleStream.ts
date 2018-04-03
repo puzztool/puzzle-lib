@@ -1,7 +1,6 @@
 import BrailleCategory from './BrailleCategory';
 import BrailleCharacter from './BrailleCharacter';
 import BrailleData from './BrailleData';
-import BrailleDot from './BrailleDot';
 import BrailleEncoding from './BrailleEncoding';
 
 interface IBrailleStreamState {
@@ -10,7 +9,7 @@ interface IBrailleStreamState {
 }
 
 class BrailleStream {
-  private readonly _chars: number[] = [];
+  private readonly _chars: BrailleEncoding[] = [];
   private readonly _state: IBrailleStreamState;
   private _currentStr: string;
   private _processPosition: number;
@@ -24,6 +23,18 @@ class BrailleStream {
     this.invalidate();
   }
 
+  get chars() {
+    return this._chars;
+  }
+
+  set chars(value: BrailleEncoding[]) {
+    this.clear();
+
+    for (const ch of value) {
+      this._chars.push(ch);
+    }
+  }
+
   public append(ch: BrailleCharacter) {
     this._chars.push(ch.valueOf());
   }
@@ -34,7 +45,7 @@ class BrailleStream {
   }
 
   public space() {
-    this._chars.push(BrailleDot.None);
+    this._chars.push(BrailleEncoding.None);
   }
 
   public toString() {

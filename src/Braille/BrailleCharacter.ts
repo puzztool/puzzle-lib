@@ -27,6 +27,15 @@ class BrailleCharacter {
     }
   }
 
+  get encoding() {
+    return this._encoding;
+  }
+
+  set encoding(value: BrailleEncoding) {
+    this._encoding = value;
+    this.invalidateLookup();
+  }
+
   public clear() {
     this._encoding = BrailleEncoding.None;
     this.invalidateLookup();
