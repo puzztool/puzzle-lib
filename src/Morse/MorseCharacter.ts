@@ -11,6 +11,15 @@ class MorseCharacter {
     this.invalidateLookup();
   }
 
+  get morseString() {
+    return this._morse;
+  }
+
+  set morseString(value: string) {
+    this._morse = value;
+    this.invalidateLookup();
+  }
+
   public backspace() {
     if (this._morse.length > 0) {
       this._morse = this._morse.substring(0, this._morse.length - 1);
@@ -43,10 +52,6 @@ class MorseCharacter {
 
   public getPotentialMatches(): MorseEntry[] {
     return this.ensureLookup().partial;
-  }
-
-  public toMorseString() {
-    return this._morse;
   }
 
   public toString() {
