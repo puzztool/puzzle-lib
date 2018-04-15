@@ -1,4 +1,5 @@
 enum SemaphoreDirection {
+  None = 0,
   North = 1 << 1,
   NorthEast = 1 << 2,
   East = 1 << 3,

@@ -19,7 +19,7 @@ class SemaphoreData {
     this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.NorthWest), 'I');
     this.addToList((SemaphoreDirection.North | SemaphoreDirection.East), 'J');
     this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.North), 'K');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.NorthWest), 'L');
+    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast), 'L');
     this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.East), 'M');
     this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.SouthEast), 'N');
     this.addToList((SemaphoreDirection.West | SemaphoreDirection.NorthWest), 'O');
@@ -32,7 +32,7 @@ class SemaphoreData {
     this.addToList((SemaphoreDirection.North | SemaphoreDirection.SouthEast), 'V');
     this.addToList((SemaphoreDirection.East | SemaphoreDirection.NorthEast), 'W');
     this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.NorthEast), 'X');
-    this.addToList((SemaphoreDirection.NorthEast | SemaphoreDirection.East), 'Y');
+    this.addToList((SemaphoreDirection.NorthWest | SemaphoreDirection.East), 'Y');
     this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.East), 'Z');
   }
 
