@@ -36,10 +36,9 @@ class SemaphoreData {
     this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.East), 'Z');
   }
 
-  public lookup(first: SemaphoreDirection, second: SemaphoreDirection): string {
-    const combined = first | second;
+  public lookup(directions: SemaphoreDirection): string {
     for (const entry of this._data) {
-      if (entry.encoding === combined) {
+      if (entry.encoding === directions) {
         return entry.display;
       }
     }
