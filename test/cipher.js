@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CaesarString, VigenereString } = require('../');
+const { CaesarString, VigenereString, AutoKeyString } = require('../');
 
 describe('Cipher', function () {
   describe('CaesarString', function () {
@@ -114,6 +114,42 @@ describe('Cipher', function () {
       str.key = '';
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
+    });
+  });
+
+  describe('AutoKeyString', function () {
+    it('encrypt - Basic tests', function () {
+      const str = new AutoKeyString('ATTACKATDAWN', 'QUEENLY');
+      assert.strictEqual(str.encrypt(), 'QNXEPVYTWTWP');
+
+      str.text = 'ATTACK AT DAWN';
+      assert.strictEqual(str.encrypt(), 'QNXEPV YT WTWP');
+    });
+
+    it('decrypt - Basic tests', function () {
+      const str = new AutoKeyString('QNXEPVYTWTWP', 'QUEENLY');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.text = 'QNXEPV YT WTWP';
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+    });
+
+    it('encrypt/decrypt - Empty', function () {
+      const str = new AutoKeyString('', 'QUEENLY');
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      assert.throws(() => {
+        /* eslint-disable no-unused-variables */
+        const str = new AutoKeyString();
+        str.text = "This is only here because the linter demands it, and doesn't seem to pay attention to eslint-disable syntax";
+        /* eslint-enable no-unused-variables */
+      }, /A key is required/);
+
+      assert.throws(() => {
+        const str = new AutoKeyString('', 'QUEENLY');
+        str.key = '';
+      }, /A key is required/);
     });
   });
 });

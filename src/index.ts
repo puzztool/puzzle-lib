@@ -9,6 +9,7 @@ export { default as BrailleStream } from './Braille/BrailleStream';
 // Cipher exports
 export { default as CaesarString } from './Cipher/CaesarString';
 export { default as VigenereString } from './Cipher/VigenereString';
+export { default as AutoKeyString } from './Cipher/AutoKeyString';
 
 // Conversion exports
 export { default as CharacterConversion } from './Conversion/CharacterConversion';
