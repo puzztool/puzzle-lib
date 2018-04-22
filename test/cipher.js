@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CaesarString, VigenereString } = require('../');
+const { CaesarString, VigenereString, AutoKeyString } = require('../');
 
 describe('Cipher', function () {
   describe('CaesarString', function () {
@@ -108,6 +108,47 @@ describe('Cipher', function () {
 
       str.text = '';
       str.key = 'LEMON';
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      str.key = '';
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+    });
+  });
+
+  describe('AutoKeyString', function () {
+    it('encrypt - Basic tests', function () {
+      const str = new AutoKeyString('ATTACKATDAWN', 'QUEENLY');
+      assert.strictEqual(str.encrypt(), 'QNXEPVYTWTWP');
+
+      str.text = 'ATTACK AT DAWN';
+      assert.strictEqual(str.encrypt(), 'QNXEPV YT WTWP');
+    });
+
+    it('decrypt - Basic tests', function () {
+      const str = new AutoKeyString('QNXEPVYTWTWP', 'QUEENLY');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.text = 'QNXEPV YT WTWP';
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+    });
+
+    it('encrypt/decrypt - Empty', function () {
+      const str = new AutoKeyString('', '');
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      str.text = 'ATTACKATDAWN';
+      assert.strictEqual(str.encrypt(), 'ATTACKATDAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
+
+      str.text = 'ATTACK AT DAWN';
+      assert.strictEqual(str.encrypt(), 'ATTACK AT DAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+
+      str.text = '';
+      str.key = 'QUEENLY';
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
 
