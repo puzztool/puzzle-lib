@@ -135,21 +135,26 @@ describe('Cipher', function () {
     });
 
     it('encrypt/decrypt - Empty', function () {
-      const str = new AutoKeyString('', 'QUEENLY');
+      const str = new AutoKeyString('', '');
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
 
-      assert.throws(() => {
-        /* eslint-disable no-unused-variables */
-        const str = new AutoKeyString();
-        str.text = "This is only here because the linter demands it, and doesn't seem to pay attention to eslint-disable syntax";
-        /* eslint-enable no-unused-variables */
-      }, /A key is required/);
+      str.text = 'ATTACKATDAWN';
+      assert.strictEqual(str.encrypt(), 'ATTACKATDAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
-      assert.throws(() => {
-        const str = new AutoKeyString('', 'QUEENLY');
-        str.key = '';
-      }, /A key is required/);
+      str.text = 'ATTACK AT DAWN';
+      assert.strictEqual(str.encrypt(), 'ATTACK AT DAWN');
+      assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
+
+      str.text = '';
+      str.key = 'QUEENLY';
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
+
+      str.key = '';
+      assert.strictEqual(str.encrypt(), '');
+      assert.strictEqual(str.decrypt(), '');
     });
   });
 });
