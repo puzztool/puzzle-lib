@@ -1,39 +1,8 @@
 import CaesarUtils from './CaesarUtils';
+import KeyedCipherStringBase from './KeyedCipherStringBase';
 
-class AutoKeyString {
-  private _text: string;
-  private _key: string;
-
-  constructor(text: string = '', key: string = '') {
-    this._text = text;
-    this._key = key;
-  }
-
-  get text() {
-    return this._text;
-  }
-
-  set text(value: string) {
-    this._text = value;
-  }
-
-  get key() {
-    return this._key;
-  }
-
-  set key(value: string) {
-    this._key = value;
-  }
-
-  public encrypt() {
-    return this.convert();
-  }
-
-  public decrypt() {
-    return this.convert(true);
-  }
-
-  private convert(decrypt: boolean = false) {
+class AutoKeyString extends KeyedCipherStringBase {
+  protected convert(decrypt: boolean) {
     if (this._key.length < 1) {
       return this._text;
     } else {
