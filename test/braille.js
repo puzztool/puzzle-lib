@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { BrailleCategory, BrailleCharacter, BrailleDot, BrailleEncoding, BrailleStream } = require('../');
+const { EncodingCategory, BrailleCharacter, BrailleDot, BrailleEncoding, BrailleStream } = require('../');
 
 describe('Braille', function () {
   describe('Character', function () {
@@ -81,7 +81,7 @@ describe('Braille', function () {
     });
 
     it('category - Basic', function () {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA, BrailleCategory.Letter);
+      const ch = new BrailleCharacter(BrailleEncoding.LetterA, EncodingCategory.Letter);
       assert.strictEqual(ch.toString(), 'A');
 
       let exact = ch.getExactMatches();
@@ -92,7 +92,7 @@ describe('Braille', function () {
       assert.strictEqual(partial.length, 20);
       assert.strictEqual(partial[0].toString(), 'B');
 
-      ch.category = BrailleCategory.Number;
+      ch.category = EncodingCategory.Number;
       assert.strictEqual(ch.toString(), '1');
 
       exact = ch.getExactMatches();

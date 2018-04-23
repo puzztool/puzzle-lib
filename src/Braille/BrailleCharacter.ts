@@ -1,30 +1,18 @@
-import BrailleCategory from './BrailleCategory';
+import EncodingCategory from '../Common/EncodingCategory';
+import EncodingCharacterBase from '../Common/EncodingCharacterBase';
 import BrailleData from './BrailleData';
 import BrailleDot from './BrailleDot';
 import BrailleEncoding from './BrailleEncoding';
-import BrailleEntry from './BrailleEntry';
-import BrailleLookupResult from './BrailleLookupResult';
 
-class BrailleCharacter {
+class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
   private _encoding: BrailleEncoding;
-  private _category: BrailleCategory;
-  private _lookup: BrailleLookupResult | null;
 
-  constructor(encoding: BrailleEncoding = BrailleEncoding.None, category: BrailleCategory = BrailleCategory.All) {
+  constructor(
+      encoding: BrailleEncoding = BrailleEncoding.None,
+      category: EncodingCategory = EncodingCategory.All) {
+    super(BrailleData.instance, category);
+
     this._encoding = encoding;
-    this._category = category;
-    this.invalidateLookup();
-  }
-
-  get category() {
-    return this._category;
-  }
-
-  set category(value: BrailleCategory) {
-    if (this._category !== value) {
-      this._category = value;
-      this.invalidateLookup();
-    }
   }
 
   get encoding() {
@@ -36,15 +24,6 @@ class BrailleCharacter {
     this.invalidateLookup();
   }
 
-  public clear() {
-    this._encoding = BrailleEncoding.None;
-    this.invalidateLookup();
-  }
-
-  public empty() {
-    return this._encoding === BrailleEncoding.None;
-  }
-
   public get(mask: BrailleDot | BrailleEncoding) {
     return (this._encoding & mask) === mask;
   }
@@ -54,36 +33,17 @@ class BrailleCharacter {
     this.invalidateLookup();
   }
 
-  public getExactMatches(): BrailleEntry[] {
-    return this.ensureLookup().exact;
+  protected onClear() {
+    this._encoding = BrailleEncoding.None;
+    this.invalidateLookup();
   }
 
-  public getPotentialMatches(): BrailleEntry[] {
-    return this.ensureLookup().partial;
+  protected onEmpty() {
+    return this._encoding === BrailleEncoding.None;
   }
 
-  public toString() {
-    return this.ensureLookup().exactString;
-  }
-
-  public valid() {
-    return this.ensureLookup().exact.length > 0;
-  }
-
-  public valueOf() {
+  protected getEncoding() {
     return this._encoding;
-  }
-
-  private ensureLookup() {
-    if (!this._lookup) {
-      this._lookup = BrailleData.instance.lookup(this._encoding, this._category);
-    }
-
-    return this._lookup;
-  }
-
-  private invalidateLookup() {
-    this._lookup = null;
   }
 }
 

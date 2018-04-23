@@ -1,53 +1,55 @@
-import SemaphoreDirection from './SemaphoreDirection';
-import SemaphoreEntry from './SemaphoreEntry';
+import EncodingCategory from '../Common/EncodingCategory';
+import EncodingDataBase from '../Common/EncodingDataBase';
+import SemaphoreEncoding from './SemaphoreEncoding';
 
-class SemaphoreData {
+class SemaphoreData extends EncodingDataBase<SemaphoreEncoding> {
   public static readonly instance: SemaphoreData = new SemaphoreData();
 
-  private readonly _data: SemaphoreEntry[] = [];
-
   constructor() {
+    super();
+
     // Letters
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.South), 'A');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.South), 'B');
-    this.addToList((SemaphoreDirection.NorthWest | SemaphoreDirection.South), 'C');
-    this.addToList((SemaphoreDirection.North | SemaphoreDirection.South), 'D');
-    this.addToList((SemaphoreDirection.NorthEast | SemaphoreDirection.South), 'E');
-    this.addToList((SemaphoreDirection.East | SemaphoreDirection.South), 'F');
-    this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.South), 'G');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.West), 'H');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.NorthWest), 'I');
-    this.addToList((SemaphoreDirection.North | SemaphoreDirection.East), 'J');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.North), 'K');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast), 'L');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.East), 'M');
-    this.addToList((SemaphoreDirection.SouthWest | SemaphoreDirection.SouthEast), 'N');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.NorthWest), 'O');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.North), 'P');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.NorthEast), 'Q');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.East), 'R');
-    this.addToList((SemaphoreDirection.West | SemaphoreDirection.SouthEast), 'S');
-    this.addToList((SemaphoreDirection.NorthWest | SemaphoreDirection.North), 'T');
-    this.addToList((SemaphoreDirection.NorthWest | SemaphoreDirection.NorthEast), 'U');
-    this.addToList((SemaphoreDirection.North | SemaphoreDirection.SouthEast), 'V');
-    this.addToList((SemaphoreDirection.East | SemaphoreDirection.NorthEast), 'W');
-    this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.NorthEast), 'X');
-    this.addToList((SemaphoreDirection.NorthWest | SemaphoreDirection.East), 'Y');
-    this.addToList((SemaphoreDirection.SouthEast | SemaphoreDirection.East), 'Z');
-  }
+    this.addToList(SemaphoreEncoding.LetterA, EncodingCategory.Letter, 'A');
+    this.addToList(SemaphoreEncoding.LetterB, EncodingCategory.Letter, 'B');
+    this.addToList(SemaphoreEncoding.LetterC, EncodingCategory.Letter, 'C');
+    this.addToList(SemaphoreEncoding.LetterD, EncodingCategory.Letter, 'D');
+    this.addToList(SemaphoreEncoding.LetterE, EncodingCategory.Letter, 'E');
+    this.addToList(SemaphoreEncoding.LetterF, EncodingCategory.Letter, 'F');
+    this.addToList(SemaphoreEncoding.LetterG, EncodingCategory.Letter, 'G');
+    this.addToList(SemaphoreEncoding.LetterH, EncodingCategory.Letter, 'H');
+    this.addToList(SemaphoreEncoding.LetterI, EncodingCategory.Letter, 'I');
+    this.addToList(SemaphoreEncoding.LetterJ, EncodingCategory.Letter, 'J');
+    this.addToList(SemaphoreEncoding.LetterK, EncodingCategory.Letter, 'K');
+    this.addToList(SemaphoreEncoding.LetterL, EncodingCategory.Letter, 'L');
+    this.addToList(SemaphoreEncoding.LetterM, EncodingCategory.Letter, 'M');
+    this.addToList(SemaphoreEncoding.LetterN, EncodingCategory.Letter, 'N');
+    this.addToList(SemaphoreEncoding.LetterO, EncodingCategory.Letter, 'O');
+    this.addToList(SemaphoreEncoding.LetterP, EncodingCategory.Letter, 'P');
+    this.addToList(SemaphoreEncoding.LetterQ, EncodingCategory.Letter, 'Q');
+    this.addToList(SemaphoreEncoding.LetterR, EncodingCategory.Letter, 'R');
+    this.addToList(SemaphoreEncoding.LetterS, EncodingCategory.Letter, 'S');
+    this.addToList(SemaphoreEncoding.LetterT, EncodingCategory.Letter, 'T');
+    this.addToList(SemaphoreEncoding.LetterU, EncodingCategory.Letter, 'U');
+    this.addToList(SemaphoreEncoding.LetterV, EncodingCategory.Letter, 'V');
+    this.addToList(SemaphoreEncoding.LetterW, EncodingCategory.Letter, 'W');
+    this.addToList(SemaphoreEncoding.LetterX, EncodingCategory.Letter, 'X');
+    this.addToList(SemaphoreEncoding.LetterY, EncodingCategory.Letter, 'Y');
+    this.addToList(SemaphoreEncoding.LetterZ, EncodingCategory.Letter, 'Z');
 
-  public lookup(directions: SemaphoreDirection): string {
-    for (const entry of this._data) {
-      if (entry.encoding === directions) {
-        return entry.display;
-      }
-    }
+    // Numbers
+    this.addToList(SemaphoreEncoding.Number1, EncodingCategory.Number, '1');
+    this.addToList(SemaphoreEncoding.Number2, EncodingCategory.Number, '2');
+    this.addToList(SemaphoreEncoding.Number3, EncodingCategory.Number, '3');
+    this.addToList(SemaphoreEncoding.Number4, EncodingCategory.Number, '4');
+    this.addToList(SemaphoreEncoding.Number5, EncodingCategory.Number, '5');
+    this.addToList(SemaphoreEncoding.Number6, EncodingCategory.Number, '6');
+    this.addToList(SemaphoreEncoding.Number7, EncodingCategory.Number, '7');
+    this.addToList(SemaphoreEncoding.Number8, EncodingCategory.Number, '8');
+    this.addToList(SemaphoreEncoding.Number9, EncodingCategory.Number, '9');
+    this.addToList(SemaphoreEncoding.Number0, EncodingCategory.Number, '0');
 
-    return '';
-  }
-
-  private addToList(encoding: number, display: string) {
-    this._data.push(new SemaphoreEntry(encoding, display));
+    // Formatting
+    this.addToList(SemaphoreEncoding.FormattingNumber, EncodingCategory.Formatting, '#');
   }
 }
 

@@ -11,7 +11,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.morseString, '.');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 30);
+      assert.strictEqual(partial.length, 26);
       assert.strictEqual(partial[0].toString(), 'A');
       assert.strictEqual(partial[1].toString(), 'F');
     });
@@ -22,7 +22,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.morseString, '--.');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 5);
+      assert.strictEqual(partial.length, 4);
       assert.strictEqual(partial[0].toString(), 'Q');
       assert.strictEqual(partial[1].toString(), 'Z');
     });
@@ -33,7 +33,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.morseString, '');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 61);
+      assert.strictEqual(partial.length, 54);
       assert.strictEqual(partial[0].toString(), 'A');
     });
 
@@ -52,7 +52,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.morseString, '--.');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 5);
+      assert.strictEqual(partial.length, 4);
       assert.strictEqual(partial[0].toString(), 'Q');
       assert.strictEqual(partial[1].toString(), 'Z');
     });
