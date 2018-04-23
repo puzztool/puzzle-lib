@@ -32,21 +32,21 @@ describe('Semaphore', function () {
 
   describe('Characters', function () {
     it('Char Matches', function () {
-      const aChar = new SemaphoreCharacter(SemaphoreDirection.SouthWest, SemaphoreDirection.South);
-      assert.strictEqual(aChar.toString(), 'A');
+      const aChar = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.South);
+      assert.strictEqual(aChar.toString(), 'A/1');
 
-      const qChar = new SemaphoreCharacter(SemaphoreDirection.West, SemaphoreDirection.NorthEast);
+      const qChar = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.NorthEast);
       assert.strictEqual(qChar.toString(), 'Q');
 
-      const zChar = new SemaphoreCharacter(SemaphoreDirection.SouthEast, SemaphoreDirection.East);
+      const zChar = new SemaphoreCharacter(SemaphoreDirection.SouthEast | SemaphoreDirection.East);
       assert.strictEqual(zChar.toString(), 'Z');
     });
 
     it('No Matches', function () {
-      const noChar = new SemaphoreCharacter(SemaphoreDirection.South, SemaphoreDirection.South);
+      const noChar = new SemaphoreCharacter(SemaphoreDirection.South | SemaphoreDirection.South);
       assert.strictEqual(noChar.toString(), '');
 
-      const emptyChar = new SemaphoreCharacter(SemaphoreDirection.South, SemaphoreDirection.South);
+      const emptyChar = new SemaphoreCharacter(SemaphoreDirection.South | SemaphoreDirection.South);
       assert.strictEqual(emptyChar.toString(), '');
     });
 
@@ -60,11 +60,11 @@ describe('Semaphore', function () {
       assert.strictEqual(char.directions.length, 1);
       assert.strictEqual(char.directions[0], SemaphoreDirection.West);
 
-      char = new SemaphoreCharacter(SemaphoreDirection.West, SemaphoreDirection.East);
+      char = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.East);
       assert.strictEqual(char.toString(), 'R');
       assert.strictEqual(char.directions.length, 2);
-      assert.strictEqual(char.directions[0], SemaphoreDirection.West);
-      assert.strictEqual(char.directions[1], SemaphoreDirection.East);
+      assert.strictEqual(char.directions[0], SemaphoreDirection.East);
+      assert.strictEqual(char.directions[1], SemaphoreDirection.West);
     });
 
     it('addDirection/removeDirection', function () {
@@ -74,7 +74,7 @@ describe('Semaphore', function () {
 
       // Complete the match
       char.addDirection(SemaphoreDirection.SouthWest);
-      assert.strictEqual(char.toString(), 'A');
+      assert.strictEqual(char.toString(), 'A/1');
 
       // Push off the oldest direction
       char.addDirection(SemaphoreDirection.NorthEast);
@@ -94,7 +94,7 @@ describe('Semaphore', function () {
     });
 
     it('getDegrees', function () {
-      const char = new SemaphoreCharacter(SemaphoreDirection.SouthWest, SemaphoreDirection.NorthEast);
+      const char = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast);
       let [ first, second ] = char.getDegrees();
       assert.strictEqual(first, 45);
       assert.strictEqual(second, 225);

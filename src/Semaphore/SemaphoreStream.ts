@@ -1,23 +1,21 @@
 import EncodingCategory from '../Common/EncodingCategory';
-import BrailleCharacter from './BrailleCharacter';
-import BrailleData from './BrailleData';
-import BrailleEncoding from './BrailleEncoding';
+import SemaphoreCharacter from './SemaphoreCharacter';
+import SemaphoreData from './SemaphoreData';
+import SemaphoreEncoding from './SemaphoreEncoding';
 
-interface IBrailleStreamState {
+interface ISemaphoreStreamState {
   numberMode: boolean;
-  previousWhitespace: boolean;
 }
 
-class BrailleStream {
-  private readonly _chars: BrailleEncoding[] = [];
-  private readonly _state: IBrailleStreamState;
+class SemaphoreStream {
+  private readonly _chars: SemaphoreEncoding[] = [];
+  private readonly _state: ISemaphoreStreamState;
   private _currentStr: string;
   private _processPosition: number;
 
   constructor() {
     this._state = {
       numberMode: false,
-      previousWhitespace: true,
     };
 
     this.invalidate();
@@ -27,7 +25,7 @@ class BrailleStream {
     return this._chars;
   }
 
-  set chars(value: BrailleEncoding[]) {
+  set chars(value: SemaphoreEncoding[]) {
     this.clear();
 
     for (const ch of value) {
@@ -35,7 +33,7 @@ class BrailleStream {
     }
   }
 
-  public append(ch: BrailleCharacter) {
+  public append(ch: SemaphoreCharacter) {
     this._chars.push(ch.valueOf());
   }
 
@@ -45,7 +43,7 @@ class BrailleStream {
   }
 
   public space() {
-    this._chars.push(BrailleEncoding.None);
+    this._chars.push(SemaphoreEncoding.None);
   }
 
   public toString() {
@@ -63,23 +61,20 @@ class BrailleStream {
       const ch = this._chars[this._processPosition];
 
       switch (ch) {
-        case BrailleEncoding.None:
+        case SemaphoreEncoding.None:
           this._state.numberMode = false;
-          this._state.previousWhitespace = true;
           this._currentStr += ' ';
           break;
 
-        case BrailleEncoding.FormattingNumber:
+        case SemaphoreEncoding.FormattingNumber:
           this._state.numberMode = true;
-          this._state.previousWhitespace = false;
           this._currentStr += '#';
           break;
 
         default:
-          this._state.previousWhitespace = false;
           const category = EncodingCategory.Punctuation |
               (this._state.numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
-          const exact = BrailleData.instance.lookup(ch, category).exact;
+          const exact = SemaphoreData.instance.lookup(ch, category).exact;
 
           if (exact.length > 0) {
             this._currentStr += exact[0].toString();
@@ -91,4 +86,4 @@ class BrailleStream {
   }
 }
 
-export default BrailleStream;
+export default SemaphoreStream;

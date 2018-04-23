@@ -1,21 +1,32 @@
+import EncodingCategory from '../Common/EncodingCategory';
+import EncodingCharacterBase from '../Common/EncodingCharacterBase';
 import SemaphoreData from './SemaphoreData';
 import SemaphoreDegrees from './SemaphoreDegrees';
 import SemaphoreDirection from './SemaphoreDirection';
+import SemaphoreEncoding from './SemaphoreEncoding';
 
-class SemaphoreCharacter {
+class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding> {
+  private static parseEncoding(encoding: SemaphoreDirection | SemaphoreEncoding) {
+    const directions: SemaphoreDirection[] = [];
+
+    for (let i = 1; i <= 8; i++) {
+      const direction = (1 << i) as SemaphoreDirection;
+      if ((encoding & direction) === direction) {
+        directions.push(direction);
+      }
+    }
+
+    return directions;
+  }
+
   private _directions: SemaphoreDirection[] = [];
-  private _semaphore: string = '';
 
   public constructor(
-      first: SemaphoreDirection = SemaphoreDirection.None,
-      second: SemaphoreDirection = SemaphoreDirection.None) {
-    if (first > SemaphoreDirection.None) {
-      this.addDirection(first);
-    }
+      encoding: SemaphoreEncoding = SemaphoreEncoding.None,
+      category: EncodingCategory = EncodingCategory.All) {
+    super(SemaphoreData.instance, category);
 
-    if (second > SemaphoreDirection.None) {
-      this.addDirection(second);
-    }
+    this.addDirection(encoding);
   }
 
   public get directions() {
@@ -24,26 +35,30 @@ class SemaphoreCharacter {
 
   public set directions(value: SemaphoreDirection[]) {
     this._directions = value.slice(0, 2);
-    this.update();
+    this.invalidateLookup();
   }
 
-  public addDirection(direction: SemaphoreDirection) {
-    this._directions.push(direction);
+  public addDirection(direction: SemaphoreDirection | SemaphoreEncoding) {
+    for (const dir of SemaphoreCharacter.parseEncoding(direction)) {
+      this._directions.push(dir);
+    }
 
     if (this._directions.length > 2) {
       this._directions.splice(0, this._directions.length - 2);
     }
 
-    this.update();
+    this.invalidateLookup();
   }
 
-  public removeDirection(direction: SemaphoreDirection) {
-    const index = this._directions.indexOf(direction);
-    if (index >= 0) {
-      this._directions.splice(index, 1);
+  public removeDirection(direction: SemaphoreDirection | SemaphoreEncoding) {
+    for (const dir of SemaphoreCharacter.parseEncoding(direction)) {
+      const index = this._directions.indexOf(dir);
+      if (index >= 0) {
+        this._directions.splice(index, 1);
+      }
     }
 
-    this.update();
+    this.invalidateLookup();
   }
 
   public hasDirection(direction: SemaphoreDirection) {
@@ -56,21 +71,18 @@ class SemaphoreCharacter {
       .sort((a, b) => a - b);
   }
 
-  public clear() {
+  protected onClear() {
     this._directions.length = 0;
-    this._semaphore = '';
   }
 
-  public toString() {
-    return this._semaphore;
+  protected onEmpty() {
+    return this._directions.length === 0;
   }
 
-  private update() {
-    const combined = this._directions.reduce(
+  protected getEncoding() {
+    return this._directions.reduce(
       (previousValue, currentValue) => previousValue |= currentValue,
       SemaphoreDirection.None);
-
-    this._semaphore = SemaphoreData.instance.lookup(combined);
   }
 }
 

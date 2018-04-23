@@ -1,14 +1,55 @@
+import EncodingCategory from '../Common/EncodingCategory';
+import EncodingCharacterBase from '../Common/EncodingCharacterBase';
 import MorseData from './MorseData';
-import MorseEntry from './MorseEntry';
-import MorseLookupResult from './MorseLookupResult';
+import MorseEncoding from './MorseEncoding';
 
-class MorseCharacter {
+const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
+
+class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
+  public static toMorseString(encoding: MorseEncoding) {
+    let morseChars = '';
+
+    while (encoding !== MorseEncoding.None) {
+      if ((encoding & MORSE_BITMASK) === MorseEncoding.Dot) {
+        morseChars += '.';
+      } else if ((encoding & MORSE_BITMASK) === MorseEncoding.Dash) {
+        morseChars += '-';
+      } else {
+        throw new Error('Invalid morse bits');
+      }
+
+      encoding >>>= 2;
+    }
+
+    return morseChars;
+  }
+
+  public static parseMorseString(morse: string): MorseEncoding {
+    let bits = MorseEncoding.None;
+
+    for (let i = morse.length - 1; i >= 0; i--) {
+      const ch = morse[i];
+      if (ch === '.') {
+        bits |= MorseEncoding.Dot;
+      } else if (ch === '-') {
+        bits |= MorseEncoding.Dash;
+      } else {
+        throw new Error('Invalid morse character');
+      }
+
+      bits <<= 2;
+    }
+
+    bits >>>= 2;
+    return bits;
+  }
+
   private _morse: string;
-  private _lookup: MorseLookupResult | null;
 
-  constructor(str: string = '') {
+  constructor(str: string = '', category: EncodingCategory = EncodingCategory.All) {
+    super(MorseData.instance, category);
+
     this._morse = str;
-    this.invalidateLookup();
   }
 
   get morseString() {
@@ -27,11 +68,6 @@ class MorseCharacter {
     }
   }
 
-  public clear() {
-    this._morse = '';
-    this.invalidateLookup();
-  }
-
   public dot() {
     this._morse += '.';
     this.invalidateLookup();
@@ -42,37 +78,17 @@ class MorseCharacter {
     this.invalidateLookup();
   }
 
-  public empty() {
+  protected onClear() {
+    this._morse = '';
+    this.invalidateLookup();
+  }
+
+  protected onEmpty() {
     return this._morse.length === 0;
   }
 
-  public getExactMatch(): MorseEntry {
-    return this.ensureLookup().exact;
-  }
-
-  public getPotentialMatches(): MorseEntry[] {
-    return this.ensureLookup().partial;
-  }
-
-  public toString() {
-    const exact = this.ensureLookup().exact;
-    return exact ? exact.toString() : '';
-  }
-
-  public valid() {
-    return !!this.ensureLookup().exact;
-  }
-
-  private ensureLookup() {
-    if (!this._lookup) {
-      this._lookup = MorseData.instance.lookup(this._morse);
-    }
-
-    return this._lookup;
-  }
-
-  private invalidateLookup() {
-    this._lookup = null;
+  protected getEncoding() {
+    return MorseCharacter.parseMorseString(this._morse);
   }
 }
 

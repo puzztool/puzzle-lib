@@ -1,4 +1,4 @@
-enum BrailleCategory {
+enum EncodingCategory {
   None,
 
   Letter = 1 << 1,
@@ -9,4 +9,4 @@ enum BrailleCategory {
   All = 0xFF,
 }
 
-export default BrailleCategory;
+export default EncodingCategory;

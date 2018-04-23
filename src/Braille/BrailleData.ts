@@ -1,88 +1,68 @@
-import BrailleCategory from './BrailleCategory';
+import EncodingCategory from '../Common/EncodingCategory';
+import EncodingDataBase from '../Common/EncodingDataBase';
 import BrailleEncoding from './BrailleEncoding';
-import BrailleEntry from './BrailleEntry';
-import BrailleLookupResult from './BrailleLookupResult';
 
-class BrailleData {
+class BrailleData extends EncodingDataBase<BrailleEncoding> {
   public static readonly instance: BrailleData = new BrailleData();
-  private readonly _entries: BrailleEntry[] = [];
 
   constructor() {
-    this.addToList(BrailleEncoding.LetterA, BrailleCategory.Letter, 'A');
-    this.addToList(BrailleEncoding.LetterB, BrailleCategory.Letter, 'B');
-    this.addToList(BrailleEncoding.LetterC, BrailleCategory.Letter, 'C');
-    this.addToList(BrailleEncoding.LetterD, BrailleCategory.Letter, 'D');
-    this.addToList(BrailleEncoding.LetterE, BrailleCategory.Letter, 'E');
-    this.addToList(BrailleEncoding.LetterF, BrailleCategory.Letter, 'F');
-    this.addToList(BrailleEncoding.LetterG, BrailleCategory.Letter, 'G');
-    this.addToList(BrailleEncoding.LetterH, BrailleCategory.Letter, 'H');
-    this.addToList(BrailleEncoding.LetterI, BrailleCategory.Letter, 'I');
-    this.addToList(BrailleEncoding.LetterJ, BrailleCategory.Letter, 'J');
-    this.addToList(BrailleEncoding.LetterK, BrailleCategory.Letter, 'K');
-    this.addToList(BrailleEncoding.LetterL, BrailleCategory.Letter, 'L');
-    this.addToList(BrailleEncoding.LetterM, BrailleCategory.Letter, 'M');
-    this.addToList(BrailleEncoding.LetterN, BrailleCategory.Letter, 'N');
-    this.addToList(BrailleEncoding.LetterO, BrailleCategory.Letter, 'O');
-    this.addToList(BrailleEncoding.LetterP, BrailleCategory.Letter, 'P');
-    this.addToList(BrailleEncoding.LetterQ, BrailleCategory.Letter, 'Q');
-    this.addToList(BrailleEncoding.LetterR, BrailleCategory.Letter, 'R');
-    this.addToList(BrailleEncoding.LetterS, BrailleCategory.Letter, 'S');
-    this.addToList(BrailleEncoding.LetterT, BrailleCategory.Letter, 'T');
-    this.addToList(BrailleEncoding.LetterU, BrailleCategory.Letter, 'U');
-    this.addToList(BrailleEncoding.LetterV, BrailleCategory.Letter, 'V');
-    this.addToList(BrailleEncoding.LetterW, BrailleCategory.Letter, 'W');
-    this.addToList(BrailleEncoding.LetterX, BrailleCategory.Letter, 'X');
-    this.addToList(BrailleEncoding.LetterY, BrailleCategory.Letter, 'Y');
-    this.addToList(BrailleEncoding.LetterZ, BrailleCategory.Letter, 'Z');
+    super();
 
-    this.addToList(BrailleEncoding.Number0, BrailleCategory.Number, '0');
-    this.addToList(BrailleEncoding.Number1, BrailleCategory.Number, '1');
-    this.addToList(BrailleEncoding.Number2, BrailleCategory.Number, '2');
-    this.addToList(BrailleEncoding.Number3, BrailleCategory.Number, '3');
-    this.addToList(BrailleEncoding.Number4, BrailleCategory.Number, '4');
-    this.addToList(BrailleEncoding.Number5, BrailleCategory.Number, '5');
-    this.addToList(BrailleEncoding.Number6, BrailleCategory.Number, '6');
-    this.addToList(BrailleEncoding.Number7, BrailleCategory.Number, '7');
-    this.addToList(BrailleEncoding.Number8, BrailleCategory.Number, '8');
-    this.addToList(BrailleEncoding.Number9, BrailleCategory.Number, '9');
+    this.addToList(BrailleEncoding.LetterA, EncodingCategory.Letter, 'A');
+    this.addToList(BrailleEncoding.LetterB, EncodingCategory.Letter, 'B');
+    this.addToList(BrailleEncoding.LetterC, EncodingCategory.Letter, 'C');
+    this.addToList(BrailleEncoding.LetterD, EncodingCategory.Letter, 'D');
+    this.addToList(BrailleEncoding.LetterE, EncodingCategory.Letter, 'E');
+    this.addToList(BrailleEncoding.LetterF, EncodingCategory.Letter, 'F');
+    this.addToList(BrailleEncoding.LetterG, EncodingCategory.Letter, 'G');
+    this.addToList(BrailleEncoding.LetterH, EncodingCategory.Letter, 'H');
+    this.addToList(BrailleEncoding.LetterI, EncodingCategory.Letter, 'I');
+    this.addToList(BrailleEncoding.LetterJ, EncodingCategory.Letter, 'J');
+    this.addToList(BrailleEncoding.LetterK, EncodingCategory.Letter, 'K');
+    this.addToList(BrailleEncoding.LetterL, EncodingCategory.Letter, 'L');
+    this.addToList(BrailleEncoding.LetterM, EncodingCategory.Letter, 'M');
+    this.addToList(BrailleEncoding.LetterN, EncodingCategory.Letter, 'N');
+    this.addToList(BrailleEncoding.LetterO, EncodingCategory.Letter, 'O');
+    this.addToList(BrailleEncoding.LetterP, EncodingCategory.Letter, 'P');
+    this.addToList(BrailleEncoding.LetterQ, EncodingCategory.Letter, 'Q');
+    this.addToList(BrailleEncoding.LetterR, EncodingCategory.Letter, 'R');
+    this.addToList(BrailleEncoding.LetterS, EncodingCategory.Letter, 'S');
+    this.addToList(BrailleEncoding.LetterT, EncodingCategory.Letter, 'T');
+    this.addToList(BrailleEncoding.LetterU, EncodingCategory.Letter, 'U');
+    this.addToList(BrailleEncoding.LetterV, EncodingCategory.Letter, 'V');
+    this.addToList(BrailleEncoding.LetterW, EncodingCategory.Letter, 'W');
+    this.addToList(BrailleEncoding.LetterX, EncodingCategory.Letter, 'X');
+    this.addToList(BrailleEncoding.LetterY, EncodingCategory.Letter, 'Y');
+    this.addToList(BrailleEncoding.LetterZ, EncodingCategory.Letter, 'Z');
 
-    this.addToList(BrailleEncoding.FormattingNumber, BrailleCategory.Formatting, '#');
-    this.addToList(BrailleEncoding.FormattingCapital, BrailleCategory.Formatting, '^');
+    this.addToList(BrailleEncoding.Number0, EncodingCategory.Number, '0');
+    this.addToList(BrailleEncoding.Number1, EncodingCategory.Number, '1');
+    this.addToList(BrailleEncoding.Number2, EncodingCategory.Number, '2');
+    this.addToList(BrailleEncoding.Number3, EncodingCategory.Number, '3');
+    this.addToList(BrailleEncoding.Number4, EncodingCategory.Number, '4');
+    this.addToList(BrailleEncoding.Number5, EncodingCategory.Number, '5');
+    this.addToList(BrailleEncoding.Number6, EncodingCategory.Number, '6');
+    this.addToList(BrailleEncoding.Number7, EncodingCategory.Number, '7');
+    this.addToList(BrailleEncoding.Number8, EncodingCategory.Number, '8');
+    this.addToList(BrailleEncoding.Number9, EncodingCategory.Number, '9');
 
-    this.addToList(BrailleEncoding.PunctuationComma, BrailleCategory.Punctuation, ',');
-    this.addToList(BrailleEncoding.PunctuationSemicolon, BrailleCategory.Punctuation, ';');
-    this.addToList(BrailleEncoding.PunctuationApostrophe, BrailleCategory.Punctuation, "'");
-    this.addToList(BrailleEncoding.PunctuationColon, BrailleCategory.Punctuation, ':');
-    this.addToList(BrailleEncoding.PunctuationHyphen, BrailleCategory.Punctuation, '-');
-    this.addToList(BrailleEncoding.PunctuationDecimalPoint, BrailleCategory.Punctuation, '.');
-    this.addToList(BrailleEncoding.PunctuationFullStop, BrailleCategory.Punctuation, '.');
-    this.addToList(BrailleEncoding.PunctuationExclamationPoint, BrailleCategory.Punctuation, '!');
-    this.addToList(BrailleEncoding.PunctuationOpenQuote, BrailleCategory.Punctuation, '"');
-    this.addToList(BrailleEncoding.PunctuationQuestionMark, BrailleCategory.Punctuation, '?');
-    this.addToList(BrailleEncoding.PunctuationCloseQuote, BrailleCategory.Punctuation, '"');
-    this.addToList(BrailleEncoding.PunctuationBracket, BrailleCategory.Punctuation, '(');
-    this.addToList(BrailleEncoding.PunctuationBracket, BrailleCategory.Punctuation, ')');
-    this.addToList(BrailleEncoding.PunctuationSlash, BrailleCategory.Punctuation, '/');
-  }
+    this.addToList(BrailleEncoding.FormattingNumber, EncodingCategory.Formatting, '#');
+    this.addToList(BrailleEncoding.FormattingCapital, EncodingCategory.Formatting, '^');
 
-  public lookup(encoding: BrailleEncoding, category: BrailleCategory = BrailleCategory.All) {
-    const result = new BrailleLookupResult();
-
-    for (const entry of this._entries) {
-      if ((entry.category & category) !== 0) {
-        if (entry.encoding === encoding) {
-          result.exact.push(entry);
-        } else if ((entry.encoding & encoding) === encoding) {
-          result.partial.push(entry);
-        }
-      }
-    }
-
-    return result;
-  }
-
-  private addToList(encoding: BrailleEncoding, category: BrailleCategory, display: string) {
-    this._entries.push(new BrailleEntry(encoding, category, display));
+    this.addToList(BrailleEncoding.PunctuationComma, EncodingCategory.Punctuation, ',');
+    this.addToList(BrailleEncoding.PunctuationSemicolon, EncodingCategory.Punctuation, ';');
+    this.addToList(BrailleEncoding.PunctuationApostrophe, EncodingCategory.Punctuation, "'");
+    this.addToList(BrailleEncoding.PunctuationColon, EncodingCategory.Punctuation, ':');
+    this.addToList(BrailleEncoding.PunctuationHyphen, EncodingCategory.Punctuation, '-');
+    this.addToList(BrailleEncoding.PunctuationDecimalPoint, EncodingCategory.Punctuation, '.');
+    this.addToList(BrailleEncoding.PunctuationFullStop, EncodingCategory.Punctuation, '.');
+    this.addToList(BrailleEncoding.PunctuationExclamationPoint, EncodingCategory.Punctuation, '!');
+    this.addToList(BrailleEncoding.PunctuationOpenQuote, EncodingCategory.Punctuation, '"');
+    this.addToList(BrailleEncoding.PunctuationQuestionMark, EncodingCategory.Punctuation, '?');
+    this.addToList(BrailleEncoding.PunctuationCloseQuote, EncodingCategory.Punctuation, '"');
+    this.addToList(BrailleEncoding.PunctuationBracket, EncodingCategory.Punctuation, '(');
+    this.addToList(BrailleEncoding.PunctuationBracket, EncodingCategory.Punctuation, ')');
+    this.addToList(BrailleEncoding.PunctuationSlash, EncodingCategory.Punctuation, '/');
   }
 }
 
