@@ -1,11 +1,11 @@
 enum BrailleDot {
-  None,
-  UpperLeft = 1 << 1,
-  MiddleLeft = 1 << 2,
-  LowerLeft = 1 << 3,
-  UpperRight = 1 << 4,
-  MiddleRight = 1 << 5,
-  LowerRight = 1 << 6,
+  None = 0,
+  UpperLeft = 1 << 0,
+  MiddleLeft = 1 << 1,
+  LowerLeft = 1 << 2,
+  UpperRight = 1 << 3,
+  MiddleRight = 1 << 4,
+  LowerRight = 1 << 5,
 }
 
 export default BrailleDot;
