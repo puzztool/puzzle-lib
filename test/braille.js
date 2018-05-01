@@ -212,5 +212,51 @@ describe('Braille', function () {
 
       assert.strictEqual(stream.toString(), 'C D');
     });
+
+    it('backspace', function () {
+      const stream = new BrailleStream();
+      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
+      stream.append(ch);
+
+      ch.toggle(BrailleDot.MiddleLeft);
+      stream.append(ch);
+      stream.space();
+
+      ch.encoding = BrailleEncoding.FormattingNumber;
+      stream.append(ch);
+
+      ch.encoding = BrailleEncoding.Number1;
+      stream.append(ch);
+
+      assert.strictEqual(stream.toString(), 'AB #1');
+
+      stream.backspace();
+      assert.strictEqual(stream.toString(), 'AB #');
+
+      ch.encoding = BrailleEncoding.Number2;
+      stream.append(ch);
+      assert.strictEqual(stream.toString(), 'AB #2');
+
+      stream.backspace();
+      stream.backspace();
+      assert.strictEqual(stream.toString(), 'AB ');
+
+      ch.encoding = BrailleEncoding.LetterC;
+      stream.append(ch);
+      assert.strictEqual(stream.toString(), 'AB C');
+
+      stream.backspace();
+      stream.backspace();
+      stream.backspace();
+      assert.strictEqual(stream.toString(), 'A');
+
+      stream.backspace();
+      assert.strictEqual(stream.toString(), '');
+
+      stream.backspace();
+      stream.backspace();
+      stream.backspace();
+      assert.strictEqual(stream.toString(), '');
+    });
   });
 });

@@ -3,23 +3,13 @@ import BrailleCharacter from './BrailleCharacter';
 import BrailleData from './BrailleData';
 import BrailleEncoding from './BrailleEncoding';
 
-interface IBrailleStreamState {
-  numberMode: boolean;
-  previousWhitespace: boolean;
-}
-
 class BrailleStream {
   private readonly _chars: BrailleEncoding[] = [];
-  private readonly _state: IBrailleStreamState;
   private _currentStr: string;
   private _processPosition: number;
+  private _numberMode: boolean;
 
   constructor() {
-    this._state = {
-      numberMode: false,
-      previousWhitespace: true,
-    };
-
     this.invalidate();
   }
 
@@ -44,6 +34,11 @@ class BrailleStream {
     this.invalidate();
   }
 
+  public backspace() {
+    this._chars.pop();
+    this.invalidate();
+  }
+
   public space() {
     this._chars.push(BrailleEncoding.None);
   }
@@ -56,6 +51,7 @@ class BrailleStream {
   private invalidate() {
     this._currentStr = '';
     this._processPosition = 0;
+    this._numberMode = false;
   }
 
   private update() {
@@ -64,21 +60,18 @@ class BrailleStream {
 
       switch (ch) {
         case BrailleEncoding.None:
-          this._state.numberMode = false;
-          this._state.previousWhitespace = true;
+          this._numberMode = false;
           this._currentStr += ' ';
           break;
 
         case BrailleEncoding.FormattingNumber:
-          this._state.numberMode = true;
-          this._state.previousWhitespace = false;
+          this._numberMode = true;
           this._currentStr += '#';
           break;
 
         default:
-          this._state.previousWhitespace = false;
           const category = EncodingCategory.Punctuation |
-              (this._state.numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
+              (this._numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
           const exact = BrailleData.instance.lookup(ch, category).exact;
 
           if (exact.length > 0) {
