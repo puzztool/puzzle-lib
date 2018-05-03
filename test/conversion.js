@@ -1,9 +1,28 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CharacterConversion } = require('../');
+const { CharacterConversion, Encoding, AutoConvert } = require('../');
 
 describe('Conversions', function () {
+  describe('CharacterConversion', function () {
+    it('determineCharacterEncoding', function () {
+      const ordinal = AutoConvert.determineCharacterEncoding('12');
+      assert.strictEqual(ordinal, Encoding.Ordinal);
+
+      const fiveBit = AutoConvert.determineCharacterEncoding('01100');
+      assert.strictEqual(fiveBit, Encoding.FiveBitBinary);
+
+      const eightBit = AutoConvert.determineCharacterEncoding('01101100');
+      assert.strictEqual(eightBit, Encoding.EightBitBinary);
+
+      const ascii = AutoConvert.determineCharacterEncoding('76');
+      assert.strictEqual(ascii, Encoding.Ascii);
+
+      const none = AutoConvert.determineCharacterEncoding('999');
+      assert.strictEqual(none, Encoding.None);
+    });
+  });
+
   describe('CharacterConversion', function () {
     it('getAsciiTable - Basic tests', function () {
       const table = CharacterConversion.getAsciiTable();
