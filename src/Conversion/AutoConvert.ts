@@ -1,12 +1,40 @@
 import Encoding from './Encoding';
 
-// Attempts to automatically detect an encoding and convert it to English
 class AutoConvert {
+  // Forced encoding can be useful when converting an entire string
+  // or simply dealing with binary which has no leading zeros
+  public static convertCharacter(input: string, forcedEncoding?: Encoding) {
+    let encoding = null;
+    if (!forcedEncoding) {
+      encoding = this.determineCharacterEncoding(input);
+    } else {
+      encoding = forcedEncoding;
+    }
 
-  // This method converts tries to convert a single character (ie does not tokenize)
-  // Returns null if conversions failed
-  // public static convertCharacter(input: string) {
-  // }
+    // Assume that Latin characters should remain
+    if (encoding === Encoding.Latin) {
+      return input;
+    }
+
+    const baseTen = parseInt(input, 10);
+    if (encoding === Encoding.Ascii) {
+      return String.fromCharCode(baseTen);
+    }
+    const asciiOffset = 64;
+    if (encoding === Encoding.Ordinal) {
+      return String.fromCharCode(baseTen + asciiOffset);
+    }
+
+    const binary = parseInt(input, 2);
+    if (encoding === Encoding.FiveBitBinary) {
+      return String.fromCharCode(binary + asciiOffset);
+    }
+    if (encoding === Encoding.EightBitBinary) {
+      return String.fromCharCode(binary);
+    }
+
+    return '?';
+  }
 
   public static determineCharacterEncoding(input: string) {
     const lower = input.toLowerCase();

@@ -4,8 +4,11 @@ const assert = require('assert');
 const { CharacterConversion, Encoding, AutoConvert } = require('../');
 
 describe('Conversions', function () {
-  describe('CharacterConversion', function () {
+  describe('AutoConvert', function () {
     it('determineCharacterEncoding', function () {
+      const latin = AutoConvert.determineCharacterEncoding('L');
+      assert.strictEqual(latin, Encoding.Latin);
+
       const ordinal = AutoConvert.determineCharacterEncoding('12');
       assert.strictEqual(ordinal, Encoding.Ordinal);
 
@@ -20,6 +23,43 @@ describe('Conversions', function () {
 
       const none = AutoConvert.determineCharacterEncoding('999');
       assert.strictEqual(none, Encoding.None);
+    });
+
+    it('convertCharacter', function () {
+      const latin = AutoConvert.convertCharacter('A');
+      assert.strictEqual(latin, 'A');
+
+      const ordinalA = AutoConvert.convertCharacter('1');
+      assert.strictEqual(ordinalA, 'A');
+
+      const ordinalZ = AutoConvert.convertCharacter('26');
+      assert.strictEqual(ordinalZ, 'Z');
+
+      const fiveBitA = AutoConvert.convertCharacter('00001');
+      assert.strictEqual(fiveBitA, 'A');
+
+      const fiveBitZ = AutoConvert.convertCharacter('11010');
+      assert.strictEqual(fiveBitZ, 'Z');
+
+      const eightBitA = AutoConvert.convertCharacter('01100001');
+      assert.strictEqual(eightBitA, 'a');
+
+      const eightBitZ = AutoConvert.convertCharacter('01011010');
+      assert.strictEqual(eightBitZ, 'Z');
+
+      const unknown = AutoConvert.convertCharacter('999');
+      assert.strictEqual(unknown, '?');
+    });
+
+    it('forceCharacterEncoding', function () {
+      const fiveBitA = AutoConvert.convertCharacter('1', Encoding.FiveBitBinary);
+      assert.strictEqual(fiveBitA, 'A');
+
+      const fiveBitD = AutoConvert.convertCharacter('100', Encoding.FiveBitBinary);
+      assert.strictEqual(fiveBitD, 'D');
+
+      const eightBitD = AutoConvert.convertCharacter('1000100', Encoding.EightBitBinary);
+      assert.strictEqual(eightBitD, 'D');
     });
   });
 
