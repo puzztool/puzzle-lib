@@ -17,8 +17,8 @@ export { default as EncodingEntry } from './Common/EncodingEntry';
 // Conversion exports
 export { default as CharacterConversion } from './Conversion/CharacterConversion';
 export { default as CharacterTableEntry } from './Conversion/CharacterTableEntry';
-export { default as AutoConvert } from './Conversion/AutoConvert';
-export { default as Encoding } from './Conversion/Encoding';
+export { default as CharacterAutoConvert } from './Conversion/CharacterAutoConvert';
+export { default as CharacterEncoding } from './Conversion/CharacterEncoding';
 
 // Morse exports
 export { default as MorseCharacter } from './Morse/MorseCharacter';

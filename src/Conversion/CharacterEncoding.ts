@@ -1,4 +1,4 @@
-enum Encoding {
+enum CharacterEncoding {
   None,
   Latin, // A = A, B = B
   Ordinal, // A = 1, B = 2
@@ -7,4 +7,4 @@ enum Encoding {
   Ascii, // 65 = A, 66 = B
 }
 
-export default Encoding;
+export default CharacterEncoding;
