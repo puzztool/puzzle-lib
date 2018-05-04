@@ -1,9 +1,71 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CharacterConversion } = require('../');
+const { CharacterConversion, CharacterEncoding, CharacterAutoConvert } = require('../');
 
 describe('Conversions', function () {
+  describe('AutoConvert', function () {
+    it('determineCharacterEncoding', function () {
+      const latin = CharacterAutoConvert.determineCharacterEncoding('L');
+      assert.strictEqual(latin, CharacterEncoding.Latin);
+
+      const ordinal = CharacterAutoConvert.determineCharacterEncoding('12');
+      assert.strictEqual(ordinal, CharacterEncoding.Ordinal);
+
+      const fiveBit = CharacterAutoConvert.determineCharacterEncoding('01100');
+      assert.strictEqual(fiveBit, CharacterEncoding.FiveBitBinary);
+
+      const eightBit = CharacterAutoConvert.determineCharacterEncoding('01101100');
+      assert.strictEqual(eightBit, CharacterEncoding.EightBitBinary);
+
+      const ascii = CharacterAutoConvert.determineCharacterEncoding('76');
+      assert.strictEqual(ascii, CharacterEncoding.Ascii);
+
+      const none = CharacterAutoConvert.determineCharacterEncoding('999');
+      assert.strictEqual(none, CharacterEncoding.None);
+    });
+
+    it('convertCharacter', function () {
+      const latin = CharacterAutoConvert.convertCharacter('A');
+      assert.strictEqual(latin, 'A');
+
+      const ordinalA = CharacterAutoConvert.convertCharacter('1');
+      assert.strictEqual(ordinalA, 'A');
+
+      const ordinalZ = CharacterAutoConvert.convertCharacter('26');
+      assert.strictEqual(ordinalZ, 'Z');
+
+      const fiveBitA = CharacterAutoConvert.convertCharacter('00001');
+      assert.strictEqual(fiveBitA, 'A');
+
+      const fiveBitZ = CharacterAutoConvert.convertCharacter('11010');
+      assert.strictEqual(fiveBitZ, 'Z');
+
+      const eightBitA = CharacterAutoConvert.convertCharacter('01100001');
+      assert.strictEqual(eightBitA, 'a');
+
+      const eightBitZ = CharacterAutoConvert.convertCharacter('01011010');
+      assert.strictEqual(eightBitZ, 'Z');
+
+      const unknown = CharacterAutoConvert.convertCharacter('999');
+      assert.strictEqual(unknown, '');
+
+      const asciiMiddle = CharacterAutoConvert.convertCharacter('136');
+      assert.strictEqual(asciiMiddle, '');
+    });
+
+    it('forceCharacterEncoding', function () {
+      const fiveBitA = CharacterAutoConvert.convertCharacter('1', CharacterEncoding.FiveBitBinary);
+      assert.strictEqual(fiveBitA, 'A');
+
+      const fiveBitD = CharacterAutoConvert.convertCharacter('100', CharacterEncoding.FiveBitBinary);
+      assert.strictEqual(fiveBitD, 'D');
+
+      const eightBitD = CharacterAutoConvert.convertCharacter('1000100', CharacterEncoding.EightBitBinary);
+      assert.strictEqual(eightBitD, 'D');
+    });
+  });
+
   describe('CharacterConversion', function () {
     it('getAsciiTable - Basic tests', function () {
       const table = CharacterConversion.getAsciiTable();
