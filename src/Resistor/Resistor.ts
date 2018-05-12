@@ -3,7 +3,7 @@ import ResistorColorEntry from './ResistorColorEntry';
 class Resistor {
   //                                                     Name      Color      Multiplier Value Tolerance
   public static readonly BLACK =  new ResistorColorEntry('Black',  '#000000', 1,            0, undefined);
-  public static readonly BROWN =  new ResistorColorEntry('Brown',  '#000000', 10,           1, 1);
+  public static readonly BROWN =  new ResistorColorEntry('Brown',  '#8B4513', 10,           1, 1);
   public static readonly RED =    new ResistorColorEntry('Red',    '#FF0000', 100,          2, 2);
   public static readonly ORANGE = new ResistorColorEntry('Orange', '#EE7420', 1000,         3, undefined);
   public static readonly YELLOW = new ResistorColorEntry('Yellow', '#FFFF00', 10000,        4, undefined);
