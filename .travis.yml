@@ -27,3 +27,11 @@ install:
 - npm --version
 # Install the application's NPM dependencies.
 - npm install
+deploy:
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_TOKEN
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: $NODEJS_VERSION = node/10
