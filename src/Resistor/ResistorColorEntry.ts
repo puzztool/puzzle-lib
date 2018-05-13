@@ -25,14 +25,14 @@ class ResistorColorEntry {
   }
 
   public hasTolerance() {
-    return (this.value !== undefined);
+    return (this.toleranceInPercent !== undefined);
   }
 
   public getDisplayTolerance() {
     if (this.toleranceInPercent === undefined) {
       return '';
     }
-    return `&plusmn; ${this.toleranceInPercent}%`;
+    return `${this.toleranceInPercent}%`;
   }
 }
 

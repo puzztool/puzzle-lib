@@ -25,8 +25,18 @@ describe('Resistor', function () {
   });
 
   it('Invalid Resistors', function () {
-    assert.throws(() => Resistor.getValue([Resistor.GOLD, Resistor.RED, Resistor.RED]), /Invalid value color/);
-    assert.throws(() => Resistor.getValue([Resistor.ORANGE, Resistor.RED, Resistor.SILVER, Resistor.YELLOW]), /Invalid value color/);
+    assert.strictEqual(Resistor.getValue([Resistor.GOLD, Resistor.RED, Resistor.RED]), Resistor.INVALID_RESISTOR);
+    assert.strictEqual(Resistor.getValue([Resistor.ORANGE, Resistor.RED, Resistor.SILVER, Resistor.YELLOW]), Resistor.INVALID_RESISTOR);
+  });
+
+  it('Tolerance', function () {
+    assert.strictEqual(Resistor.GOLD.hasTolerance(), true);
+    assert.strictEqual(Resistor.BLACK.hasTolerance(), false);
+  });
+
+  it('Value', function () {
+    assert.strictEqual(Resistor.GOLD.hasValue(), false);
+    assert.strictEqual(Resistor.BLACK.hasValue(), true);
   });
 
   it('Too Short', function () {
@@ -40,6 +50,6 @@ describe('Resistor', function () {
   });
 
   it('Tolerance', function () {
-    assert.strictEqual(Resistor.GOLD.getDisplayTolerance(), '&plusmn; 5%');
+    assert.strictEqual(Resistor.GOLD.getDisplayTolerance(), '5%');
   });
 });

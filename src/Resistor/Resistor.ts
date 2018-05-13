@@ -19,6 +19,8 @@ class Resistor {
     [ Resistor.BLACK, Resistor.BROWN, Resistor.RED, Resistor.ORANGE, Resistor.YELLOW, Resistor.GREEN,
       Resistor.BLUE, Resistor.VIOLET, Resistor.GREY, Resistor.WHITE, Resistor.GOLD, Resistor.SILVER ];
 
+  public static readonly INVALID_RESISTOR = -1;
+
   /** getValue assumes there is no tolerance band, as tolerance is not part of the value calculation */
   public static getValue(colors: ResistorColorEntry[]) {
     if (colors.length < 3 || colors.length > 4) {
@@ -33,7 +35,7 @@ class Resistor {
     for (let i = 0; i < (colors.length - 1); ++i) {
       const currentColor = colors[i];
       if (currentColor.value === undefined) {
-        throw new Error('Invalid value color');
+        return Resistor.INVALID_RESISTOR;
       }
       value *= 10;
       value += currentColor.value;
