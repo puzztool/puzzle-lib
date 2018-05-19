@@ -5,11 +5,20 @@ const {
   CharacterConversion,
   CharacterEncoding,
   CharacterAutoConvert,
+  StringAutoConvert,
   SignificantFigures
 } = require('../');
 
 describe('Conversions', function () {
-  describe('AutoConvert', function () {
+  describe.only('StringAutoConvert', function () {
+    it('determineStringEncoding', function () {
+      const ordinal = StringAutoConvert.determineStringEncoding('12 13 65');
+      const enumIns = CharacterEncoding.Ordinal;
+      assert.strictEqual(ordinal, enumIns);
+    });
+  });
+
+  describe('CharacterAutoConvert', function () {
     it('determineCharacterEncoding', function () {
       const latin = CharacterAutoConvert.determineCharacterEncoding('L');
       assert.strictEqual(latin, CharacterEncoding.Latin);
