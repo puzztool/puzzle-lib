@@ -30,10 +30,10 @@ class CharacterAutoConvert {
     }
 
     const binary = parseInt(input, 2);
-    if (encoding === CharacterEncoding.FiveBitBinary) {
+    if (encoding === CharacterEncoding.FiveBitBinary && this.appearsBinary(input)) {
       return String.fromCharCode(binary + asciiOffset);
     }
-    if (encoding === CharacterEncoding.EightBitBinary) {
+    if (encoding === CharacterEncoding.EightBitBinary && this.appearsBinary(input)) {
       return String.fromCharCode(binary);
     }
 
@@ -46,7 +46,8 @@ class CharacterAutoConvert {
     }
 
     const numeric = parseInt(input, 10);
-    if (numeric > 0 && numeric < 27) {
+
+    if (input.length < 3 && numeric > 0 && numeric < 27) {
       return CharacterEncoding.Ordinal;
     }
 
@@ -57,15 +58,7 @@ class CharacterAutoConvert {
       return CharacterEncoding.Ascii;
     }
 
-    // Just contains ones and zeros?
-    let isBinary = true;
-    for (const letter of input) {
-      if (letter !== '0' && letter !== '1') {
-        isBinary = false;
-      }
-    }
-
-    if (isBinary) {
+    if (this.appearsBinary(input)) {
       if (input.length === 5) {
         return CharacterEncoding.FiveBitBinary;
       } else if (input.length === 8) {
@@ -74,6 +67,16 @@ class CharacterAutoConvert {
     }
 
     return CharacterEncoding.None;
+  }
+
+  private static appearsBinary(character: string) {
+    let isBinary = true;
+    for (const letter of character) {
+      if (letter !== '0' && letter !== '1') {
+        isBinary = false;
+      }
+    }
+    return isBinary;
   }
 
 }

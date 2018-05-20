@@ -10,11 +10,44 @@ const {
 } = require('../');
 
 describe('Conversions', function () {
-  describe.only('StringAutoConvert', function () {
+  describe('StringAutoConvert', function () {
     it('determineStringEncoding', function () {
       const ordinal = StringAutoConvert.determineStringEncoding('12 13 65');
-      const enumIns = CharacterEncoding.Ordinal;
-      assert.strictEqual(ordinal, enumIns);
+      assert.strictEqual(ordinal, CharacterEncoding.Ordinal);
+
+      const ascii = StringAutoConvert.determineStringEncoding('65 83 43 j');
+      assert.strictEqual(ascii, CharacterEncoding.Ascii);
+
+      const variedSpacing = StringAutoConvert.determineStringEncoding('00010      00001 10010');
+      assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
+
+      const none = StringAutoConvert.determineStringEncoding('999 999 999');
+      assert.strictEqual(none, CharacterEncoding.None);
+
+      const empty = StringAutoConvert.determineStringEncoding('');
+      assert.strictEqual(empty, CharacterEncoding.None);
+    });
+
+    it('convertString - consistent encoding', function () {
+      const foo = StringAutoConvert.convertString('foo', true);
+      assert.strictEqual(foo, 'foo');
+
+      const variedSpacing = StringAutoConvert.convertString('00010    00001 10010', true);
+      assert.strictEqual(variedSpacing, 'BAR');
+
+      const variedEncoding = StringAutoConvert.convertString('00010 00001 26', true);
+      assert.strictEqual(variedEncoding, 'BA');
+
+      const planet = StringAutoConvert.convertString('01010000 01001100 01000001 01001110 01000101 01010100', true);
+      assert.strictEqual('PLANET', planet);
+    });
+
+    it('convertString - varied encoding', function () {
+      const noEncoding = StringAutoConvert.convertString('999 999');
+      assert.strictEqual('', noEncoding);
+
+      const express = StringAutoConvert.convertString('01000101 24 16 10010 5    SS', false);
+      assert.strictEqual('EXPRESS', express);
     });
   });
 

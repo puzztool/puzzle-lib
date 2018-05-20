@@ -2,11 +2,20 @@ import CharacterAutoConvert from './CharacterAutoConvert';
 import CharacterEncoding from './CharacterEncoding';
 
 class StringAutoConvert {
-  public static convertHomogenousString(input: string) {
-    const encoding = this.determineStringEncoding(input);
+  public static convertString(input: string, homogeneous: boolean) {
     const split = this.splitString(input);
 
-    return split.reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter, encoding), '');
+    if (homogeneous) {
+      const encoding = this.determineStringEncoding(input);
+      return split.reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter, encoding), '');
+    } else {
+      return split.reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter), '');
+    }
+  }
+
+  public static convertHeterogeneousString(input: string) {
+    return input.split(' ')
+    .reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter), '');
   }
 
   public static determineStringEncoding(input: string): CharacterEncoding {
@@ -31,7 +40,6 @@ class StringAutoConvert {
     for (const encoding of encodingKeys) {
       if (encodingCount[encoding] > maxCount) {
         maxCount = encodingCount[encoding];
-        console.log(encoding);
         maxEncoding = encoding;
       }
     }
@@ -39,7 +47,7 @@ class StringAutoConvert {
   }
 
   public static splitString(input: string): string[] {
-    return input.split(' ');
+    return input.split(' ').filter((item) => item !== '');
   }
 }
 
