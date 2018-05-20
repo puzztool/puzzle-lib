@@ -13,11 +13,6 @@ class StringAutoConvert {
     }
   }
 
-  public static convertHeterogeneousString(input: string) {
-    return input.split(' ')
-    .reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter), '');
-  }
-
   public static determineStringEncoding(input: string): CharacterEncoding {
     const encodingCount: { [index: number]: number } = {};
     const parsed = this.splitString(input);
