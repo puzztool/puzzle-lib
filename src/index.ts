@@ -14,6 +14,7 @@ export { default as EncodingEntry } from './Common/EncodingEntry';
 export { default as CharacterConversion } from './Conversion/CharacterConversion';
 export { default as CharacterTableEntry } from './Conversion/CharacterTableEntry';
 export { default as CharacterAutoConvert } from './Conversion/CharacterAutoConvert';
+export { default as StringAutoConvert } from './Conversion/StringAutoConvert';
 export { default as CharacterEncoding } from './Conversion/CharacterEncoding';
 export { default as SignificantFigures } from './Conversion/SignificantFigures';
 
