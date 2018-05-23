@@ -70,13 +70,12 @@ class CharacterAutoConvert {
   }
 
   private static appearsBinary(character: string) {
-    let isBinary = true;
     for (const letter of character) {
       if (letter !== '0' && letter !== '1') {
-        isBinary = false;
+        return false;
       }
     }
-    return isBinary;
+    return true;
   }
 
 }
