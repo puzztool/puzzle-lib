@@ -4,7 +4,7 @@ const assert = require('assert');
 const { SemaphoreDirection, SemaphoreCharacter, SemaphoreDegrees } = require('../');
 
 describe('Semaphore', function () {
-  describe('Semaphore Degrees', function () {
+  describe('Degrees', function () {
     it('To Degrees Happy cases', function () {
       const north = SemaphoreDegrees.ToDegrees(SemaphoreDirection.North);
       assert.strictEqual(north, 0);
@@ -113,6 +113,277 @@ describe('Semaphore', function () {
       [ first, second ] = char.getDegrees();
       assert.strictEqual(first, 45);
       assert.strictEqual(second, 315);
+    });
+
+    it('All Results', function () {
+      const ch = new SemaphoreCharacter();
+      const results = ch.getPotentialMatches();
+      const expected = [
+        {
+          'category': 2,
+          'display': 'A',
+          'encoding': 96
+        },
+        {
+          'category': 2,
+          'display': 'B',
+          'encoding': 160
+        },
+        {
+          'category': 2,
+          'display': 'C',
+          'encoding': 288
+        },
+        {
+          'category': 2,
+          'display': 'D',
+          'encoding': 34
+        },
+        {
+          'category': 2,
+          'display': 'E',
+          'encoding': 36
+        },
+        {
+          'category': 2,
+          'display': 'F',
+          'encoding': 40
+        },
+        {
+          'category': 2,
+          'display': 'G',
+          'encoding': 48
+        },
+        {
+          'category': 2,
+          'display': 'H',
+          'encoding': 192
+        },
+        {
+          'category': 2,
+          'display': 'I',
+          'encoding': 320
+        },
+        {
+          'category': 2,
+          'display': 'J',
+          'encoding': 10
+        },
+        {
+          'category': 2,
+          'display': 'K',
+          'encoding': 66
+        },
+        {
+          'category': 2,
+          'display': 'L',
+          'encoding': 68
+        },
+        {
+          'category': 2,
+          'display': 'M',
+          'encoding': 72
+        },
+        {
+          'category': 2,
+          'display': 'N',
+          'encoding': 80
+        },
+        {
+          'category': 2,
+          'display': 'O',
+          'encoding': 384
+        },
+        {
+          'category': 2,
+          'display': 'P',
+          'encoding': 130
+        },
+        {
+          'category': 2,
+          'display': 'Q',
+          'encoding': 132
+        },
+        {
+          'category': 2,
+          'display': 'R',
+          'encoding': 136
+        },
+        {
+          'category': 2,
+          'display': 'S',
+          'encoding': 144
+        },
+        {
+          'category': 2,
+          'display': 'T',
+          'encoding': 258
+        },
+        {
+          'category': 2,
+          'display': 'U',
+          'encoding': 260
+        },
+        {
+          'category': 2,
+          'display': 'V',
+          'encoding': 18
+        },
+        {
+          'category': 2,
+          'display': 'W',
+          'encoding': 12
+        },
+        {
+          'category': 2,
+          'display': 'X',
+          'encoding': 20
+        },
+        {
+          'category': 2,
+          'display': 'Y',
+          'encoding': 264
+        },
+        {
+          'category': 2,
+          'display': 'Z',
+          'encoding': 24
+        },
+        {
+          'category': 4,
+          'display': '1',
+          'encoding': 96
+        },
+        {
+          'category': 4,
+          'display': '2',
+          'encoding': 160
+        },
+        {
+          'category': 4,
+          'display': '3',
+          'encoding': 288
+        },
+        {
+          'category': 4,
+          'display': '4',
+          'encoding': 34
+        },
+        {
+          'category': 4,
+          'display': '5',
+          'encoding': 36
+        },
+        {
+          'category': 4,
+          'display': '6',
+          'encoding': 40
+        },
+        {
+          'category': 4,
+          'display': '7',
+          'encoding': 48
+        },
+        {
+          'category': 4,
+          'display': '8',
+          'encoding': 192
+        },
+        {
+          'category': 4,
+          'display': '9',
+          'encoding': 320
+        },
+        {
+          'category': 4,
+          'display': '0',
+          'encoding': 66
+        },
+        {
+          'category': 8,
+          'display': '#',
+          'encoding': 6
+        }
+      ];
+      assert.deepEqual(results, expected);
+    });
+
+    it('Some Results', function () {
+      const ch = new SemaphoreCharacter(SemaphoreDirection.West);
+      const results = ch.getPotentialMatches();
+      const expected = [
+        {
+          'category': 2,
+          'display': 'B',
+          'encoding': 160
+        },
+        {
+          'category': 2,
+          'display': 'H',
+          'encoding': 192
+        },
+        {
+          'category': 2,
+          'display': 'O',
+          'encoding': 384
+        },
+        {
+          'category': 2,
+          'display': 'P',
+          'encoding': 130
+        },
+        {
+          'category': 2,
+          'display': 'Q',
+          'encoding': 132
+        },
+        {
+          'category': 2,
+          'display': 'R',
+          'encoding': 136
+        },
+        {
+          'category': 2,
+          'display': 'S',
+          'encoding': 144
+        },
+        {
+          'category': 4,
+          'display': '2',
+          'encoding': 160
+        },
+        {
+          'category': 4,
+          'display': '8',
+          'encoding': 192
+        }
+      ];
+      assert.deepEqual(results, expected);
+    });
+
+    it('One Result', function () {
+      const ch = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.North);
+      const exact = ch.getExactMatches();
+      const exactExpected = [
+        {
+          'category': 2,
+          'display': 'P',
+          'encoding': 130
+        }
+      ];
+      assert.deepEqual(exact, exactExpected);
+
+      const potential = ch.getPotentialMatches();
+      assert.deepEqual(potential, []);
+    });
+
+    it('No Results', function () {
+      const ch = new SemaphoreCharacter(SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast);
+      const exact = ch.getExactMatches();
+      assert.deepEqual(exact, []);
+
+      const potential = ch.getPotentialMatches();
+      assert.deepEqual(potential, []);
     });
   });
 });
