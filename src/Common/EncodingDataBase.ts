@@ -21,6 +21,10 @@ abstract class EncodingDataBase<T extends number> {
     return result;
   }
 
+  public get entries() {
+    return this._entries;
+  }
+
   protected addToList(encoding: T, category: EncodingCategory, display: string) {
     this._entries.push(new EncodingEntry<T>(encoding, category, display));
   }
