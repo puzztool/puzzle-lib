@@ -374,7 +374,6 @@ describe('Semaphore', function () {
 
     it('No Results', function () {
       const results = SemaphorePrediction.PossibleSemaphore(SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast);
-      // assert.strictEqual(allResults, []);
       assert.deepEqual(results, []);
     });
   });
