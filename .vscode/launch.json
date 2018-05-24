@@ -13,8 +13,7 @@
         "999999",
         "--colors",
         "${workspaceFolder}/test"
-      ],
-      "internalConsoleOptions": "openOnSessionStart"
+      ]
     }
   ]
 }

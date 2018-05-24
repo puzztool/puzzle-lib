@@ -26,3 +26,4 @@ export { default as ResistorColorEntry } from './Resistor/ResistorColorEntry';
 export { default as SemaphoreCharacter } from './Semaphore/SemaphoreCharacter';
 export { default as SemaphoreDegrees } from './Semaphore/SemaphoreDegrees';
 export { default as SemaphoreDirection } from './Semaphore/SemaphoreDirection';
+export { default as SemaphorePrediction } from './Semaphore/SemaphorePrediction';
