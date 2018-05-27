@@ -37,11 +37,23 @@ class Resistor {
       if (currentColor.value === undefined) {
         return Resistor.INVALID_RESISTOR;
       }
+
       value *= 10;
       value += currentColor.value;
     }
-    value *= colors[colors.length - 1].multiplier;
-    return value;
+
+    return Resistor.applyMultiplier(value, colors[colors.length - 1].multiplier);
+  }
+
+  private static applyMultiplier(value: number, multipler: number) {
+    if (multipler >= 1) {
+      return value * multipler;
+    } else if (multipler > 0) {
+      // Avoid floating point multiplication issues
+      return value / (1 / multipler);
+    } else {
+      throw new RangeError('Invalid multiplier');
+    }
   }
 }
 

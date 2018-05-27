@@ -52,4 +52,8 @@ describe('Resistor', function () {
   it('Tolerance', function () {
     assert.strictEqual(Resistor.GOLD.getDisplayTolerance(), '5%');
   });
+
+  it('Rounding', function () {
+    assert.strictEqual(Resistor.getValue([Resistor.YELLOW, Resistor.GREEN, Resistor.WHITE, Resistor.GOLD]), 45.9);
+  });
 });
