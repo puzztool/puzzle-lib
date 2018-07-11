@@ -72,6 +72,20 @@ describe('Conversions', function () {
       assert.strictEqual(none, CharacterEncoding.None);
     });
 
+    it('determineCharacterEncoding - Ambigious Cases', function () {
+      // Overlap between ascii and binary
+      const asciiE = CharacterAutoConvert.determineCharacterEncoding('101');
+      assert.strictEqual(asciiE, CharacterEncoding.Ascii);
+
+      // Overlap between ascii and binary
+      const binaryE = CharacterAutoConvert.determineCharacterEncoding('00101');
+      assert.strictEqual(binaryE, CharacterEncoding.FiveBitBinary);
+
+      // Overlap between binary and ordinal
+      const ordinalA = CharacterAutoConvert.determineCharacterEncoding('1');
+      assert.strictEqual(ordinalA, CharacterEncoding.Ordinal);
+    });
+
     it('convertCharacter', function () {
       const latin = CharacterAutoConvert.convertCharacter('A');
       assert.strictEqual(latin, 'A');
