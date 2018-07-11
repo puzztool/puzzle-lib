@@ -47,6 +47,14 @@ class CharacterAutoConvert {
 
     const numeric = parseInt(input, 10);
 
+    if (this.appearsBinary(input)) {
+      if (input.length === 5) {
+        return CharacterEncoding.FiveBitBinary;
+      } else if (input.length === 8) {
+        return CharacterEncoding.EightBitBinary;
+      }
+    }
+
     if (input.length < 3 && numeric > 0 && numeric < 27) {
       return CharacterEncoding.Ordinal;
     }
@@ -56,14 +64,6 @@ class CharacterAutoConvert {
     }
     if (numeric > 97 && numeric < 123) {
       return CharacterEncoding.Ascii;
-    }
-
-    if (this.appearsBinary(input)) {
-      if (input.length === 5) {
-        return CharacterEncoding.FiveBitBinary;
-      } else if (input.length === 8) {
-        return CharacterEncoding.EightBitBinary;
-      }
     }
 
     return CharacterEncoding.None;
