@@ -21,6 +21,9 @@ export { default as SignificantFigures } from './Conversion/SignificantFigures';
 export { default as MorseCharacter } from './Morse/MorseCharacter';
 export { default as MorseEncoding } from './Morse/MorseEncoding';
 
+export { default as NatoCharacter } from './Nato/NatoCharacter';
+export { default as NatoData } from './Nato/NatoData';
+
 export { default as Resistor } from './Resistor/Resistor';
 export { default as ResistorColorEntry } from './Resistor/ResistorColorEntry';
 
