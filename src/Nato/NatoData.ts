@@ -40,7 +40,7 @@ class NatoData {
 
   public lookup(letter: string): NatoCharacter | null {
     for (const ch of this._entries) {
-      if (ch.character === letter) {
+      if (ch.character.toUpperCase() === letter.toUpperCase()) {
         return ch;
       }
     }

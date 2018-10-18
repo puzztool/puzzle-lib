@@ -14,6 +14,7 @@ describe('Nato', function () {
   });
   it('Lookup', function () {
     assert.strictEqual(NatoData.instance.lookup('B').word, 'Bravo');
+    assert.strictEqual(NatoData.instance.lookup('b').word, 'Bravo');
     assert.strictEqual(NatoData.instance.lookup(''), null);
   });
 });
