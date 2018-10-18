@@ -8,8 +8,10 @@ export { default as CaesarString } from './Cipher/CaesarString';
 export { default as KeyedCipherStringBase } from './Cipher/KeyedCipherStringBase';
 export { default as VigenereString } from './Cipher/VigenereString';
 
+export { default as CharacterImage } from './Common/CharacterImage';
 export { default as EncodingCategory } from './Common/EncodingCategory';
 export { default as EncodingEntry } from './Common/EncodingEntry';
+export { default as InlineSvg } from './Common/InlineSvg';
 
 export { default as CharacterConversion } from './Conversion/CharacterConversion';
 export { default as CharacterTableEntry } from './Conversion/CharacterTableEntry';
@@ -23,6 +25,8 @@ export { default as MorseEncoding } from './Morse/MorseEncoding';
 
 export { default as NatoCharacter } from './Nato/NatoCharacter';
 export { default as NatoData } from './Nato/NatoData';
+
+export { default as NavalFlags } from './NavalFlags/NavalFlags';
 
 export { default as Resistor } from './Resistor/Resistor';
 export { default as ResistorColorEntry } from './Resistor/ResistorColorEntry';
