@@ -10,7 +10,8 @@ class InlineSvg {
   }
 
   public render(width: number): string {
-    return `<svg width="${width}" viewBox="0 0 ${this.viewBoxWidth} ${this.viewBoxHeight}">${this.inlineSvg}</svg>`;
+    // tslint:disable-next-line:max-line-length
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" viewBox="0 0 ${this.viewBoxWidth} ${this.viewBoxHeight}">${this.inlineSvg}</svg>`;
   }
 }
 
