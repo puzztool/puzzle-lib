@@ -71,6 +71,17 @@ class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding> {
       .sort((a, b) => a - b);
   }
 
+  public getPotentialMatch(other: SemaphoreDirection) {
+    if (this.directions.length !== 1 || this.directions[0] === other) {
+      return null;
+    }
+
+    const potentialMatch = this.getPotentialMatches()
+      .filter((value) => (value.encoding & other) === other)[0];
+
+    return potentialMatch || null;
+  }
+
   protected onClear() {
     this._directions.length = 0;
   }

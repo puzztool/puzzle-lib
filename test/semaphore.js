@@ -385,5 +385,38 @@ describe('Semaphore', function () {
       const potential = ch.getPotentialMatches();
       assert.deepEqual(potential, []);
     });
+
+    it('Potential Match', function () {
+      const ch = new SemaphoreCharacter(SemaphoreDirection.West);
+
+      // Can't ask for a direction that's already set.
+      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.West), null);
+
+      // Ask for a valid direction.
+      assert.deepEqual(
+        ch.getPotentialMatch(SemaphoreDirection.NorthWest),
+        {
+          'category': 2,
+          'display': 'O',
+          'encoding': 384
+        });
+
+      // Add another direction and verify that a match isn't returned.
+      ch.addDirection(SemaphoreDirection.NorthWest);
+      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.South), null);
+
+      // Remove the original direction and verify the same potential match is returned.
+      ch.removeDirection(SemaphoreDirection.West);
+      assert.deepEqual(
+        ch.getPotentialMatch(SemaphoreDirection.West),
+        {
+          'category': 2,
+          'display': 'O',
+          'encoding': 384
+        });
+
+      // Test an invalid combination which has no match.
+      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.SouthEast), null);
+    });
   });
 });
