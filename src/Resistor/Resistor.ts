@@ -52,6 +52,18 @@ export class Resistor {
     return Resistor.applyMultiplier(value, colors[colors.length - 1].multiplier);
   }
 
+  static getDisplayValue(value: number) {
+    if (value >= 1000000000) {
+      return `${value / 1000000000}G`;
+    } else if (value >= 1000000) {
+      return `${value / 1000000}M`;
+    } else if (value >= 1000) {
+      return `${value / 1000}k`;
+    } else {
+      return value.toString();
+    }
+  }
+
   private static applyMultiplier(value: number, multipler: number) {
     if (multipler >= 1) {
       return value * multipler;

@@ -56,4 +56,15 @@ describe('Resistor', function () {
   it('Rounding', function () {
     assert.strictEqual(Resistor.getValue([Resistor.YELLOW, Resistor.GREEN, Resistor.WHITE, Resistor.GOLD]), 45.9);
   });
+
+  it('Display Values', function () {
+    assert.strictEqual(Resistor.getDisplayValue(0), '0');
+    assert.strictEqual(Resistor.getDisplayValue(0.3), '0.3');
+    assert.strictEqual(Resistor.getDisplayValue(1), '1');
+    assert.strictEqual(Resistor.getDisplayValue(999), '999');
+    assert.strictEqual(Resistor.getDisplayValue(1000), '1k');
+    assert.strictEqual(Resistor.getDisplayValue(1200), '1.2k');
+    assert.strictEqual(Resistor.getDisplayValue(30000000), '30M');
+    assert.strictEqual(Resistor.getDisplayValue(45900000000), '45.9G');
+  });
 });
