@@ -1,9 +1,9 @@
-import CharacterEncoding from './CharacterEncoding';
+import {CharacterEncoding} from './CharacterEncoding';
 
-class CharacterAutoConvert {
+export class CharacterAutoConvert {
   // Forced encoding can be useful when converting an entire string
   // or simply dealing with binary which has no leading zeros
-  public static convertCharacter(input: string, forcedCharacterEncoding?: CharacterEncoding) {
+  static convertCharacter(input: string, forcedCharacterEncoding?: CharacterEncoding) {
     let encoding = null;
     if (!forcedCharacterEncoding) {
       encoding = this.determineCharacterEncoding(input);
@@ -20,7 +20,7 @@ class CharacterAutoConvert {
       return input;
     }
 
-    const baseTen = parseInt(input, 10);
+    const baseTen = Number.parseInt(input, 10);
     if (encoding === CharacterEncoding.Ascii) {
       return String.fromCharCode(baseTen);
     }
@@ -29,7 +29,7 @@ class CharacterAutoConvert {
       return String.fromCharCode(baseTen + asciiOffset);
     }
 
-    const binary = parseInt(input, 2);
+    const binary = Number.parseInt(input, 2);
     if (encoding === CharacterEncoding.FiveBitBinary && this.appearsBinary(input)) {
       return String.fromCharCode(binary + asciiOffset);
     }
@@ -40,12 +40,12 @@ class CharacterAutoConvert {
     return '';
   }
 
-  public static determineCharacterEncoding(input: string) {
+  static determineCharacterEncoding(input: string) {
     if (input.match(/[a-z]/i)) {
       return CharacterEncoding.Latin;
     }
 
-    const numeric = parseInt(input, 10);
+    const numeric = Number.parseInt(input, 10);
 
     if (this.appearsBinary(input)) {
       if (input.length === 5) {
@@ -77,7 +77,4 @@ class CharacterAutoConvert {
     }
     return true;
   }
-
 }
-
-export default CharacterAutoConvert;

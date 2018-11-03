@@ -1,17 +1,17 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import SemaphoreCharacter from './SemaphoreCharacter';
-import SemaphoreData from './SemaphoreData';
-import SemaphoreEncoding from './SemaphoreEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {SemaphoreCharacter} from './SemaphoreCharacter';
+import {SemaphoreData} from './SemaphoreData';
+import {SemaphoreEncoding} from './SemaphoreEncoding';
 
-interface ISemaphoreStreamState {
+interface SemaphoreStreamState {
   numberMode: boolean;
 }
 
-class SemaphoreStream {
+export class SemaphoreStream {
   private readonly _chars: SemaphoreEncoding[] = [];
-  private readonly _state: ISemaphoreStreamState;
-  private _currentStr: string;
-  private _processPosition: number;
+  private readonly _state: SemaphoreStreamState;
+  private _currentStr = '';
+  private _processPosition = 0;
 
   constructor() {
     this._state = {
@@ -33,20 +33,20 @@ class SemaphoreStream {
     }
   }
 
-  public append(ch: SemaphoreCharacter) {
+  append(ch: SemaphoreCharacter) {
     this._chars.push(ch.valueOf());
   }
 
-  public clear() {
+  clear() {
     this._chars.length = 0;
     this.invalidate();
   }
 
-  public space() {
+  space() {
     this._chars.push(SemaphoreEncoding.None);
   }
 
-  public toString() {
+  toString() {
     this.update();
     return this._currentStr;
   }
@@ -85,5 +85,3 @@ class SemaphoreStream {
     }
   }
 }
-
-export default SemaphoreStream;

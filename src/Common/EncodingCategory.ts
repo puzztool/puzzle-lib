@@ -1,4 +1,4 @@
-enum EncodingCategory {
+export enum EncodingCategory {
   None,
 
   Letter = 1 << 1,
@@ -8,5 +8,3 @@ enum EncodingCategory {
 
   All = 0xFF,
 }
-
-export default EncodingCategory;

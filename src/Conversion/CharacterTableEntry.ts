@@ -1,16 +1,16 @@
 import leftPad = require('left-pad');
 
-class CharacterTableEntry {
+export class CharacterTableEntry {
   private static getValue(value: number, base: number, maxValue: number) {
     return leftPad(value.toString(base), Math.ceil(Math.log(maxValue) / Math.log(base)), '0');
   }
 
-  public readonly character: string;
-  public readonly binary: string;
-  public readonly ternary: string;
-  public readonly octal: string;
-  public readonly decimal: string;
-  public readonly hexadecimal: string;
+  readonly character: string;
+  readonly binary: string;
+  readonly ternary: string;
+  readonly octal: string;
+  readonly decimal: string;
+  readonly hexadecimal: string;
 
   constructor(character: string, value: number, maxValue: number) {
     this.character = character;
@@ -21,5 +21,3 @@ class CharacterTableEntry {
     this.hexadecimal = CharacterTableEntry.getValue(value, 16, maxValue);
   }
 }
-
-export default CharacterTableEntry;

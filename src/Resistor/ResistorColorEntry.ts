@@ -1,9 +1,9 @@
-class ResistorColorEntry {
-  public readonly name: string;
-  public readonly colorCode: string;
-  public readonly multiplier: number;
-  public readonly value?: number;
-  public readonly toleranceInPercent?: number;
+export class ResistorColorEntry {
+  readonly name: string;
+  readonly colorCode: string;
+  readonly multiplier: number;
+  readonly value?: number;
+  readonly toleranceInPercent?: number;
 
   constructor(name: string, colorCode: string, multiplier: number, value?: number, toleranceInPercent?: number) {
     this.name = name;
@@ -13,27 +13,25 @@ class ResistorColorEntry {
     this.toleranceInPercent = toleranceInPercent;
   }
 
-  public hasValue() {
+  hasValue() {
     return (this.value !== undefined);
   }
 
-  public getDisplayValue() {
+  getDisplayValue() {
     if (this.value === undefined) {
       return '';
     }
     return this.value.toString();
   }
 
-  public hasTolerance() {
+  hasTolerance() {
     return (this.toleranceInPercent !== undefined);
   }
 
-  public getDisplayTolerance() {
+  getDisplayTolerance() {
     if (this.toleranceInPercent === undefined) {
       return '';
     }
     return `${this.toleranceInPercent}%`;
   }
 }
-
-export default ResistorColorEntry;

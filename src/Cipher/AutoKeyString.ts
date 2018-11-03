@@ -1,7 +1,7 @@
-import CaesarUtils from './CaesarUtils';
-import KeyedCipherStringBase from './KeyedCipherStringBase';
+import {CaesarUtils} from './CaesarUtils';
+import {KeyedCipherStringBase} from './KeyedCipherStringBase';
 
-class AutoKeyString extends KeyedCipherStringBase {
+export class AutoKeyString extends KeyedCipherStringBase {
   protected convert(decrypt: boolean) {
     if (this._key.length < 1) {
       return this._text;
@@ -28,5 +28,3 @@ class AutoKeyString extends KeyedCipherStringBase {
     }
   }
 }
-
-export default AutoKeyString;

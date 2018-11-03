@@ -1,9 +1,9 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingDataBase from '../Common/EncodingDataBase';
-import MorseEncoding from './MorseEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingDataBase} from '../Common/EncodingDataBase';
+import {MorseEncoding} from './MorseEncoding';
 
-class MorseData extends EncodingDataBase<MorseEncoding> {
-  public static readonly instance: MorseData = new MorseData();
+export class MorseData extends EncodingDataBase<MorseEncoding> {
+  static readonly instance: MorseData = new MorseData();
 
   constructor() {
     super();
@@ -52,7 +52,7 @@ class MorseData extends EncodingDataBase<MorseEncoding> {
     this.addToList(MorseEncoding.PunctuationPeriod, EncodingCategory.Punctuation, '.');
     this.addToList(MorseEncoding.PunctuationComma, EncodingCategory.Punctuation, ',');
     this.addToList(MorseEncoding.PunctuationQuestionMark, EncodingCategory.Punctuation, '?');
-    this.addToList(MorseEncoding.PunctuationApostrophe, EncodingCategory.Punctuation, "'");
+    this.addToList(MorseEncoding.PunctuationApostrophe, EncodingCategory.Punctuation, '\'');
     this.addToList(MorseEncoding.PunctuationExclamationPoint, EncodingCategory.Punctuation, '!');
     this.addToList(MorseEncoding.PunctuationForwardSlash, EncodingCategory.Punctuation, '/');
     this.addToList(MorseEncoding.PunctuationOpenParenthesis, EncodingCategory.Punctuation, '(');
@@ -69,5 +69,3 @@ class MorseData extends EncodingDataBase<MorseEncoding> {
     this.addToList(MorseEncoding.PunctuationAtSign, EncodingCategory.Punctuation, '@');
   }
 }
-
-export default MorseData;

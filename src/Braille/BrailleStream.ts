@@ -1,13 +1,13 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import BrailleCharacter from './BrailleCharacter';
-import BrailleData from './BrailleData';
-import BrailleEncoding from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {BrailleCharacter} from './BrailleCharacter';
+import {BrailleData} from './BrailleData';
+import {BrailleEncoding} from './BrailleEncoding';
 
-class BrailleStream {
+export class BrailleStream {
   private readonly _chars: BrailleEncoding[] = [];
-  private _currentStr: string;
-  private _processPosition: number;
-  private _numberMode: boolean;
+  private _currentStr = '';
+  private _processPosition = 0;
+  private _numberMode = false;
 
   constructor() {
     this.invalidate();
@@ -25,25 +25,25 @@ class BrailleStream {
     }
   }
 
-  public append(ch: BrailleCharacter) {
+  append(ch: BrailleCharacter) {
     this._chars.push(ch.valueOf());
   }
 
-  public clear() {
+  clear() {
     this._chars.length = 0;
     this.invalidate();
   }
 
-  public backspace() {
+  backspace() {
     this._chars.pop();
     this.invalidate();
   }
 
-  public space() {
+  space() {
     this._chars.push(BrailleEncoding.None);
   }
 
-  public toString() {
+  toString() {
     this.update();
     return this._currentStr;
   }
@@ -70,8 +70,8 @@ class BrailleStream {
           break;
 
         default:
-          const category = EncodingCategory.Punctuation |
-              (this._numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
+          const category =
+              EncodingCategory.Punctuation | (this._numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
           const exact = BrailleData.instance.lookup(ch, category).exact;
 
           if (exact.length > 0) {
@@ -83,5 +83,3 @@ class BrailleStream {
     }
   }
 }
-
-export default BrailleStream;

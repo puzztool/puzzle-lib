@@ -1,20 +1,17 @@
-class SignificantFigures {
-  public static ceil(num: number, sigFigs: number) {
+export class SignificantFigures {
+  static ceil(num: number, sigFigs: number) {
     return this.roundInternal(Math.ceil, num, sigFigs);
   }
 
-  public static floor(num: number, sigFigs: number) {
+  static floor(num: number, sigFigs: number) {
     return this.roundInternal(Math.floor, num, sigFigs);
   }
 
-  public static round(num: number, sigFigs: number) {
+  static round(num: number, sigFigs: number) {
     return this.roundInternal(Math.round, num, sigFigs);
   }
 
-  private static roundInternal(
-      func: (num: number) => number,
-      num: number,
-      sigFigs: number) {
+  private static roundInternal(func: (num: number) => number, num: number, sigFigs: number) {
     if (num === 0) {
       return num;
     }
@@ -52,5 +49,3 @@ class SignificantFigures {
     }
   }
 }
-
-export default SignificantFigures;

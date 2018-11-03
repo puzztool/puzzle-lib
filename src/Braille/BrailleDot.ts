@@ -1,4 +1,4 @@
-enum BrailleDot {
+export enum BrailleDot {
   None = 0,
   UpperLeft = 1 << 0,
   MiddleLeft = 1 << 1,
@@ -7,5 +7,3 @@ enum BrailleDot {
   MiddleRight = 1 << 4,
   LowerRight = 1 << 5,
 }
-
-export default BrailleDot;

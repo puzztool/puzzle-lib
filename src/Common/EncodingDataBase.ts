@@ -1,11 +1,11 @@
-import EncodingCategory from './EncodingCategory';
-import EncodingEntry from './EncodingEntry';
-import EncodingLookupResult from './EncodingLookupResult';
+import {EncodingCategory} from './EncodingCategory';
+import {EncodingEntry} from './EncodingEntry';
+import {EncodingLookupResult} from './EncodingLookupResult';
 
-abstract class EncodingDataBase<T extends number> {
+export abstract class EncodingDataBase<T extends number> {
   private readonly _entries: Array<EncodingEntry<T>> = [];
 
-  public lookup(encoding: T, category: EncodingCategory = EncodingCategory.All) {
+  lookup(encoding: T, category: EncodingCategory = EncodingCategory.All) {
     const result = new EncodingLookupResult<T>();
 
     for (const entry of this._entries) {
@@ -25,5 +25,3 @@ abstract class EncodingDataBase<T extends number> {
     this._entries.push(new EncodingEntry<T>(encoding, category, display));
   }
 }
-
-export default EncodingDataBase;

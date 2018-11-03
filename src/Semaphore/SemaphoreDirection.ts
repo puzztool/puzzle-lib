@@ -1,4 +1,4 @@
-enum SemaphoreDirection {
+export enum SemaphoreDirection {
   None = 0,
   North = 1 << 1,
   NorthEast = 1 << 2,
@@ -9,5 +9,3 @@ enum SemaphoreDirection {
   West = 1 << 7,
   NorthWest = 1 << 8,
 }
-
-export default SemaphoreDirection;

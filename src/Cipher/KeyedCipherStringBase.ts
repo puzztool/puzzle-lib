@@ -1,8 +1,8 @@
-abstract class KeyedCipherStringBase {
+export abstract class KeyedCipherStringBase {
   protected _text: string;
   protected _key: string;
 
-  constructor(text: string = '', key: string = '') {
+  constructor(text = '', key = '') {
     this._text = text;
     this._key = key;
   }
@@ -23,15 +23,13 @@ abstract class KeyedCipherStringBase {
     this._key = value;
   }
 
-  public encrypt() {
+  encrypt() {
     return this.convert(false);
   }
 
-  public decrypt() {
+  decrypt() {
     return this.convert(true);
   }
 
   protected abstract convert(decrypt: boolean): string;
 }
-
-export default KeyedCipherStringBase;

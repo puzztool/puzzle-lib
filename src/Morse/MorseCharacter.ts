@@ -1,12 +1,12 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingCharacterBase from '../Common/EncodingCharacterBase';
-import MorseData from './MorseData';
-import MorseEncoding from './MorseEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {MorseData} from './MorseData';
+import {MorseEncoding} from './MorseEncoding';
 
 const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
 
-class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
-  public static toMorseString(encoding: MorseEncoding) {
+export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
+  static toMorseString(encoding: MorseEncoding) {
     let morseChars = '';
 
     while (encoding !== MorseEncoding.None) {
@@ -24,7 +24,7 @@ class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
     return morseChars;
   }
 
-  public static parseMorseString(morse: string): MorseEncoding {
+  static parseMorseString(morse: string): MorseEncoding {
     let bits = MorseEncoding.None;
 
     for (let i = morse.length - 1; i >= 0; i--) {
@@ -46,7 +46,7 @@ class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
 
   private _morse: string;
 
-  constructor(str: string = '', category: EncodingCategory = EncodingCategory.All) {
+  constructor(str = '', category: EncodingCategory = EncodingCategory.All) {
     super(MorseData.instance, category);
 
     this._morse = str;
@@ -61,19 +61,19 @@ class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
     this.invalidateLookup();
   }
 
-  public backspace() {
+  backspace() {
     if (this._morse.length > 0) {
       this._morse = this._morse.substring(0, this._morse.length - 1);
       this.invalidateLookup();
     }
   }
 
-  public dot() {
+  dot() {
     this._morse += '.';
     this.invalidateLookup();
   }
 
-  public dash() {
+  dash() {
     this._morse += '-';
     this.invalidateLookup();
   }
@@ -91,5 +91,3 @@ class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
     return MorseCharacter.parseMorseString(this._morse);
   }
 }
-
-export default MorseCharacter;

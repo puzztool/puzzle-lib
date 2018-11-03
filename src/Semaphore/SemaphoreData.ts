@@ -1,9 +1,9 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingDataBase from '../Common/EncodingDataBase';
-import SemaphoreEncoding from './SemaphoreEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingDataBase} from '../Common/EncodingDataBase';
+import {SemaphoreEncoding} from './SemaphoreEncoding';
 
-class SemaphoreData extends EncodingDataBase<SemaphoreEncoding> {
-  public static readonly instance: SemaphoreData = new SemaphoreData();
+export class SemaphoreData extends EncodingDataBase<SemaphoreEncoding> {
+  static readonly instance: SemaphoreData = new SemaphoreData();
 
   constructor() {
     super();
@@ -52,5 +52,3 @@ class SemaphoreData extends EncodingDataBase<SemaphoreEncoding> {
     this.addToList(SemaphoreEncoding.FormattingNumber, EncodingCategory.Formatting, '#');
   }
 }
-
-export default SemaphoreData;

@@ -1,6 +1,6 @@
-import SemaphoreDirection from './SemaphoreDirection';
+import {SemaphoreDirection} from './SemaphoreDirection';
 
-enum SemaphoreEncoding {
+export enum SemaphoreEncoding {
   None = 0,
 
   // Letters
@@ -46,5 +46,3 @@ enum SemaphoreEncoding {
   // Formatting
   FormattingNumber = SemaphoreDirection.North | SemaphoreDirection.NorthEast,
 }
-
-export default SemaphoreEncoding;

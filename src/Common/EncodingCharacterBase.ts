@@ -1,12 +1,12 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingEntry from '../Common/EncodingEntry';
-import EncodingLookupResult from '../Common/EncodingLookupResult';
-import EncodingDataBase from './EncodingDataBase';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingEntry} from '../Common/EncodingEntry';
+import {EncodingLookupResult} from '../Common/EncodingLookupResult';
+import {EncodingDataBase} from './EncodingDataBase';
 
-abstract class EncodingCharacterBase<T extends number> {
+export abstract class EncodingCharacterBase<T extends number> {
   private _category: EncodingCategory;
   private _data: EncodingDataBase<T>;
-  private _lookup: EncodingLookupResult<T> | null;
+  private _lookup: EncodingLookupResult<T>|null = null;
 
   constructor(data: EncodingDataBase<T>, category: EncodingCategory) {
     this._data = data;
@@ -25,32 +25,32 @@ abstract class EncodingCharacterBase<T extends number> {
     }
   }
 
-  public clear() {
+  clear() {
     this.onClear();
     this.invalidateLookup();
   }
 
-  public empty() {
+  empty() {
     return this.onEmpty();
   }
 
-  public getExactMatches(): Array<EncodingEntry<T>> {
+  getExactMatches(): Array<EncodingEntry<T>> {
     return this.ensureLookup().exact;
   }
 
-  public getPotentialMatches(): Array<EncodingEntry<T>> {
+  getPotentialMatches(): Array<EncodingEntry<T>> {
     return this.ensureLookup().partial;
   }
 
-  public toString() {
+  toString() {
     return this.ensureLookup().exactString;
   }
 
-  public valid() {
+  valid() {
     return this.ensureLookup().exact.length > 0;
   }
 
-  public valueOf() {
+  valueOf() {
     return this.getEncoding();
   }
 
@@ -70,5 +70,3 @@ abstract class EncodingCharacterBase<T extends number> {
     return this._lookup;
   }
 }
-
-export default EncodingCharacterBase;

@@ -1,9 +1,9 @@
-import CaesarUtils from './CaesarUtils';
+import {CaesarUtils} from './CaesarUtils';
 
-class CaesarString {
+export class CaesarString {
   private _text: string;
 
-  constructor(text: string = '') {
+  constructor(text = '') {
     this._text = text;
   }
 
@@ -15,7 +15,7 @@ class CaesarString {
     this._text = value;
   }
 
-  public getRotation(rot: number) {
+  getRotation(rot: number) {
     const rotStr = [];
 
     for (const ch of this._text) {
@@ -25,7 +25,7 @@ class CaesarString {
     return rotStr.join('');
   }
 
-  public getRotations() {
+  getRotations() {
     const rotations = [];
     rotations.push(this._text);
 
@@ -36,5 +36,3 @@ class CaesarString {
     return rotations;
   }
 }
-
-export default CaesarString;

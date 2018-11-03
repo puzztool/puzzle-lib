@@ -1,8 +1,8 @@
-import CharacterAutoConvert from './CharacterAutoConvert';
-import CharacterEncoding from './CharacterEncoding';
+import {CharacterAutoConvert} from './CharacterAutoConvert';
+import {CharacterEncoding} from './CharacterEncoding';
 
-class StringAutoConvert {
-  public static convertString(input: string, homogeneous: boolean) {
+export class StringAutoConvert {
+  static convertString(input: string, homogeneous: boolean) {
     const split = this.splitString(input);
 
     if (homogeneous) {
@@ -13,8 +13,8 @@ class StringAutoConvert {
     }
   }
 
-  public static determineStringEncoding(input: string): CharacterEncoding {
-    const encodingCount: { [index: number]: number } = {};
+  static determineStringEncoding(input: string): CharacterEncoding {
+    const encodingCount: {[index: number]: number} = {};
     const parsed = this.splitString(input);
     const encodingKeys: number[] = [];
 
@@ -41,9 +41,7 @@ class StringAutoConvert {
     return maxEncoding;
   }
 
-  public static splitString(input: string): string[] {
+  static splitString(input: string): string[] {
     return input.split(' ').filter((item) => item !== '');
   }
 }
-
-export default StringAutoConvert;

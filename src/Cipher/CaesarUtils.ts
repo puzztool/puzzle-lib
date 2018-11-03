@@ -1,7 +1,7 @@
-import CharacterConversion from '../Conversion/CharacterConversion';
+import {CharacterConversion} from '../Conversion/CharacterConversion';
 
-class CaesarUtils {
-  public static rotateLetter(ch: string, rot: number) {
+export class CaesarUtils {
+  static rotateLetter(ch: string, rot: number) {
     if (ch.length !== 1) {
       throw new Error('Expected a single character');
     }
@@ -24,7 +24,7 @@ class CaesarUtils {
     return String.fromCharCode((((code - base) + rot) % this.alphaLength) + base);
   }
 
-  public static rotateLetterWithKey(ch: string, key: string, keyIndex: number, decrypt: boolean = false) {
+  static rotateLetterWithKey(ch: string, key: string, keyIndex: number, decrypt = false) {
     if (key.length === 0) {
       return ch;
     }
@@ -39,7 +39,7 @@ class CaesarUtils {
     return this.rotateLetter(ch, rot);
   }
 
-  public static isAlpha(ch: string) {
+  static isAlpha(ch: string) {
     const code = ch.charCodeAt(0);
     return this.isUpperAlpha(code) || this.isLowerAlpha(code);
   }
@@ -48,7 +48,7 @@ class CaesarUtils {
   private static upperZ: number = 'Z'.charCodeAt(0);
   private static lowerA: number = 'a'.charCodeAt(0);
   private static lowerZ: number = 'z'.charCodeAt(0);
-  private static alphaLength: number = 26;
+  private static alphaLength = 26;
 
   private static getCharacterWithMod(str: string, index: number) {
     return str.charAt(index % str.length);
@@ -62,5 +62,3 @@ class CaesarUtils {
     return code >= this.lowerA && code <= this.lowerZ;
   }
 }
-
-export default CaesarUtils;

@@ -1,9 +1,9 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingDataBase from '../Common/EncodingDataBase';
-import BrailleEncoding from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingDataBase} from '../Common/EncodingDataBase';
+import {BrailleEncoding} from './BrailleEncoding';
 
-class BrailleData extends EncodingDataBase<BrailleEncoding> {
-  public static readonly instance: BrailleData = new BrailleData();
+export class BrailleData extends EncodingDataBase<BrailleEncoding> {
+  static readonly instance: BrailleData = new BrailleData();
 
   constructor() {
     super();
@@ -51,7 +51,7 @@ class BrailleData extends EncodingDataBase<BrailleEncoding> {
 
     this.addToList(BrailleEncoding.PunctuationComma, EncodingCategory.Punctuation, ',');
     this.addToList(BrailleEncoding.PunctuationSemicolon, EncodingCategory.Punctuation, ';');
-    this.addToList(BrailleEncoding.PunctuationApostrophe, EncodingCategory.Punctuation, "'");
+    this.addToList(BrailleEncoding.PunctuationApostrophe, EncodingCategory.Punctuation, '\'');
     this.addToList(BrailleEncoding.PunctuationColon, EncodingCategory.Punctuation, ':');
     this.addToList(BrailleEncoding.PunctuationHyphen, EncodingCategory.Punctuation, '-');
     this.addToList(BrailleEncoding.PunctuationDecimalPoint, EncodingCategory.Punctuation, '.');
@@ -65,5 +65,3 @@ class BrailleData extends EncodingDataBase<BrailleEncoding> {
     this.addToList(BrailleEncoding.PunctuationSlash, EncodingCategory.Punctuation, '/');
   }
 }
-
-export default BrailleData;

@@ -1,15 +1,13 @@
-import EncodingCategory from '../Common/EncodingCategory';
-import EncodingCharacterBase from '../Common/EncodingCharacterBase';
-import BrailleData from './BrailleData';
-import BrailleDot from './BrailleDot';
-import BrailleEncoding from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {BrailleData} from './BrailleData';
+import {BrailleDot} from './BrailleDot';
+import {BrailleEncoding} from './BrailleEncoding';
 
-class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
+export class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
   private _encoding: BrailleEncoding;
 
-  constructor(
-      encoding: BrailleEncoding = BrailleEncoding.None,
-      category: EncodingCategory = EncodingCategory.All) {
+  constructor(encoding: BrailleEncoding = BrailleEncoding.None, category: EncodingCategory = EncodingCategory.All) {
     super(BrailleData.instance, category);
 
     this._encoding = encoding;
@@ -24,11 +22,11 @@ class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
     this.invalidateLookup();
   }
 
-  public get(mask: BrailleDot | BrailleEncoding) {
+  get(mask: BrailleDot|BrailleEncoding) {
     return (this._encoding & mask) === mask;
   }
 
-  public toggle(mask: BrailleDot | BrailleEncoding) {
+  toggle(mask: BrailleDot|BrailleEncoding) {
     this._encoding ^= mask;
     this.invalidateLookup();
   }
@@ -46,5 +44,3 @@ class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
     return this._encoding;
   }
 }
-
-export default BrailleCharacter;

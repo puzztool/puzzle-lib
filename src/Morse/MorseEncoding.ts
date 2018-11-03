@@ -29,7 +29,7 @@ function packMorse(...args: MorseEncoding[]) {
   return value;
 }
 
-enum MorseEncoding {
+export enum MorseEncoding {
   None = 0,
 
   // Primitives
@@ -96,5 +96,3 @@ enum MorseEncoding {
   PunctuationDollarSign = packMorse(Dot, Dot, Dot, Dash, Dot, Dot, Dash),
   PunctuationAtSign = packMorse(Dot, Dash, Dash, Dot, Dash, Dot),
 }
-
-export default MorseEncoding;

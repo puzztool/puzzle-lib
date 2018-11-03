@@ -1,13 +1,11 @@
-import InlineSvg from './InlineSvg';
+import {InlineSvg} from './InlineSvg';
 
-class CharacterImage {
-  public readonly character: string;
-  public readonly image: InlineSvg;
+export class CharacterImage {
+  readonly character: string;
+  readonly image: InlineSvg;
 
   constructor(character: string, image: InlineSvg) {
     this.character = character;
     this.image = image;
   }
 }
-
-export default CharacterImage;

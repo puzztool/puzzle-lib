@@ -1,7 +1,7 @@
-import CharacterTableEntry from './CharacterTableEntry';
+import {CharacterTableEntry} from './CharacterTableEntry';
 
-class CharacterConversion {
-  public static getAsciiTable() {
+export class CharacterConversion {
+  static getAsciiTable() {
     const retVal: CharacterTableEntry[] = [];
     CharacterConversion.addAsciiRange(retVal, 48, 57, CharacterConversion.toAscii, 127);
     CharacterConversion.addAsciiRange(retVal, 65, 90, CharacterConversion.toAscii, 127);
@@ -10,14 +10,14 @@ class CharacterConversion {
     return retVal;
   }
 
-  public static getOrdinalTable() {
+  static getOrdinalTable() {
     const retVal: CharacterTableEntry[] = [];
     CharacterConversion.addAsciiRange(retVal, 65, 90, CharacterConversion.toOrdinal, 26);
 
     return retVal;
   }
 
-  public static toAscii(ch: string) {
+  static toAscii(ch: string) {
     if (typeof ch !== 'string' || ch.length !== 1) {
       throw new Error('A single character is required');
     }
@@ -30,7 +30,7 @@ class CharacterConversion {
     return -1;
   }
 
-  public static toOrdinal(ch: string) {
+  static toOrdinal(ch: string) {
     if (typeof ch !== 'string' || ch.length !== 1) {
       throw new Error('A single character is required');
     }
@@ -51,10 +51,7 @@ class CharacterConversion {
   }
 
   private static addAsciiRange(
-      array: CharacterTableEntry[],
-      start: number,
-      end: number,
-      conversion: (value: string) => number,
+      array: CharacterTableEntry[], start: number, end: number, conversion: (value: string) => number,
       maxValue: number) {
     for (let i = start; i <= end; i++) {
       const letter = String.fromCharCode(i);
@@ -62,5 +59,3 @@ class CharacterConversion {
     }
   }
 }
-
-export default CharacterConversion;

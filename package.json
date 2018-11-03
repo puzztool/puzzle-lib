@@ -2,18 +2,20 @@
   "name": "puzzle-lib",
   "version": "0.6.3",
   "description": "Library of puzzle-solving algorithms",
-  "main": "./built/index.js",
-  "types": "./built/index.d.ts",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
   "files": [
-    "built/"
+    "build/src/"
   ],
   "scripts": {
-    "build": "tsc",
-    "lint": "semistandard && tslint --project .",
-    "lint-fix": "semistandard --fix && tslint --fix --project .",
-    "prepare": "npm run build",
-    "test": "npm run lint && npm run build && npm run test-only",
-    "test-only": "mocha"
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "posttest": "npm run check",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -26,10 +28,11 @@
   },
   "homepage": "https://github.com/kfarnung/puzzle-lib#readme",
   "devDependencies": {
+    "gts": "^0.8.0",
     "mocha": "^5.2.0",
     "semistandard": "^12.0.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.3"
+    "typescript": "~2.8.0"
   },
   "dependencies": {
     "left-pad": "^1.3.0"

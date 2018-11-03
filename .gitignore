@@ -58,4 +58,4 @@ typings/
 .env
 
 # TypeScript build output
-built/
+build/

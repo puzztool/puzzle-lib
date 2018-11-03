@@ -1,7 +1,7 @@
-import SemaphoreDirection from './SemaphoreDirection';
+import {SemaphoreDirection} from './SemaphoreDirection';
 
-class SemaphoreDegrees {
-  public static FromDegrees(degrees: number) {
+export class SemaphoreDegrees {
+  static FromDegrees(degrees: number) {
     if (degrees >= 360) {
       degrees = degrees % 360;
     }
@@ -13,7 +13,7 @@ class SemaphoreDegrees {
     return SemaphoreDirection.North << position;
   }
 
-  public static ToDegrees(direction: SemaphoreDirection) {
+  static ToDegrees(direction: SemaphoreDirection) {
     let position = SemaphoreDirection.North;
     let counter = 0;
     while (counter < 9 && position !== direction) {
@@ -24,5 +24,3 @@ class SemaphoreDegrees {
     return (counter * 45);
   }
 }
-
-export default SemaphoreDegrees;

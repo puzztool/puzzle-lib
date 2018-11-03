@@ -1,7 +1,7 @@
-import CaesarUtils from './CaesarUtils';
-import KeyedCipherStringBase from './KeyedCipherStringBase';
+import {CaesarUtils} from './CaesarUtils';
+import {KeyedCipherStringBase} from './KeyedCipherStringBase';
 
-class VigenereString extends KeyedCipherStringBase {
+export class VigenereString extends KeyedCipherStringBase {
   protected convert(decrypt: boolean) {
     const rotStr = [];
     let keyIndex = 0;
@@ -17,5 +17,3 @@ class VigenereString extends KeyedCipherStringBase {
     return rotStr.join('');
   }
 }
-
-export default VigenereString;

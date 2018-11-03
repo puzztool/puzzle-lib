@@ -1,6 +1,6 @@
-import BrailleDot from './BrailleDot';
+import {BrailleDot} from './BrailleDot';
 
-enum BrailleEncoding {
+export enum BrailleEncoding {
   None,
 
   // Letters (first decade)
@@ -23,7 +23,7 @@ enum BrailleEncoding {
   LetterO = BrailleDot.LowerLeft | BrailleDot.UpperLeft | BrailleDot.MiddleRight,
   LetterP = BrailleDot.LowerLeft | BrailleDot.UpperLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight,
   LetterQ = BrailleDot.LowerLeft | BrailleDot.UpperLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight |
-            BrailleDot.MiddleRight,
+      BrailleDot.MiddleRight,
   LetterR = BrailleDot.LowerLeft | BrailleDot.UpperLeft | BrailleDot.MiddleLeft | BrailleDot.MiddleRight,
   LetterS = BrailleDot.LowerLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight,
   LetterT = BrailleDot.LowerLeft | BrailleDot.MiddleLeft | BrailleDot.UpperRight | BrailleDot.MiddleRight,
@@ -33,7 +33,7 @@ enum BrailleEncoding {
   LetterV = BrailleDot.LowerLeft | BrailleDot.LowerRight | BrailleDot.UpperLeft | BrailleDot.MiddleLeft,
   LetterX = BrailleDot.LowerLeft | BrailleDot.LowerRight | BrailleDot.UpperLeft | BrailleDot.UpperRight,
   LetterY = BrailleDot.LowerLeft | BrailleDot.LowerRight | BrailleDot.UpperLeft | BrailleDot.UpperRight |
-            BrailleDot.MiddleRight,
+      BrailleDot.MiddleRight,
   LetterZ = BrailleDot.LowerLeft | BrailleDot.LowerRight | BrailleDot.UpperLeft | BrailleDot.MiddleRight,
 
   // Letters (fourth decade)
@@ -70,5 +70,3 @@ enum BrailleEncoding {
   PunctuationBracket = BrailleDot.MiddleLeft | BrailleDot.LowerLeft | BrailleDot.MiddleRight | BrailleDot.LowerRight,
   PunctuationSlash = BrailleDot.LowerLeft | BrailleDot.UpperRight,
 }
-
-export default BrailleEncoding;
