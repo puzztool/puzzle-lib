@@ -65,6 +65,9 @@ describe('Conversions', function () {
       const eightBit = CharacterAutoConvert.determineCharacterEncoding('01101100');
       assert.strictEqual(eightBit, CharacterEncoding.EightBitBinary);
 
+      const eightBitLen7 = CharacterAutoConvert.determineCharacterEncoding('1000011');
+      assert.strictEqual(eightBitLen7, CharacterEncoding.EightBitBinary);
+
       const ascii = CharacterAutoConvert.determineCharacterEncoding('76');
       assert.strictEqual(ascii, CharacterEncoding.Ascii);
 
@@ -107,6 +110,9 @@ describe('Conversions', function () {
 
       const eightBitZ = CharacterAutoConvert.convertCharacter('01011010');
       assert.strictEqual(eightBitZ, 'Z');
+
+      const eightBitTruncatedC = CharacterAutoConvert.convertCharacter('1000011');
+      assert.strictEqual(eightBitTruncatedC, 'C');
 
       const unknown = CharacterAutoConvert.convertCharacter('999');
       assert.strictEqual(unknown, '');

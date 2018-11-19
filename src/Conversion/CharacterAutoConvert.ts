@@ -50,7 +50,7 @@ export class CharacterAutoConvert {
     if (this.appearsBinary(input)) {
       if (input.length === 5) {
         return CharacterEncoding.FiveBitBinary;
-      } else if (input.length === 8) {
+      } else if (input.length === 8 || input.length === 7) {
         return CharacterEncoding.EightBitBinary;
       }
     }
