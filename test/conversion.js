@@ -131,6 +131,14 @@ describe('Conversions', function () {
       const eightBitD = CharacterAutoConvert.convertCharacter('1000100', CharacterEncoding.EightBitBinary);
       assert.strictEqual(eightBitD, 'D');
     });
+
+    it('nonPrintable', function () {
+      const asciiControl = CharacterAutoConvert.convertCharacter('28', CharacterEncoding.Ascii);
+      assert.strictEqual(asciiControl, '');
+
+      const asciiDel = CharacterAutoConvert.convertCharacter('127', CharacterEncoding.Ascii);
+      assert.strictEqual(asciiDel, '');
+    });
   });
 
   describe('CharacterConversion', function () {

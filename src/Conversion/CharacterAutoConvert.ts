@@ -22,22 +22,29 @@ export class CharacterAutoConvert {
 
     const baseTen = Number.parseInt(input, 10);
     if (encoding === CharacterEncoding.Ascii) {
-      return String.fromCharCode(baseTen);
+      return CharacterAutoConvert.asciiPrintable(baseTen);
     }
     const asciiOffset = 64;
     if (encoding === CharacterEncoding.Ordinal) {
-      return String.fromCharCode(baseTen + asciiOffset);
+      return CharacterAutoConvert.asciiPrintable(baseTen + asciiOffset);
     }
 
     const binary = Number.parseInt(input, 2);
     if (encoding === CharacterEncoding.FiveBitBinary && this.appearsBinary(input)) {
-      return String.fromCharCode(binary + asciiOffset);
+      return CharacterAutoConvert.asciiPrintable(binary + asciiOffset);
     }
     if (encoding === CharacterEncoding.EightBitBinary && this.appearsBinary(input)) {
-      return String.fromCharCode(binary);
+      return CharacterAutoConvert.asciiPrintable(binary);
     }
 
     return '';
+  }
+
+  static asciiPrintable(index: number) {
+    if (index < 32 || index > 126) {
+      return '';
+    }
+    return String.fromCharCode(index);
   }
 
   static determineCharacterEncoding(input: string) {
