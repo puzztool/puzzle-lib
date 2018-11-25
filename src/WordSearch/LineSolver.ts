@@ -11,10 +11,10 @@ export class LineSolver {
     this._matrix = matrix;
 
     this._directions = [
-      [0, 1],
-      [-1, 0],
-      [1, 0],
-      [0, -1],
+      // Cardinal directions
+      [0, 1], [-1, 0], [1, 0], [0, -1],
+      // Diagonal
+      [1, 1], [-1, -1], [1, -1], [-1, 1]
     ];
 
     this._trie = new Trie([]);
