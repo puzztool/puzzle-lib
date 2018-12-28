@@ -21,41 +21,52 @@ export class MorseString {
     assert(wordDivider !== MorseCharacter.DOT, 'Word divider must not be a reserved value');
     assert(wordDivider !== MorseCharacter.RESERVED_DIVIDER, 'Word divider must not be a reserved value');
 
-    const morseCharStrings = morse.split(characterDivider);
+    const words = morse.split(wordDivider).filter(w => w.length > 0);
     // Discard any empty characters (caused by trailing separator)
-    this._chars = morseCharStrings.filter(mcs => mcs.length > 0).map(mcs => new MorseCharacter(mcs));
+    const wordCharacters = words.map(w => w.split(characterDivider).filter(wc => wc.length > 0));
+    this._words = wordCharacters.map(subarray => subarray.map(wc => new MorseCharacter(wc)));
   }
 
   // reverse reverses the order of all tokens in the string (including separators), such as would be
   // the case if you were reading the data for a puzzle backwards.
   reverse(): MorseString {
-    for (const c of this._chars) {
-      c.reverse();
+    for (let i = 0; i < this._words.length; i++) {
+      for (const c of this._words[i]) {
+        // Reverse the dots/dashes in each letter
+        c.reverse();
+      }
+      // Reverse the letters in each word
+      this._words[i] = this._words[i].reverse();
     }
-    this._chars = this._chars.reverse();
+
+    // Reverse the order of the words
+    this._words = this._words.reverse();
     return this;
   }
 
   // invertDotsAndDashes switches all dots and dashes in the input, such as would be the case if
   // you had two ambiguous symbols for dot/dash and selected the wrong mapping.
   invertDotsAndDashes(): MorseString {
-    for (const c of this._chars) {
-      c.invertDotsAndDashes();
+    for (const word of this._words) {
+      for (const c of word) {
+        c.invertDotsAndDashes();
+      }
     }
     return this;
   }
 
   toString(): string {
     let s = '';
-    for (const c of this._chars) {
-      s += (c.toString() || '?');
+    for (let i = 0; i < this._words.length; i++) {
+      if (i > 0) {
+        s += ' ';  // This is a new word
+      }
+      for (const c of this._words[i]) {
+        s += (c.toString() || '?');
+      }
     }
     return s;
   }
 
-  get chars() {
-    return this._chars;
-  }
-
-  protected _chars: MorseCharacter[];
+  protected _words: MorseCharacter[][];
 }

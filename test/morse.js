@@ -189,6 +189,13 @@ describe('Morse', function () {
       assertSeparatorThrows('/', '/');
       assertSeparatorThrows('C', 'C');
     });
+
+    it('Word Delimiters', function() {
+      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.'
+      assert.strictEqual(new MorseString(someTestString).toString(), 'SOME TEST STRING');
+      assert.strictEqual(new MorseString(someTestString).reverse().toString(), 'WAIRTS TSET EMOS');
+      assert.strictEqual(new MorseString(someTestString).invertDotsAndDashes().toString(), 'OSIT ETOE OEKMAU');
+    })
   });
 });
 
