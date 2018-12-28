@@ -2,13 +2,15 @@ import {EncodingCategory} from '../Common/EncodingCategory';
 import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
 import {MorseData} from './MorseData';
 import {MorseEncoding} from './MorseEncoding';
+import assert = require('assert');
 
 const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
 
 export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
   static readonly DOT: string = '.';
   static readonly DASH: string = '-';
-  static readonly DIVIDER: string = '/';
+  // Character which may not appear in morse and is reserved for use by this class
+  static readonly RESERVED_DIVIDER: string = 'A';
 
   static toMorseString(encoding: MorseEncoding) {
     let morseChars = '';
@@ -84,6 +86,7 @@ export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
 
   invertDotsAndDashes() {
     // Replace dots with a placeholder, dashes with dots, then placeholders with dashes
+    assert(this._morse.indexOf(MorseCharacter.RESERVED_DIVIDER) < 0);
     this._morse = this._morse.replace(/\./g, 'A').replace(/-/g, MorseCharacter.DOT).replace(/A/g, MorseCharacter.DASH);
   }
 

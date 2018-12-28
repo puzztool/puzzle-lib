@@ -178,5 +178,25 @@ describe('Morse', function () {
       assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().reverse().toString(), 'EDAT');
       assert.strictEqual(new MorseString('./.-/--./-').reverse().invertDotsAndDashes().toString(), 'EDAT');
     });
+
+    it('Separator Errors', function() {
+      assertSeparatorThrows('.', ' ');
+      assertSeparatorThrows('-', ' ');
+      assertSeparatorThrows('A', ' ');
+      assertSeparatorThrows('/', '.');
+      assertSeparatorThrows('/', '-');
+      assertSeparatorThrows('/', 'A');
+      assertSeparatorThrows('/', '/');
+      assertSeparatorThrows('C', 'C');
+    });
   });
 });
+
+function assertSeparatorThrows(charSep, wordSep) {
+  // For some reason assert.throws doesn't catch assert.AssertionError.  Do it manually.
+  try {
+    m = new MorseString('.', charSep, wordSep);
+  } catch (e) {
+    assert(e instanceof assert.AssertionError);
+  }
+}

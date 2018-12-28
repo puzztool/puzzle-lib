@@ -1,11 +1,27 @@
+import * as assert from 'assert';
+
 import {MorseCharacter} from './MorseCharacter';
 
 // MorseString represents a string of multiple morse characters.  It allows for a longer representation
 // to be converted to a single string and allows for sentence-level transforms such as reversing
 // the order of tokens.
 export class MorseString {
-  constructor(morse = '', divider = MorseCharacter.DIVIDER) {
-    const morseCharStrings = morse.split(divider);
+  static readonly CHARACTER_DIVIDER: string = '/';
+  static readonly WORD_DIVIDER = ' ';
+
+  constructor(morse = '', characterDivider = MorseString.CHARACTER_DIVIDER, wordDivider = MorseString.WORD_DIVIDER) {
+    // The dividers should be single characters which don't clash with the other string content
+    assert(characterDivider.length === 1, 'Divider must be a single character');
+    assert(wordDivider.length === 1, 'Divider must be a single character');
+    assert(characterDivider !== wordDivider, 'Dividers must be different from each other');
+    assert(characterDivider !== MorseCharacter.DASH, 'Character divider must not be a reserved value');
+    assert(characterDivider !== MorseCharacter.DOT, 'Character divider must not be a reserved value');
+    assert(characterDivider !== MorseCharacter.RESERVED_DIVIDER, 'Character divider must not be a reserved value');
+    assert(wordDivider !== MorseCharacter.DASH, 'Word divider must not be a reserved value');
+    assert(wordDivider !== MorseCharacter.DOT, 'Word divider must not be a reserved value');
+    assert(wordDivider !== MorseCharacter.RESERVED_DIVIDER, 'Word divider must not be a reserved value');
+
+    const morseCharStrings = morse.split(characterDivider);
     // Discard any empty characters (caused by trailing separator)
     this._chars = morseCharStrings.filter(mcs => mcs.length > 0).map(mcs => new MorseCharacter(mcs));
   }
