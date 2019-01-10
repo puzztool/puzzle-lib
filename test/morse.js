@@ -200,10 +200,5 @@ describe('Morse', function () {
 });
 
 function assertSeparatorThrows(charSep, wordSep) {
-  // For some reason assert.throws doesn't catch assert.AssertionError.  Do it manually.
-  try {
-    m = new MorseString('.', charSep, wordSep);
-  } catch (e) {
-    assert(e instanceof assert.AssertionError);
-  }
+  assert.throws(() => {m = new MorseString('.', charSep, wordSep);});
 }
