@@ -18,6 +18,7 @@ export {SignificantFigures} from './Conversion/SignificantFigures';
 export {StringAutoConvert} from './Conversion/StringAutoConvert';
 export {MorseCharacter} from './Morse/MorseCharacter';
 export {MorseEncoding} from './Morse/MorseEncoding';
+export {MorseString} from './Morse/MorseString';
 export {NatoCharacter} from './Nato/NatoCharacter';
 export {NatoData} from './Nato/NatoData';
 export {NavalFlags} from './NavalFlags/NavalFlags';

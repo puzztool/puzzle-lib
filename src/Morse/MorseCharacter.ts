@@ -1,19 +1,25 @@
 import {EncodingCategory} from '../Common/EncodingCategory';
 import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {Helpers} from '../Common/Helpers';
 import {MorseData} from './MorseData';
 import {MorseEncoding} from './MorseEncoding';
 
 const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
 
 export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
+  static readonly DOT: string = '.';
+  static readonly DASH: string = '-';
+  // Character which may not appear in morse and is reserved for use by this class
+  static readonly RESERVED_DIVIDER: string = 'A';
+
   static toMorseString(encoding: MorseEncoding) {
     let morseChars = '';
 
     while (encoding !== MorseEncoding.None) {
       if ((encoding & MORSE_BITMASK) === MorseEncoding.Dot) {
-        morseChars += '.';
+        morseChars += MorseCharacter.DOT;
       } else if ((encoding & MORSE_BITMASK) === MorseEncoding.Dash) {
-        morseChars += '-';
+        morseChars += MorseCharacter.DASH;
       } else {
         throw new Error('Invalid morse bits');
       }
@@ -29,9 +35,9 @@ export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
 
     for (let i = morse.length - 1; i >= 0; i--) {
       const ch = morse[i];
-      if (ch === '.') {
+      if (ch === MorseCharacter.DOT) {
         bits |= MorseEncoding.Dot;
-      } else if (ch === '-') {
+      } else if (ch === MorseCharacter.DASH) {
         bits |= MorseEncoding.Dash;
       } else {
         throw new Error('Invalid morse character');
@@ -69,13 +75,23 @@ export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
   }
 
   dot() {
-    this._morse += '.';
+    this._morse += MorseCharacter.DOT;
     this.invalidateLookup();
   }
 
   dash() {
-    this._morse += '-';
+    this._morse += MorseCharacter.DASH;
     this.invalidateLookup();
+  }
+
+  invertDotsAndDashes() {
+    // Replace dots with a placeholder, dashes with dots, then placeholders with dashes
+    Helpers.assert(this._morse.indexOf(MorseCharacter.RESERVED_DIVIDER) < 0);
+    this._morse = this._morse.replace(/\./g, 'A').replace(/-/g, MorseCharacter.DOT).replace(/A/g, MorseCharacter.DASH);
+  }
+
+  reverse() {
+    this._morse = this._morse.split('').reverse().join('');
   }
 
   protected onClear() {

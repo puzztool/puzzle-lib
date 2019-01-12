@@ -1,7 +1,7 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { MorseCharacter } = require('../');
+const { MorseCharacter, MorseString } = require('../');
 
 describe('Morse', function () {
   describe('Character', function () {
@@ -146,4 +146,59 @@ describe('Morse', function () {
       assert.strictEqual(ch.valid(), false);
     });
   });
+
+  describe('String', function () {
+    it('constructor - Basic', function () {
+      assert.strictEqual(new MorseString('.').toString(), 'E');
+      assert.strictEqual(new MorseString('.../---/...').toString(), 'SOS');
+
+      assert.strictEqual(new MorseString('./.-/--./-').toString(), 'EAGT');
+    });
+
+    it('Invert dots/dashes', function() {
+      // Becomes ---/.../---
+      assert.strictEqual(new MorseString('.../---/...').invertDotsAndDashes().toString(), 'OSO');
+
+      // Becomes -/-./..-/.
+      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().toString(), 'TNUE');
+
+      // Should undo itself if repeated
+      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().invertDotsAndDashes().toString(), 'EAGT');
+    });
+
+    it('Reverse', function() {
+      // Becomes -/.--/-./.
+      assert.strictEqual(new MorseString('./.-/--./-').reverse().toString(), 'TWNE');
+
+      // Should undo itself if repeated
+      assert.strictEqual(new MorseString('./.-/--./-').reverse().reverse().toString(), 'EAGT');
+    });
+
+    it('Chaining', function() {
+      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().reverse().toString(), 'EDAT');
+      assert.strictEqual(new MorseString('./.-/--./-').reverse().invertDotsAndDashes().toString(), 'EDAT');
+    });
+
+    it('Separator Errors', function() {
+      assertSeparatorThrows('.', ' ');
+      assertSeparatorThrows('-', ' ');
+      assertSeparatorThrows('A', ' ');
+      assertSeparatorThrows('/', '.');
+      assertSeparatorThrows('/', '-');
+      assertSeparatorThrows('/', 'A');
+      assertSeparatorThrows('/', '/');
+      assertSeparatorThrows('C', 'C');
+    });
+
+    it('Word Delimiters', function() {
+      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.'
+      assert.strictEqual(new MorseString(someTestString).toString(), 'SOME TEST STRING');
+      assert.strictEqual(new MorseString(someTestString).reverse().toString(), 'WAIRTS TSET EMOS');
+      assert.strictEqual(new MorseString(someTestString).invertDotsAndDashes().toString(), 'OSIT ETOE OEKMAU');
+    })
+  });
 });
+
+function assertSeparatorThrows(charSep, wordSep) {
+  assert.throws(() => {m = new MorseString('.', charSep, wordSep);});
+}
