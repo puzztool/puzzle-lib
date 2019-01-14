@@ -23,7 +23,9 @@ export class WordSearchSolver {
 
   findWords(words: string[]): WordSearchResult[] {
     for (const word of words) {
-      this._trie.addWord(word);
+      if (word !== '') {
+        this._trie.addWord(word);
+      }
     }
     return this.search();
   }
