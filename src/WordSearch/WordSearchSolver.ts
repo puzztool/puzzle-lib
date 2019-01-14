@@ -1,12 +1,12 @@
-import {trie} from 'trie-prefix-tree';
+import trie = require('trie-prefix-tree');
 import {WordSearchPoint} from './WordSearchPoint';
 import {WordSearchResult} from './WordSearchResult';
 
-export class LineSolver {
+export class WordSearchSolver {
   private _matrix: string[][];
   private _directions: number[][];
-  // tslint:disable-next-line
-  private _trie: any;
+
+  private _trie: any;  // tslint:disable-line
 
   constructor(matrix: string[][]) {
     this._matrix = matrix;

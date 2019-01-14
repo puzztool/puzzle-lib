@@ -1,9 +1,9 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { LineSolver } = require('../');
+const { WordSearchSolver } = require('../');
 
-describe('LineSolver', function () {
+describe('WordSearchSolver', function () {
   it('Cardnial directions', function () {
     const matrix = [
       [ 'p', 'x', 'x', 'x' ],
@@ -11,7 +11,7 @@ describe('LineSolver', function () {
       [ 'z', 'x', 'x', 'x' ],
       [ 'z', 'x', 'x', 'x' ]
     ];
-    const solver = new LineSolver(matrix);
+    const solver = new WordSearchSolver(matrix);
     const results = solver.findWords(['puzz', 'win', 'foo', 'bar', 'baz']);
 
     assert.strictEqual(results.length, 2);
@@ -24,7 +24,7 @@ describe('LineSolver', function () {
       [ 'x', 'x', 'z', 'x', 'x' ],
       [ 'x', 'x', 'x', 'z', 'x' ]
     ];
-    const solver = new LineSolver(matrix);
+    const solver = new WordSearchSolver(matrix);
     const results = solver.findWords(['puzz', 'baz']);
 
     assert.strictEqual(results.length, 2);
@@ -37,7 +37,7 @@ describe('LineSolver', function () {
       [ 'a', 'x', 'b', 'a', 'r' ],
       [ 'z', 'x', 'x', 'x' ]
     ];
-    const solver = new LineSolver(matrix);
+    const solver = new WordSearchSolver(matrix);
     const results = solver.findWords(['foo', 'bar', 'baz', 'abc', 'def']);
 
     assert.strictEqual(results.length, 3);
@@ -50,7 +50,7 @@ describe('LineSolver', function () {
       [ 'x', 'x', 'x', 'x' ],
       [ 'x', 'x', 'x', 'x' ],
     ];
-    const solver = new LineSolver(matrix);
+    const solver = new WordSearchSolver(matrix);
     const results = solver.findWords(['foo', 'bar', 'baz']);
 
     assert.strictEqual(results.length, 1);
