@@ -1,13 +1,10 @@
-import {WordSearchPoint} from './WordSearchPoint';
+import {Point} from './WordSearchPoint';
 
 export class WordSearchResult {
   word: string;
-  points: WordSearchPoint[];
-  constructor(word: string, wordPoints: WordSearchPoint[]) {
+  points: Point[];
+  constructor(word: string, wordPoints: Point[]) {
     this.word = word;
-    this.points = [];
-    wordPoints.forEach((element) => {
-      this.points.push(element);
-    });
+    this.points = wordPoints;
   }
 }

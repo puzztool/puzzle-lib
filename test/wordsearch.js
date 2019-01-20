@@ -56,11 +56,11 @@ describe('WordSearchSolver', function () {
     assert.strictEqual(results.length, 1);
     assert.strictEqual(results[0].word, 'foo');
 
-    assert.strictEqual(results[0].points[0].j, 1);
-    assert.strictEqual(results[0].points[0].i, 1);
-    assert.strictEqual(results[0].points[1].j, 2);
-    assert.strictEqual(results[0].points[1].i, 1);
-    assert.strictEqual(results[0].points[2].j, 3);
-    assert.strictEqual(results[0].points[2].i, 1);
+    assert.strictEqual(results[0].points[0].x, 1);
+    assert.strictEqual(results[0].points[0].y, 1);
+    assert.strictEqual(results[0].points[1].x, 2);
+    assert.strictEqual(results[0].points[1].y, 1);
+    assert.strictEqual(results[0].points[2].x, 3);
+    assert.strictEqual(results[0].points[2].y, 1);
   });
 });

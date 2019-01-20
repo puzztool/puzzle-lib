@@ -1,8 +1,8 @@
-export class WordSearchPoint {
-  i: number;
-  j: number;
-  constructor(i: number, j: number) {
-    this.i = i;
-    this.j = j;
+export class Point {
+  x: number;
+  y: number;
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 }
