@@ -27,6 +27,6 @@ export {ResistorColorEntry} from './Resistor/ResistorColorEntry';
 export {SemaphoreCharacter} from './Semaphore/SemaphoreCharacter';
 export {SemaphoreDegrees} from './Semaphore/SemaphoreDegrees';
 export {SemaphoreDirection} from './Semaphore/SemaphoreDirection';
-export {Point as WordSearchPoint} from './WordSearch/WordSearchPoint';
+export {Point as WordSearchPoint} from './WordSearch/Point';
 export {WordSearchResult} from './WordSearch/WordSearchResult';
 export {WordSearchSolver} from './WordSearch/WordSearchSolver';

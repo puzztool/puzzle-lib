@@ -1,4 +1,4 @@
-import {Point} from './WordSearchPoint';
+import {Point} from './Point';
 
 export class WordSearchResult {
   word: string;

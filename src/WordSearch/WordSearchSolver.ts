@@ -1,5 +1,5 @@
 import trie = require('trie-prefix-tree');
-import {Point} from './WordSearchPoint';
+import {Point} from './Point';
 import {WordSearchResult} from './WordSearchResult';
 
 export class WordSearchSolver {

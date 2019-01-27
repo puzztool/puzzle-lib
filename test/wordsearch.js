@@ -4,7 +4,7 @@ const assert = require('assert');
 const { WordSearchSolver } = require('../');
 
 describe('WordSearchSolver', function () {
-  it('Cardnial directions', function () {
+  it('Cardinal directions', function () {
     const matrix = [
       [ 'p', 'x', 'x', 'x' ],
       [ 'u', 'w', 'i', 'n' ],
@@ -30,7 +30,7 @@ describe('WordSearchSolver', function () {
     assert.strictEqual(results.length, 2);
   });
 
-  it('Jagged array', function () {
+  it('Jagged array outside box', function () {
     const matrix = [
       [ 'x', 'f', 'o', 'o' ],
       [ 'b', 'x', 'x', ],
@@ -41,6 +41,19 @@ describe('WordSearchSolver', function () {
     const results = solver.findWords(['foo', 'bar', 'baz', 'abc', 'def']);
 
     assert.strictEqual(results.length, 3);
+  });
+
+  it('Jagged diagonal array', function () {
+    const matrix = [
+      [ 'x', 'x', 'x', 'b' ],
+      [ 'x', 'x', 'a', ],
+      [ 'x', 'r', 'o', 'o', 'f' ],
+      [ 'x', 'x', 'x', 'x' ]
+    ];
+    const solver = new WordSearchSolver(matrix);
+    const results = solver.findWords(['foo', 'bar', 'baz']);
+
+    assert.strictEqual(results.length, 2);
   });
 
   it('Validate path', function () {
