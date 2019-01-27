@@ -1,7 +1,15 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { SemaphoreDirection, SemaphoreCharacter, SemaphoreDegrees } = require('../');
+const {
+  EncodingCategory,
+  EncodingEntry,
+  SemaphoreDirection,
+  SemaphoreCharacter,
+  SemaphoreDegrees
+} = require('../');
+
+// eslint:disable:
 
 describe('Semaphore', function () {
   describe('Degrees', function () {
@@ -119,271 +127,83 @@ describe('Semaphore', function () {
       const ch = new SemaphoreCharacter();
       const results = ch.getPotentialMatches();
       const expected = [
-        {
-          'category': 2,
-          'display': 'A',
-          'encoding': 96
-        },
-        {
-          'category': 2,
-          'display': 'B',
-          'encoding': 160
-        },
-        {
-          'category': 2,
-          'display': 'C',
-          'encoding': 288
-        },
-        {
-          'category': 2,
-          'display': 'D',
-          'encoding': 34
-        },
-        {
-          'category': 2,
-          'display': 'E',
-          'encoding': 36
-        },
-        {
-          'category': 2,
-          'display': 'F',
-          'encoding': 40
-        },
-        {
-          'category': 2,
-          'display': 'G',
-          'encoding': 48
-        },
-        {
-          'category': 2,
-          'display': 'H',
-          'encoding': 192
-        },
-        {
-          'category': 2,
-          'display': 'I',
-          'encoding': 320
-        },
-        {
-          'category': 2,
-          'display': 'J',
-          'encoding': 10
-        },
-        {
-          'category': 2,
-          'display': 'K',
-          'encoding': 66
-        },
-        {
-          'category': 2,
-          'display': 'L',
-          'encoding': 68
-        },
-        {
-          'category': 2,
-          'display': 'M',
-          'encoding': 72
-        },
-        {
-          'category': 2,
-          'display': 'N',
-          'encoding': 80
-        },
-        {
-          'category': 2,
-          'display': 'O',
-          'encoding': 384
-        },
-        {
-          'category': 2,
-          'display': 'P',
-          'encoding': 130
-        },
-        {
-          'category': 2,
-          'display': 'Q',
-          'encoding': 132
-        },
-        {
-          'category': 2,
-          'display': 'R',
-          'encoding': 136
-        },
-        {
-          'category': 2,
-          'display': 'S',
-          'encoding': 144
-        },
-        {
-          'category': 2,
-          'display': 'T',
-          'encoding': 258
-        },
-        {
-          'category': 2,
-          'display': 'U',
-          'encoding': 260
-        },
-        {
-          'category': 2,
-          'display': 'V',
-          'encoding': 18
-        },
-        {
-          'category': 2,
-          'display': 'W',
-          'encoding': 12
-        },
-        {
-          'category': 2,
-          'display': 'X',
-          'encoding': 20
-        },
-        {
-          'category': 2,
-          'display': 'Y',
-          'encoding': 264
-        },
-        {
-          'category': 2,
-          'display': 'Z',
-          'encoding': 24
-        },
-        {
-          'category': 4,
-          'display': '1',
-          'encoding': 96
-        },
-        {
-          'category': 4,
-          'display': '2',
-          'encoding': 160
-        },
-        {
-          'category': 4,
-          'display': '3',
-          'encoding': 288
-        },
-        {
-          'category': 4,
-          'display': '4',
-          'encoding': 34
-        },
-        {
-          'category': 4,
-          'display': '5',
-          'encoding': 36
-        },
-        {
-          'category': 4,
-          'display': '6',
-          'encoding': 40
-        },
-        {
-          'category': 4,
-          'display': '7',
-          'encoding': 48
-        },
-        {
-          'category': 4,
-          'display': '8',
-          'encoding': 192
-        },
-        {
-          'category': 4,
-          'display': '9',
-          'encoding': 320
-        },
-        {
-          'category': 4,
-          'display': '0',
-          'encoding': 66
-        },
-        {
-          'category': 8,
-          'display': '#',
-          'encoding': 6
-        }
+        new EncodingEntry(96, EncodingCategory.Letter, 'A'),
+        new EncodingEntry(160, EncodingCategory.Letter, 'B'),
+        new EncodingEntry(288, EncodingCategory.Letter, 'C'),
+        new EncodingEntry(34, EncodingCategory.Letter, 'D'),
+        new EncodingEntry(36, EncodingCategory.Letter, 'E'),
+        new EncodingEntry(40, EncodingCategory.Letter, 'F'),
+        new EncodingEntry(48, EncodingCategory.Letter, 'G'),
+        new EncodingEntry(192, EncodingCategory.Letter, 'H'),
+        new EncodingEntry(320, EncodingCategory.Letter, 'I'),
+        new EncodingEntry(10, EncodingCategory.Letter, 'J'),
+        new EncodingEntry(66, EncodingCategory.Letter, 'K'),
+        new EncodingEntry(68, EncodingCategory.Letter, 'L'),
+        new EncodingEntry(72, EncodingCategory.Letter, 'M'),
+        new EncodingEntry(80, EncodingCategory.Letter, 'N'),
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'),
+        new EncodingEntry(130, EncodingCategory.Letter, 'P'),
+        new EncodingEntry(132, EncodingCategory.Letter, 'Q'),
+        new EncodingEntry(136, EncodingCategory.Letter, 'R'),
+        new EncodingEntry(144, EncodingCategory.Letter, 'S'),
+        new EncodingEntry(258, EncodingCategory.Letter, 'T'),
+        new EncodingEntry(260, EncodingCategory.Letter, 'U'),
+        new EncodingEntry(18, EncodingCategory.Letter, 'V'),
+        new EncodingEntry(12, EncodingCategory.Letter, 'W'),
+        new EncodingEntry(20, EncodingCategory.Letter, 'X'),
+        new EncodingEntry(264, EncodingCategory.Letter, 'Y'),
+        new EncodingEntry(24, EncodingCategory.Letter, 'Z'),
+        new EncodingEntry(96, EncodingCategory.Number, '1'),
+        new EncodingEntry(160, EncodingCategory.Number, '2'),
+        new EncodingEntry(288, EncodingCategory.Number, '3'),
+        new EncodingEntry(34, EncodingCategory.Number, '4'),
+        new EncodingEntry(36, EncodingCategory.Number, '5'),
+        new EncodingEntry(40, EncodingCategory.Number, '6'),
+        new EncodingEntry(48, EncodingCategory.Number, '7'),
+        new EncodingEntry(192, EncodingCategory.Number, '8'),
+        new EncodingEntry(320, EncodingCategory.Number, '9'),
+        new EncodingEntry(66, EncodingCategory.Number, '0'),
+        new EncodingEntry(6, EncodingCategory.Formatting, '#')
       ];
-      assert.deepEqual(results, expected);
+      assert.strict.deepEqual(results, expected);
     });
 
     it('Some Results', function () {
       const ch = new SemaphoreCharacter(SemaphoreDirection.West);
       const results = ch.getPotentialMatches();
       const expected = [
-        {
-          'category': 2,
-          'display': 'B',
-          'encoding': 160
-        },
-        {
-          'category': 2,
-          'display': 'H',
-          'encoding': 192
-        },
-        {
-          'category': 2,
-          'display': 'O',
-          'encoding': 384
-        },
-        {
-          'category': 2,
-          'display': 'P',
-          'encoding': 130
-        },
-        {
-          'category': 2,
-          'display': 'Q',
-          'encoding': 132
-        },
-        {
-          'category': 2,
-          'display': 'R',
-          'encoding': 136
-        },
-        {
-          'category': 2,
-          'display': 'S',
-          'encoding': 144
-        },
-        {
-          'category': 4,
-          'display': '2',
-          'encoding': 160
-        },
-        {
-          'category': 4,
-          'display': '8',
-          'encoding': 192
-        }
+        new EncodingEntry(160, EncodingCategory.Letter, 'B'),
+        new EncodingEntry(192, EncodingCategory.Letter, 'H'),
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'),
+        new EncodingEntry(130, EncodingCategory.Letter, 'P'),
+        new EncodingEntry(132, EncodingCategory.Letter, 'Q'),
+        new EncodingEntry(136, EncodingCategory.Letter, 'R'),
+        new EncodingEntry(144, EncodingCategory.Letter, 'S'),
+        new EncodingEntry(160, EncodingCategory.Number, '2'),
+        new EncodingEntry(192, EncodingCategory.Number, '8')
       ];
-      assert.deepEqual(results, expected);
+      assert.strict.deepEqual(results, expected);
     });
 
     it('One Result', function () {
       const ch = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.North);
       const exact = ch.getExactMatches();
       const exactExpected = [
-        {
-          'category': 2,
-          'display': 'P',
-          'encoding': 130
-        }
+        new EncodingEntry(130, EncodingCategory.Letter, 'P')
       ];
-      assert.deepEqual(exact, exactExpected);
+      assert.strict.deepEqual(exact, exactExpected);
 
       const potential = ch.getPotentialMatches();
-      assert.deepEqual(potential, []);
+      assert.strict.deepEqual(potential, []);
     });
 
     it('No Results', function () {
       const ch = new SemaphoreCharacter(SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast);
       const exact = ch.getExactMatches();
-      assert.deepEqual(exact, []);
+      assert.strict.deepEqual(exact, []);
 
       const potential = ch.getPotentialMatches();
-      assert.deepEqual(potential, []);
+      assert.strict.deepEqual(potential, []);
     });
 
     it('Potential Match', function () {
@@ -393,13 +213,9 @@ describe('Semaphore', function () {
       assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.West), null);
 
       // Ask for a valid direction.
-      assert.deepEqual(
+      assert.strict.deepEqual(
         ch.getPotentialMatch(SemaphoreDirection.NorthWest),
-        {
-          'category': 2,
-          'display': 'O',
-          'encoding': 384
-        });
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'));
 
       // Add another direction and verify that a match isn't returned.
       ch.addDirection(SemaphoreDirection.NorthWest);
@@ -407,13 +223,9 @@ describe('Semaphore', function () {
 
       // Remove the original direction and verify the same potential match is returned.
       ch.removeDirection(SemaphoreDirection.West);
-      assert.deepEqual(
+      assert.strict.deepEqual(
         ch.getPotentialMatch(SemaphoreDirection.West),
-        {
-          'category': 2,
-          'display': 'O',
-          'encoding': 384
-        });
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'));
 
       // Test an invalid combination which has no match.
       assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.SouthEast), null);
