@@ -165,7 +165,7 @@ describe('Semaphore', function () {
         new EncodingEntry(66, EncodingCategory.Number, '0'),
         new EncodingEntry(6, EncodingCategory.Formatting, '#')
       ];
-      assert.strict.deepEqual(results, expected);
+      assert.deepStrictEqual(results, expected);
     });
 
     it('Some Results', function () {
@@ -182,7 +182,7 @@ describe('Semaphore', function () {
         new EncodingEntry(160, EncodingCategory.Number, '2'),
         new EncodingEntry(192, EncodingCategory.Number, '8')
       ];
-      assert.strict.deepEqual(results, expected);
+      assert.deepStrictEqual(results, expected);
     });
 
     it('One Result', function () {
@@ -191,19 +191,19 @@ describe('Semaphore', function () {
       const exactExpected = [
         new EncodingEntry(130, EncodingCategory.Letter, 'P')
       ];
-      assert.strict.deepEqual(exact, exactExpected);
+      assert.deepStrictEqual(exact, exactExpected);
 
       const potential = ch.getPotentialMatches();
-      assert.strict.deepEqual(potential, []);
+      assert.deepStrictEqual(potential, []);
     });
 
     it('No Results', function () {
       const ch = new SemaphoreCharacter(SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast);
       const exact = ch.getExactMatches();
-      assert.strict.deepEqual(exact, []);
+      assert.deepStrictEqual(exact, []);
 
       const potential = ch.getPotentialMatches();
-      assert.strict.deepEqual(potential, []);
+      assert.deepStrictEqual(potential, []);
     });
 
     it('Potential Match', function () {
@@ -213,7 +213,7 @@ describe('Semaphore', function () {
       assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.West), null);
 
       // Ask for a valid direction.
-      assert.strict.deepEqual(
+      assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.NorthWest),
         new EncodingEntry(384, EncodingCategory.Letter, 'O'));
 
@@ -223,7 +223,7 @@ describe('Semaphore', function () {
 
       // Remove the original direction and verify the same potential match is returned.
       ch.removeDirection(SemaphoreDirection.West);
-      assert.strict.deepEqual(
+      assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.West),
         new EncodingEntry(384, EncodingCategory.Letter, 'O'));
 
