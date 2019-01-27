@@ -155,7 +155,7 @@ describe('Morse', function () {
       assert.strictEqual(new MorseString('./.-/--./-').toString(), 'EAGT');
     });
 
-    it('Invert dots/dashes', function() {
+    it('Invert dots/dashes', function () {
       // Becomes ---/.../---
       assert.strictEqual(new MorseString('.../---/...').invertDotsAndDashes().toString(), 'OSO');
 
@@ -166,7 +166,7 @@ describe('Morse', function () {
       assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().invertDotsAndDashes().toString(), 'EAGT');
     });
 
-    it('Reverse', function() {
+    it('Reverse', function () {
       // Becomes -/.--/-./.
       assert.strictEqual(new MorseString('./.-/--./-').reverse().toString(), 'TWNE');
 
@@ -174,12 +174,12 @@ describe('Morse', function () {
       assert.strictEqual(new MorseString('./.-/--./-').reverse().reverse().toString(), 'EAGT');
     });
 
-    it('Chaining', function() {
+    it('Chaining', function () {
       assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().reverse().toString(), 'EDAT');
       assert.strictEqual(new MorseString('./.-/--./-').reverse().invertDotsAndDashes().toString(), 'EDAT');
     });
 
-    it('Separator Errors', function() {
+    it('Separator Errors', function () {
       assertSeparatorThrows('.', ' ');
       assertSeparatorThrows('-', ' ');
       assertSeparatorThrows('A', ' ');
@@ -190,15 +190,18 @@ describe('Morse', function () {
       assertSeparatorThrows('C', 'C');
     });
 
-    it('Word Delimiters', function() {
-      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.'
+    it('Word Delimiters', function () {
+      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
       assert.strictEqual(new MorseString(someTestString).toString(), 'SOME TEST STRING');
       assert.strictEqual(new MorseString(someTestString).reverse().toString(), 'WAIRTS TSET EMOS');
       assert.strictEqual(new MorseString(someTestString).invertDotsAndDashes().toString(), 'OSIT ETOE OEKMAU');
-    })
+    });
   });
 });
 
-function assertSeparatorThrows(charSep, wordSep) {
-  assert.throws(() => {m = new MorseString('.', charSep, wordSep);});
+function assertSeparatorThrows (charSep, wordSep) {
+  assert.throws(() => {
+    const m = new MorseString('.', charSep, wordSep);
+    m.toString();
+  });
 }
