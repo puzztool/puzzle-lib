@@ -1,6 +1,6 @@
 import trie = require('trie-prefix-tree');
 import {Point} from './Point';
-import {WordSearchResult} from './WordSearchResult';
+import {Result} from './Result';
 
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
@@ -8,7 +8,7 @@ export class WordSearchSolver {
   // Transpositions to apply when finding words
   private _directions: number[][];
   // Potential words to find in the letter grid
-  private _targets: any;  // tslint:disable-line
+  private _targets: ReturnType<typeof trie>;
 
   constructor(matrix: string[][]) {
     this._matrix = matrix;
@@ -23,7 +23,7 @@ export class WordSearchSolver {
     this._targets = trie([]);
   }
 
-  findWords(words: string[]): WordSearchResult[] {
+  findWords(words: string[]): Result[] {
     for (const word of words) {
       if (word !== '') {
         this._targets.addWord(word.trim());
@@ -32,29 +32,31 @@ export class WordSearchSolver {
     return this.search();
   }
 
-  private search(): WordSearchResult[] {
-    let results: WordSearchResult[] = [];
-    for (let y = 0; y < this._matrix.length; y++) {
-      for (let x = 0; x < this._matrix[y].length; x++) {
-        const point = new Point(x, y);
-        const pointResults = this.startSearch(point);
+  private search(): Result[] {
+    let results: Result[] = [];
+    const numRows = this._matrix.length;
+    for (let yIdx = 0; yIdx < numRows; yIdx++) {
+      const lineLength = this._matrix[yIdx].length;
+      for (let xIdx = 0; xIdx < lineLength; xIdx++) {
+        const p: Point = {x: xIdx, y: yIdx};
+        const pointResults = this.startSearch(p);
         results = results.concat(pointResults);
       }
     }
     return results;
   }
 
-  private startSearch(start: Point): WordSearchResult[] {
-    let results: WordSearchResult[] = [];
+  private startSearch(start: Point): Result[] {
+    const results: Result[] = [];
     for (const translation of this._directions) {
       const directionalResults = this.checkDirection(start, translation);
-      results = results.concat(directionalResults);
+      results.push(...directionalResults);
     }
     return results;
   }
 
-  private checkDirection(start: Point, direction: number[]): WordSearchResult[] {
-    const results: WordSearchResult[] = [];
+  private checkDirection(start: Point, direction: number[]): Result[] {
+    const results: Result[] = [];
 
     // Working set
     let currentPoint = start;
@@ -71,15 +73,15 @@ export class WordSearchSolver {
         break;
       }
 
-      pointHistory.push(new Point(currentPoint.x, currentPoint.y));
+      const p: Point = {x: currentPoint.x, y: currentPoint.y};
+      pointHistory.push(p);
 
       // Is a candidate an exact match for the current search string? Save it.
       if (wordsWithPrefix.indexOf(currentString) !== -1) {
-        const foundWord = new WordSearchResult(currentString, pointHistory);
+        const foundWord = new Result(currentString, pointHistory);
         results.push(foundWord);
       }
-
-      const next = new Point(currentPoint.x + direction[0], currentPoint.y + direction[1]);
+      const next: Point = {x: currentPoint.x + direction[0], y: currentPoint.y + direction[1]};
       currentPoint = next;
     }
 

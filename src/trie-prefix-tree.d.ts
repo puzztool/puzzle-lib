@@ -3,9 +3,13 @@
 // Definitions by: James Lismore <https://github.com/jlismore>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
-declare module 'trie-prefix-tree'
-{
-    interface Trie {
+
+// The published typings don't seem to work correctly with ES6 module syntax,
+// switch to CommonJS module syntax instead.
+declare module 'trie-prefix-tree' {
+    function Trie(
+        strings: string[]
+    ): {
         /**
          * Get a string representation of the trie
          */
@@ -17,11 +21,11 @@ declare module 'trie-prefix-tree'
         /**
          * Add a new word to the trie
          */
-        addWord(word: string): Trie;
+        addWord(word: string): ReturnType<typeof Trie>;
         /**
          * Remove an existing word from the trie
          */
-        removeWord(word: string): Trie;
+        removeWord(word: string): ReturnType<typeof Trie>;
         /**
          * Check a prefix is valid
          * @returns Boolean
@@ -62,9 +66,7 @@ declare module 'trie-prefix-tree'
          * @returns Array
          */
         getSubAnagrams(word: string): string[];
-    }
+    };
 
-    function trie(strings: string[]): Trie;
-
-    export = trie;
+    export = Trie;
 }
