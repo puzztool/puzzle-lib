@@ -8,7 +8,7 @@
     "build/src/"
   ],
   "scripts": {
-    "check": "gts check",
+    "check": "gts check && semistandard",
     "clean": "gts clean",
     "compile": "tsc -p .",
     "fix": "gts fix",
