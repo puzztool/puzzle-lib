@@ -25,6 +25,9 @@ export class WordSearchSolver {
 
   findWords(words: string[]): Result[] {
     for (const word of words) {
+      if (word === null || typeof (word) === 'undefined') {
+        throw new Error('Invalid input in WordSearchSolver.findWords()');
+      }
       if (word !== '') {
         this._targets.addWord(word.trim());
       }
