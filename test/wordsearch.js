@@ -93,6 +93,7 @@ describe('WordSearchSolver', function () {
     assert.strictEqual(results[0].points[1].y, 1);
     assert.strictEqual(results[0].points[2].x, 3);
     assert.strictEqual(results[0].points[2].y, 1);
+    assert.strictEqual(results[0].points.length, 3);
   });
 
   it('Overlapping words', function () {
