@@ -87,13 +87,14 @@ describe('WordSearchSolver', function () {
     assert.strictEqual(results.length, 1);
     assert.strictEqual(results[0].word, 'foo');
 
+    assert.strictEqual(results[0].points.length, 3);
+
     assert.strictEqual(results[0].points[0].x, 1);
     assert.strictEqual(results[0].points[0].y, 1);
     assert.strictEqual(results[0].points[1].x, 2);
     assert.strictEqual(results[0].points[1].y, 1);
     assert.strictEqual(results[0].points[2].x, 3);
     assert.strictEqual(results[0].points[2].y, 1);
-    assert.strictEqual(results[0].points.length, 3);
   });
 
   it('Overlapping words', function () {

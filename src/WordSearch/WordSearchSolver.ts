@@ -24,26 +24,29 @@ export class WordSearchSolver {
   }
 
   findWords(words: string[]): Result[] {
-    for (const word of words) {
-      if (word === null || typeof (word) === 'undefined') {
+    for (const full of words) {
+      if (full === null || typeof full === 'undefined') {
         throw new Error('Invalid input in WordSearchSolver.findWords()');
       }
+      const word = full.trim();
       if (word !== '') {
-        this._targets.addWord(word.trim());
+        this._targets.addWord(word);
+      } else {
+        throw new Error('Cannot find an empty string in the wordsearch');
       }
     }
     return this.search();
   }
 
   private search(): Result[] {
-    let results: Result[] = [];
+    const results: Result[] = [];
     const numRows = this._matrix.length;
     for (let yIdx = 0; yIdx < numRows; yIdx++) {
       const lineLength = this._matrix[yIdx].length;
       for (let xIdx = 0; xIdx < lineLength; xIdx++) {
         const p: Point = {x: xIdx, y: yIdx};
         const pointResults = this.startSearch(p);
-        results = results.concat(pointResults);
+        results.push(...pointResults);
       }
     }
     return results;
