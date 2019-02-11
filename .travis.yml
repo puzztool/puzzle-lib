@@ -12,7 +12,7 @@ env:
   matrix:
   - NODEJS_VERSION=node/8
   - NODEJS_VERSION=node/10
-  - NODEJS_VERSION=chakracore/8
+  - NODEJS_VERSION=node/11
   - NODEJS_VERSION=chakracore/10
 before_install:
 # Install NVS.
