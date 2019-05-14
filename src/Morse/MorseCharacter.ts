@@ -1,8 +1,8 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
-import {Helpers} from '../Common/Helpers';
-import {MorseData} from './MorseData';
-import {MorseEncoding} from './MorseEncoding';
+import { EncodingCategory } from '../Common/EncodingCategory';
+import { EncodingCharacterBase } from '../Common/EncodingCharacterBase';
+import { Helpers } from '../Common/Helpers';
+import { MorseData } from './MorseData';
+import { MorseEncoding } from './MorseEncoding';
 
 const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
 
@@ -87,11 +87,17 @@ export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
   invertDotsAndDashes() {
     // Replace dots with a placeholder, dashes with dots, then placeholders with dashes
     Helpers.assert(this._morse.indexOf(MorseCharacter.RESERVED_DIVIDER) < 0);
-    this._morse = this._morse.replace(/\./g, 'A').replace(/-/g, MorseCharacter.DOT).replace(/A/g, MorseCharacter.DASH);
+    this._morse = this._morse
+      .replace(/\./g, 'A')
+      .replace(/-/g, MorseCharacter.DOT)
+      .replace(/A/g, MorseCharacter.DASH);
   }
 
   reverse() {
-    this._morse = this._morse.split('').reverse().join('');
+    this._morse = this._morse
+      .split('')
+      .reverse()
+      .join('');
   }
 
   protected onClear() {

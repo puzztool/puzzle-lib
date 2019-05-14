@@ -1,4 +1,4 @@
-import {CharacterConversion} from '../Conversion/CharacterConversion';
+import { CharacterConversion } from '../Conversion/CharacterConversion';
 
 export class CaesarUtils {
   static rotateLetter(ch: string, rot: number) {
@@ -21,10 +21,15 @@ export class CaesarUtils {
       return ch;
     }
 
-    return String.fromCharCode((((code - base) + rot) % this.alphaLength) + base);
+    return String.fromCharCode(((code - base + rot) % this.alphaLength) + base);
   }
 
-  static rotateLetterWithKey(ch: string, key: string, keyIndex: number, decrypt = false) {
+  static rotateLetterWithKey(
+    ch: string,
+    key: string,
+    keyIndex: number,
+    decrypt = false
+  ) {
     if (key.length === 0) {
       return ch;
     }

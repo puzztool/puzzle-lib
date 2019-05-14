@@ -1,9 +1,12 @@
-import {CharacterEncoding} from './CharacterEncoding';
+import { CharacterEncoding } from './CharacterEncoding';
 
 export class CharacterAutoConvert {
   // Forced encoding can be useful when converting an entire string
   // or simply dealing with binary which has no leading zeros
-  static convertCharacter(input: string, forcedCharacterEncoding?: CharacterEncoding) {
+  static convertCharacter(
+    input: string,
+    forcedCharacterEncoding?: CharacterEncoding
+  ) {
     let encoding = null;
     if (!forcedCharacterEncoding) {
       encoding = this.determineCharacterEncoding(input);
@@ -30,10 +33,16 @@ export class CharacterAutoConvert {
     }
 
     const binary = Number.parseInt(input, 2);
-    if (encoding === CharacterEncoding.FiveBitBinary && this.appearsBinary(input)) {
+    if (
+      encoding === CharacterEncoding.FiveBitBinary &&
+      this.appearsBinary(input)
+    ) {
       return CharacterAutoConvert.asciiPrintable(binary + asciiOffset);
     }
-    if (encoding === CharacterEncoding.EightBitBinary && this.appearsBinary(input)) {
+    if (
+      encoding === CharacterEncoding.EightBitBinary &&
+      this.appearsBinary(input)
+    ) {
       return CharacterAutoConvert.asciiPrintable(binary);
     }
 

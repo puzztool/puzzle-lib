@@ -1,4 +1,4 @@
-import {ResistorColorEntry} from './ResistorColorEntry';
+import { ResistorColorEntry } from './ResistorColorEntry';
 
 export class Resistor {
   // Name, Color, Multiplier, Value, Tolerance
@@ -6,18 +6,73 @@ export class Resistor {
   static readonly BROWN = new ResistorColorEntry('Brown', '#8B4513', 10, 1, 1);
   static readonly RED = new ResistorColorEntry('Red', '#FF0000', 100, 2, 2);
   static readonly ORANGE = new ResistorColorEntry('Orange', '#EE7420', 1000, 3);
-  static readonly YELLOW = new ResistorColorEntry('Yellow', '#FFFF00', 10000, 4);
-  static readonly GREEN = new ResistorColorEntry('Green', '#008000', 100000, 5, 0.5);
-  static readonly BLUE = new ResistorColorEntry('Blue', '#0000FF', 1000000, 6, 0.25);
-  static readonly VIOLET = new ResistorColorEntry('Violet', '#800080', 10000000, 7, 0.1);
-  static readonly GREY = new ResistorColorEntry('Grey', '#808080', 100000000, 8);
-  static readonly WHITE = new ResistorColorEntry('White', '#FFFFFF', 1000000000, 9);
-  static readonly GOLD = new ResistorColorEntry('Gold', '#AB8D3F', 0.1, undefined, 5);
-  static readonly SILVER = new ResistorColorEntry('Silver', '#C0C0C0', 0.01, undefined, 10);
+  static readonly YELLOW = new ResistorColorEntry(
+    'Yellow',
+    '#FFFF00',
+    10000,
+    4
+  );
+  static readonly GREEN = new ResistorColorEntry(
+    'Green',
+    '#008000',
+    100000,
+    5,
+    0.5
+  );
+  static readonly BLUE = new ResistorColorEntry(
+    'Blue',
+    '#0000FF',
+    1000000,
+    6,
+    0.25
+  );
+  static readonly VIOLET = new ResistorColorEntry(
+    'Violet',
+    '#800080',
+    10000000,
+    7,
+    0.1
+  );
+  static readonly GREY = new ResistorColorEntry(
+    'Grey',
+    '#808080',
+    100000000,
+    8
+  );
+  static readonly WHITE = new ResistorColorEntry(
+    'White',
+    '#FFFFFF',
+    1000000000,
+    9
+  );
+  static readonly GOLD = new ResistorColorEntry(
+    'Gold',
+    '#AB8D3F',
+    0.1,
+    undefined,
+    5
+  );
+  static readonly SILVER = new ResistorColorEntry(
+    'Silver',
+    '#C0C0C0',
+    0.01,
+    undefined,
+    10
+  );
 
   static readonly colorTable: ResistorColorEntry[] = [
-    Resistor.BLACK, Resistor.BROWN, Resistor.RED, Resistor.ORANGE, Resistor.YELLOW, Resistor.GREEN, Resistor.BLUE,
-    Resistor.VIOLET, Resistor.GREY, Resistor.WHITE, Resistor.GOLD, Resistor.SILVER
+    Resistor.BLACK,
+    Resistor.BROWN,
+    Resistor.RED,
+    Resistor.ORANGE,
+    Resistor.YELLOW,
+    Resistor.GREEN,
+    Resistor.BLUE,
+    Resistor.VIOLET,
+    Resistor.GREY,
+    Resistor.WHITE,
+    Resistor.GOLD,
+    Resistor.SILVER,
   ];
 
   static readonly INVALID_RESISTOR = -1;
@@ -39,7 +94,7 @@ export class Resistor {
     // Iterate through all but the final band (the multipler) and extract the
     // values
     let value = 0;
-    for (let i = 0; i < (colors.length - 1); ++i) {
+    for (let i = 0; i < colors.length - 1; ++i) {
       const currentColor = colors[i];
       if (currentColor.value === undefined) {
         return Resistor.INVALID_RESISTOR;
@@ -49,7 +104,10 @@ export class Resistor {
       value += currentColor.value;
     }
 
-    return Resistor.applyMultiplier(value, colors[colors.length - 1].multiplier);
+    return Resistor.applyMultiplier(
+      value,
+      colors[colors.length - 1].multiplier
+    );
   }
 
   static getDisplayValue(value: number) {

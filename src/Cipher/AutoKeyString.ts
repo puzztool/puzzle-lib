@@ -1,5 +1,5 @@
-import {CaesarUtils} from './CaesarUtils';
-import {KeyedCipherStringBase} from './KeyedCipherStringBase';
+import { CaesarUtils } from './CaesarUtils';
+import { KeyedCipherStringBase } from './KeyedCipherStringBase';
 
 export class AutoKeyString extends KeyedCipherStringBase {
   protected convert(decrypt: boolean) {
@@ -12,7 +12,12 @@ export class AutoKeyString extends KeyedCipherStringBase {
 
       for (const ch of this._text) {
         if (CaesarUtils.isAlpha(ch)) {
-          const currentLetter = CaesarUtils.rotateLetterWithKey(ch, fullKey, keyIndex++, decrypt);
+          const currentLetter = CaesarUtils.rotateLetterWithKey(
+            ch,
+            fullKey,
+            keyIndex++,
+            decrypt
+          );
           rotStr.push(currentLetter);
           if (decrypt) {
             fullKey += currentLetter;

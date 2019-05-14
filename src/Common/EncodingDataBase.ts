@@ -1,6 +1,6 @@
-import {EncodingCategory} from './EncodingCategory';
-import {EncodingEntry} from './EncodingEntry';
-import {EncodingLookupResult} from './EncodingLookupResult';
+import { EncodingCategory } from './EncodingCategory';
+import { EncodingEntry } from './EncodingEntry';
+import { EncodingLookupResult } from './EncodingLookupResult';
 
 export abstract class EncodingDataBase<T extends number> {
   private readonly _entries: Array<EncodingEntry<T>> = [];
@@ -21,7 +21,11 @@ export abstract class EncodingDataBase<T extends number> {
     return result;
   }
 
-  protected addToList(encoding: T, category: EncodingCategory, display: string) {
+  protected addToList(
+    encoding: T,
+    category: EncodingCategory,
+    display: string
+  ) {
     this._entries.push(new EncodingEntry<T>(encoding, category, display));
   }
 }

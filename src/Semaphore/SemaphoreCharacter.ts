@@ -1,14 +1,18 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
-import {EncodingEntry} from '../Common/EncodingEntry';
+import { EncodingCategory } from '../Common/EncodingCategory';
+import { EncodingCharacterBase } from '../Common/EncodingCharacterBase';
+import { EncodingEntry } from '../Common/EncodingEntry';
 
-import {SemaphoreData} from './SemaphoreData';
-import {SemaphoreDegrees} from './SemaphoreDegrees';
-import {SemaphoreDirection} from './SemaphoreDirection';
-import {SemaphoreEncoding} from './SemaphoreEncoding';
+import { SemaphoreData } from './SemaphoreData';
+import { SemaphoreDegrees } from './SemaphoreDegrees';
+import { SemaphoreDirection } from './SemaphoreDirection';
+import { SemaphoreEncoding } from './SemaphoreEncoding';
 
-export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding> {
-  private static parseEncoding(encoding: SemaphoreDirection|SemaphoreEncoding) {
+export class SemaphoreCharacter extends EncodingCharacterBase<
+  SemaphoreEncoding
+> {
+  private static parseEncoding(
+    encoding: SemaphoreDirection | SemaphoreEncoding
+  ) {
     const directions: SemaphoreDirection[] = [];
 
     for (let i = 1; i <= 8; i++) {
@@ -23,7 +27,10 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
 
   private _directions: SemaphoreDirection[] = [];
 
-  constructor(encoding: SemaphoreEncoding = SemaphoreEncoding.None, category: EncodingCategory = EncodingCategory.All) {
+  constructor(
+    encoding: SemaphoreEncoding = SemaphoreEncoding.None,
+    category: EncodingCategory = EncodingCategory.All
+  ) {
     super(SemaphoreData.instance, category);
 
     this.addDirection(encoding);
@@ -38,7 +45,7 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
     this.invalidateLookup();
   }
 
-  addDirection(direction: SemaphoreDirection|SemaphoreEncoding) {
+  addDirection(direction: SemaphoreDirection | SemaphoreEncoding) {
     for (const dir of SemaphoreCharacter.parseEncoding(direction)) {
       this._directions.push(dir);
     }
@@ -50,7 +57,7 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
     this.invalidateLookup();
   }
 
-  removeDirection(direction: SemaphoreDirection|SemaphoreEncoding) {
+  removeDirection(direction: SemaphoreDirection | SemaphoreEncoding) {
     for (const dir of SemaphoreCharacter.parseEncoding(direction)) {
       const index = this._directions.indexOf(dir);
       if (index >= 0) {
@@ -66,15 +73,21 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
   }
 
   getDegrees() {
-    return this._directions.map((value) => SemaphoreDegrees.ToDegrees(value)).sort((a, b) => a - b);
+    return this._directions
+      .map(value => SemaphoreDegrees.ToDegrees(value))
+      .sort((a, b) => a - b);
   }
 
-  getPotentialMatch(other: SemaphoreDirection): EncodingEntry<SemaphoreEncoding>|null {
+  getPotentialMatch(
+    other: SemaphoreDirection
+  ): EncodingEntry<SemaphoreEncoding> | null {
     if (this.directions.length !== 1 || this.directions[0] === other) {
       return null;
     }
 
-    const potentialMatch = this.getPotentialMatches().filter((value) => (value.encoding & other) === other)[0];
+    const potentialMatch = this.getPotentialMatches().filter(
+      value => (value.encoding & other) === other
+    )[0];
 
     return potentialMatch || null;
   }
@@ -89,6 +102,8 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
 
   protected getEncoding() {
     return this._directions.reduce(
-        (previousValue, currentValue) => previousValue |= currentValue, SemaphoreEncoding.None);
+      (previousValue, currentValue) => (previousValue |= currentValue),
+      SemaphoreEncoding.None
+    );
   }
 }

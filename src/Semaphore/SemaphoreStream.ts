@@ -1,7 +1,7 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {SemaphoreCharacter} from './SemaphoreCharacter';
-import {SemaphoreData} from './SemaphoreData';
-import {SemaphoreEncoding} from './SemaphoreEncoding';
+import { EncodingCategory } from '../Common/EncodingCategory';
+import { SemaphoreCharacter } from './SemaphoreCharacter';
+import { SemaphoreData } from './SemaphoreData';
+import { SemaphoreEncoding } from './SemaphoreEncoding';
 
 interface SemaphoreStreamState {
   numberMode: boolean;
@@ -72,8 +72,11 @@ export class SemaphoreStream {
           break;
 
         default:
-          const category = EncodingCategory.Punctuation |
-              (this._state.numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
+          const category =
+            EncodingCategory.Punctuation |
+            (this._state.numberMode
+              ? EncodingCategory.Number
+              : EncodingCategory.Letter);
           const exact = SemaphoreData.instance.lookup(ch, category).exact;
 
           if (exact.length > 0) {
