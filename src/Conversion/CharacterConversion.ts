@@ -1,18 +1,42 @@
-import {CharacterTableEntry} from './CharacterTableEntry';
+import { CharacterTableEntry } from './CharacterTableEntry';
 
 export class CharacterConversion {
   static getAsciiTable() {
     const retVal: CharacterTableEntry[] = [];
-    CharacterConversion.addAsciiRange(retVal, 48, 57, CharacterConversion.toAscii, 127);
-    CharacterConversion.addAsciiRange(retVal, 65, 90, CharacterConversion.toAscii, 127);
-    CharacterConversion.addAsciiRange(retVal, 97, 122, CharacterConversion.toAscii, 127);
+    CharacterConversion.addAsciiRange(
+      retVal,
+      48,
+      57,
+      CharacterConversion.toAscii,
+      127
+    );
+    CharacterConversion.addAsciiRange(
+      retVal,
+      65,
+      90,
+      CharacterConversion.toAscii,
+      127
+    );
+    CharacterConversion.addAsciiRange(
+      retVal,
+      97,
+      122,
+      CharacterConversion.toAscii,
+      127
+    );
 
     return retVal;
   }
 
   static getOrdinalTable() {
     const retVal: CharacterTableEntry[] = [];
-    CharacterConversion.addAsciiRange(retVal, 65, 90, CharacterConversion.toOrdinal, 26);
+    CharacterConversion.addAsciiRange(
+      retVal,
+      65,
+      90,
+      CharacterConversion.toOrdinal,
+      26
+    );
 
     return retVal;
   }
@@ -51,8 +75,12 @@ export class CharacterConversion {
   }
 
   private static addAsciiRange(
-      array: CharacterTableEntry[], start: number, end: number, conversion: (value: string) => number,
-      maxValue: number) {
+    array: CharacterTableEntry[],
+    start: number,
+    end: number,
+    conversion: (value: string) => number,
+    maxValue: number
+  ) {
     for (let i = start; i <= end; i++) {
       const letter = String.fromCharCode(i);
       array.push(new CharacterTableEntry(letter, conversion(letter), maxValue));

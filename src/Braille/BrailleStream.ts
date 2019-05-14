@@ -1,7 +1,7 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {BrailleCharacter} from './BrailleCharacter';
-import {BrailleData} from './BrailleData';
-import {BrailleEncoding} from './BrailleEncoding';
+import { EncodingCategory } from '../Common/EncodingCategory';
+import { BrailleCharacter } from './BrailleCharacter';
+import { BrailleData } from './BrailleData';
+import { BrailleEncoding } from './BrailleEncoding';
 
 export class BrailleStream {
   private readonly _chars: BrailleEncoding[] = [];
@@ -71,7 +71,10 @@ export class BrailleStream {
 
         default:
           const category =
-              EncodingCategory.Punctuation | (this._numberMode ? EncodingCategory.Number : EncodingCategory.Letter);
+            EncodingCategory.Punctuation |
+            (this._numberMode
+              ? EncodingCategory.Number
+              : EncodingCategory.Letter);
           const exact = BrailleData.instance.lookup(ch, category).exact;
 
           if (exact.length > 0) {

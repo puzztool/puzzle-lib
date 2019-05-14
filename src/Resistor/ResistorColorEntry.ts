@@ -5,7 +5,13 @@ export class ResistorColorEntry {
   readonly value?: number;
   readonly toleranceInPercent?: number;
 
-  constructor(name: string, colorCode: string, multiplier: number, value?: number, toleranceInPercent?: number) {
+  constructor(
+    name: string,
+    colorCode: string,
+    multiplier: number,
+    value?: number,
+    toleranceInPercent?: number
+  ) {
     this.name = name;
     this.value = value;
     this.colorCode = colorCode;
@@ -14,7 +20,7 @@ export class ResistorColorEntry {
   }
 
   hasValue() {
-    return (this.value !== undefined);
+    return this.value !== undefined;
   }
 
   getDisplayValue() {
@@ -25,7 +31,7 @@ export class ResistorColorEntry {
   }
 
   hasTolerance() {
-    return (this.toleranceInPercent !== undefined);
+    return this.toleranceInPercent !== undefined;
   }
 
   getDisplayTolerance() {

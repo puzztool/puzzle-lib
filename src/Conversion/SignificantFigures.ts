@@ -11,7 +11,11 @@ export class SignificantFigures {
     return this.roundInternal(Math.round, num, sigFigs);
   }
 
-  private static roundInternal(func: (num: number) => number, num: number, sigFigs: number) {
+  private static roundInternal(
+    func: (num: number) => number,
+    num: number,
+    sigFigs: number
+  ) {
     if (num === 0) {
       return num;
     }

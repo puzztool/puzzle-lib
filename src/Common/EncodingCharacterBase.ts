@@ -1,12 +1,12 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {EncodingEntry} from '../Common/EncodingEntry';
-import {EncodingLookupResult} from '../Common/EncodingLookupResult';
-import {EncodingDataBase} from './EncodingDataBase';
+import { EncodingCategory } from '../Common/EncodingCategory';
+import { EncodingEntry } from '../Common/EncodingEntry';
+import { EncodingLookupResult } from '../Common/EncodingLookupResult';
+import { EncodingDataBase } from './EncodingDataBase';
 
 export abstract class EncodingCharacterBase<T extends number> {
   private _category: EncodingCategory;
   private _data: EncodingDataBase<T>;
-  private _lookup: EncodingLookupResult<T>|null = null;
+  private _lookup: EncodingLookupResult<T> | null = null;
 
   constructor(data: EncodingDataBase<T>, category: EncodingCategory) {
     this._data = data;
