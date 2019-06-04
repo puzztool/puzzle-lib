@@ -29,4 +29,5 @@ export { SemaphoreDegrees } from './Semaphore/SemaphoreDegrees';
 export { SemaphoreDirection } from './Semaphore/SemaphoreDirection';
 export { Point as WordSearchPoint } from './WordSearch/Point';
 export { Result as WordSearchResult } from './WordSearch/Result';
+export { WordSearchDirection } from './WordSearch/WordSearchDirection';
 export { WordSearchSolver } from './WordSearch/WordSearchSolver';

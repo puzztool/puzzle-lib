@@ -1,6 +1,8 @@
 import trie = require('trie-prefix-tree');
+
 import { Point } from './Point';
 import { Result } from './Result';
+import { WordSearchDirection } from './WordSearchDirection';
 
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
@@ -10,9 +12,12 @@ export class WordSearchSolver {
   // Potential words to find in the letter grid
   private _targets: ReturnType<typeof trie>;
 
-  constructor(matrix: string[][]) {
-    this._matrix = matrix;
+  constructor() {
+    // Use empty grid and list by default
+    this._matrix = [[]];
+    this._targets = trie([]);
 
+    // Use both sets of directions by default
     this._directions = [
       // Cardinal directions
       [0, 1],
@@ -25,11 +30,9 @@ export class WordSearchSolver {
       [1, -1],
       [-1, 1],
     ];
-
-    this._targets = trie([]);
   }
 
-  findWords(words: string[]): Result[] {
+  setWords(words: string[]) {
     for (const full of words) {
       if (full === null || typeof full === 'undefined') {
         throw new Error('Invalid input in WordSearchSolver.findWords()');
@@ -41,10 +44,39 @@ export class WordSearchSolver {
         throw new Error('Cannot find an empty string in the wordsearch');
       }
     }
-    return this.search();
   }
 
-  private search(): Result[] {
+  setGrid(matrix: string[][]) {
+    this._matrix = matrix;
+  }
+
+  setDirections(direction: WordSearchDirection) {
+    this._directions = [];
+    if (
+      direction === WordSearchDirection.Cardinal ||
+      direction === WordSearchDirection.CardinalAndDiagonal
+    ) {
+      this._directions = this._directions.concat([
+        [0, 1],
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+      ]);
+    }
+    if (
+      direction === WordSearchDirection.Diagonal ||
+      direction === WordSearchDirection.CardinalAndDiagonal
+    ) {
+      this._directions = this._directions.concat([
+        [1, 1],
+        [-1, -1],
+        [1, -1],
+        [-1, 1],
+      ]);
+    }
+  }
+
+  findWords(): Result[] {
     const results: Result[] = [];
     const numRows = this._matrix.length;
     for (let yIdx = 0; yIdx < numRows; yIdx++) {
