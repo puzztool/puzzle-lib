@@ -1,7 +1,8 @@
 import trie = require('trie-prefix-tree');
-import {Point} from './Point';
-import {Result} from './Result';
-import {WordSearchDirection} from './WordSearchDirection';
+
+import { Point } from './Point';
+import { Result } from './Result';
+import { WordSearchDirection } from './WordSearchDirection';
 
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
@@ -19,9 +20,15 @@ export class WordSearchSolver {
     // Use both sets of directions by default
     this._directions = [
       // Cardinal directions
-      [0, 1], [-1, 0], [1, 0], [0, -1],
+      [0, 1],
+      [-1, 0],
+      [1, 0],
+      [0, -1],
       // Diagonal
-      [1, 1], [-1, -1], [1, -1], [-1, 1]
+      [1, 1],
+      [-1, -1],
+      [1, -1],
+      [-1, 1],
     ];
   }
 
@@ -69,7 +76,7 @@ export class WordSearchSolver {
     for (let yIdx = 0; yIdx < numRows; yIdx++) {
       const lineLength = this._matrix[yIdx].length;
       for (let xIdx = 0; xIdx < lineLength; xIdx++) {
-        const p: Point = {x: xIdx, y: yIdx};
+        const p: Point = { x: xIdx, y: yIdx };
         const pointResults = this.startSearch(p);
         results.push(...pointResults);
       }
@@ -94,7 +101,8 @@ export class WordSearchSolver {
     let currentString = '';
     const pointHistory = [];
     while (this.isInBounds(currentPoint)) {
-      currentString = currentString + this._matrix[currentPoint.y][currentPoint.x];
+      currentString =
+        currentString + this._matrix[currentPoint.y][currentPoint.x];
 
       // Get the candidates with the current prefix string
       const wordsWithPrefix = this._targets.getPrefix(currentString);
@@ -104,7 +112,7 @@ export class WordSearchSolver {
         break;
       }
 
-      const p: Point = {x: currentPoint.x, y: currentPoint.y};
+      const p: Point = { x: currentPoint.x, y: currentPoint.y };
       pointHistory.push(p);
 
       // Is a candidate an exact match for the current search string? Save it.
@@ -112,7 +120,10 @@ export class WordSearchSolver {
         const foundWord = new Result(currentString, pointHistory);
         results.push(foundWord);
       }
-      const next: Point = {x: currentPoint.x + direction[0], y: currentPoint.y + direction[1]};
+      const next: Point = {
+        x: currentPoint.x + direction[0],
+        y: currentPoint.y + direction[1],
+      };
       currentPoint = next;
     }
 

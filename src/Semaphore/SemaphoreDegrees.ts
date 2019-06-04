@@ -1,4 +1,4 @@
-import {SemaphoreDirection} from './SemaphoreDirection';
+import { SemaphoreDirection } from './SemaphoreDirection';
 
 export class SemaphoreDegrees {
   static FromDegrees(degrees: number) {
@@ -21,6 +21,6 @@ export class SemaphoreDegrees {
       counter++;
     }
 
-    return (counter * 45);
+    return counter * 45;
   }
 }

@@ -1,5 +1,5 @@
-import {CharacterAutoConvert} from './CharacterAutoConvert';
-import {CharacterEncoding} from './CharacterEncoding';
+import { CharacterAutoConvert } from './CharacterAutoConvert';
+import { CharacterEncoding } from './CharacterEncoding';
 
 export class StringAutoConvert {
   static convertString(input: string, homogeneous: boolean) {
@@ -7,19 +7,29 @@ export class StringAutoConvert {
 
     if (homogeneous) {
       const encoding = this.determineStringEncoding(input);
-      return split.reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter, encoding), '');
+      return split.reduce(
+        (result, letter) =>
+          result + CharacterAutoConvert.convertCharacter(letter, encoding),
+        ''
+      );
     } else {
-      return split.reduce((result, letter) => result + CharacterAutoConvert.convertCharacter(letter), '');
+      return split.reduce(
+        (result, letter) =>
+          result + CharacterAutoConvert.convertCharacter(letter),
+        ''
+      );
     }
   }
 
   static determineStringEncoding(input: string): CharacterEncoding {
-    const encodingCount: {[index: number]: number} = {};
+    const encodingCount: { [index: number]: number } = {};
     const parsed = this.splitString(input);
     const encodingKeys: number[] = [];
 
     for (const letter of parsed) {
-      const charEncoding = CharacterAutoConvert.determineCharacterEncoding(letter);
+      const charEncoding = CharacterAutoConvert.determineCharacterEncoding(
+        letter
+      );
       if (!encodingCount[charEncoding]) {
         encodingCount[charEncoding] = 1;
         encodingKeys.push(charEncoding);
@@ -42,6 +52,6 @@ export class StringAutoConvert {
   }
 
   static splitString(input: string): string[] {
-    return input.split(' ').filter((item) => item !== '');
+    return input.split(' ').filter(item => item !== '');
   }
 }

@@ -1,4 +1,4 @@
-import {SemaphoreDirection} from './SemaphoreDirection';
+import { SemaphoreDirection } from './SemaphoreDirection';
 
 export enum SemaphoreEncoding {
   None = 0,
