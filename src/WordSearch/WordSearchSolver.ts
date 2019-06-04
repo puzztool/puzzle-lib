@@ -1,6 +1,7 @@
 import trie = require('trie-prefix-tree');
 import {Point} from './Point';
 import {Result} from './Result';
+import {WordSearchDirection} from './WordSearchDirection';
 
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
@@ -42,13 +43,23 @@ export class WordSearchSolver {
     this._matrix = matrix;
   }
 
-  setDirections(useDiagonal: boolean, useCardinal: boolean) {
+  setDirections(direction: WordSearchDirection) {
     this._directions = [];
-    if (useCardinal) {
-      this._directions = this._directions.concat([[0, 1], [-1, 0], [1, 0], [0, -1]]);
+    if (direction === WordSearchDirection.Cardinal || direction === WordSearchDirection.CardinalAndDiagonal) {
+      this._directions = this._directions.concat([
+        [0, 1],
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+      ]);
     }
-    if (useDiagonal) {
-      this._directions = this._directions.concat([[1, 1], [-1, -1], [1, -1], [-1, 1]]);
+    if (direction === WordSearchDirection.Diagonal || direction === WordSearchDirection.CardinalAndDiagonal) {
+      this._directions = this._directions.concat([
+        [1, 1],
+        [-1, -1],
+        [1, -1],
+        [-1, 1],
+      ]);
     }
   }
 

@@ -1,7 +1,10 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { WordSearchSolver } = require('../');
+const {
+  WordSearchSolver,
+  WordSearchDirection
+} = require('../');
 
 function assertResultsContainsWord (results, word) {
   for (const result of results) {
@@ -131,7 +134,7 @@ describe('WordSearchSolver', function () {
       [ 'z', 'x', 'x', 'x' ]
     ];
     const solver = new WordSearchSolver();
-    solver.setDirections(true, false);
+    solver.setDirections(WordSearchDirection.Diagonal);
     solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz', 'wax']);
     solver.setGrid(matrix);
     const diagResults = solver.findWords();
@@ -139,7 +142,7 @@ describe('WordSearchSolver', function () {
     assert.strictEqual(diagResults.length, 1);
     assertResultsContainsWord(diagResults, 'wax');
 
-    solver.setDirections(false, true);
+    solver.setDirections(WordSearchDirection.Cardinal);
     const cardinalResults = solver.findWords(matrix);
     assertResultsContainsWord(cardinalResults, 'puzz');
     assertResultsContainsWord(cardinalResults, 'win');
