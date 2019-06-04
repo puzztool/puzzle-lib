@@ -52,7 +52,10 @@ export class WordSearchSolver {
 
   setDirections(direction: WordSearchDirection) {
     this._directions = [];
-    if (direction === WordSearchDirection.Cardinal || direction === WordSearchDirection.CardinalAndDiagonal) {
+    if (
+      direction === WordSearchDirection.Cardinal ||
+      direction === WordSearchDirection.CardinalAndDiagonal
+    ) {
       this._directions = this._directions.concat([
         [0, 1],
         [-1, 0],
@@ -60,7 +63,10 @@ export class WordSearchSolver {
         [0, -1],
       ]);
     }
-    if (direction === WordSearchDirection.Diagonal || direction === WordSearchDirection.CardinalAndDiagonal) {
+    if (
+      direction === WordSearchDirection.Diagonal ||
+      direction === WordSearchDirection.CardinalAndDiagonal
+    ) {
       this._directions = this._directions.concat([
         [1, 1],
         [-1, -1],

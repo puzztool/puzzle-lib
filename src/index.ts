@@ -1,4 +1,3 @@
-
 export { BrailleCharacter } from './Braille/BrailleCharacter';
 export { BrailleDot } from './Braille/BrailleDot';
 export { BrailleEncoding } from './Braille/BrailleEncoding';
