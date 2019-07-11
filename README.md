@@ -1,6 +1,6 @@
 # puzzle-lib
 
-[![Travis](https://img.shields.io/travis/kfarnung/puzzle-lib.svg)](https://travis-ci.org/kfarnung/puzzle-lib)
+[![Build Status](https://travis-ci.com/puzztool/puzzle-lib.svg?branch=master)](https://travis-ci.com/puzztool/puzzle-lib)
 [![npm](https://img.shields.io/npm/v/puzzle-lib.svg)](https://www.npmjs.com/package/puzzle-lib)
 
 Library of puzzle-solving algorithms
@@ -24,7 +24,7 @@ The library code is written in TypeScript and produces ECMAScript 5 output. The 
 [Mocha](https://mochajs.org/).
 
 ```console
-$ git clone https://github.com/kfarnung/puzzle-lib.git
+$ git clone https://github.com/puzztool/puzzle-lib.git
 $ cd puzzle-lib
 $ npm install
 $ npm test
