@@ -33,6 +33,7 @@ export class WordSearchSolver {
   }
 
   setWords(words: string[]) {
+    this._targets = trie([]);
     for (const full of words) {
       if (full === null || typeof full === 'undefined') {
         throw new Error('Invalid input in WordSearchSolver.findWords()');
