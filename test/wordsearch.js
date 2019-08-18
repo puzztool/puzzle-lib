@@ -149,4 +149,22 @@ describe('WordSearchSolver', function () {
 
     assert.strictEqual(cardinalResults.length, 2);
   });
+
+  it('Set words clears state', function () {
+    const matrix = [
+      [ 'p', 'x', 'x', 'x' ],
+      [ 'u', 'w', 'i', 'n' ],
+      [ 'z', 'x', 'x', 'x' ],
+      [ 'z', 'x', 'x', 'x' ]
+    ];
+    const solver = new WordSearchSolver();
+    solver.setWords(['x']);
+    solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
+    solver.setGrid(matrix);
+    const results = solver.findWords();
+    assertResultsContainsWord(results, 'puzz');
+    assertResultsContainsWord(results, 'win');
+
+    assert.strictEqual(results.length, 2);
+  });
 });
