@@ -11,7 +11,7 @@
     "check": "gts check && semistandard",
     "clean": "gts clean",
     "compile": "tsc -p .",
-    "fix": "gts fix",
+    "fix": "gts fix && semistandard --fix",
     "posttest": "npm run check",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
-    "gts": "^1.0.0",
-    "mocha": "^6.1.4",
-    "semistandard": "^13.0.1",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.3"
+    "gts": "^1.1.0",
+    "mocha": "^6.2.0",
+    "semistandard": "^14.0.1",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.2"
   },
   "dependencies": {
     "trie-prefix-tree": "^1.5.1"
