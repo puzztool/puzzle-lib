@@ -18,10 +18,10 @@ function assertResultsContainsWord (results, word) {
 describe('WordSearchSolver', function () {
   it('Cardinal directions', function () {
     const matrix = [
-      [ 'p', 'x', 'x', 'x' ],
-      [ 'u', 'w', 'i', 'n' ],
-      [ 'z', 'x', 'x', 'x' ],
-      [ 'z', 'x', 'x', 'x' ]
+      ['p', 'x', 'x', 'x'],
+      ['u', 'w', 'i', 'n'],
+      ['z', 'x', 'x', 'x'],
+      ['z', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
@@ -35,10 +35,10 @@ describe('WordSearchSolver', function () {
 
   it('Diagonal directions', function () {
     const matrix = [
-      [ 'p', 'x', 'x', 'x', 'b' ],
-      [ 'x', 'u', 'x', 'a', 'x' ],
-      [ 'x', 'x', 'z', 'x', 'x' ],
-      [ 'x', 'x', 'x', 'z', 'x' ]
+      ['p', 'x', 'x', 'x', 'b'],
+      ['x', 'u', 'x', 'a', 'x'],
+      ['x', 'x', 'z', 'x', 'x'],
+      ['x', 'x', 'x', 'z', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['puzz', 'baz']);
@@ -52,10 +52,10 @@ describe('WordSearchSolver', function () {
 
   it('Jagged array outside box', function () {
     const matrix = [
-      [ 'x', 'f', 'o', 'o' ],
-      [ 'b', 'x', 'x' ],
-      [ 'a', 'x', 'b', 'a', 'r' ],
-      [ 'z', 'x', 'x', 'x' ]
+      ['x', 'f', 'o', 'o'],
+      ['b', 'x', 'x'],
+      ['a', 'x', 'b', 'a', 'r'],
+      ['z', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['foo', 'bar', 'baz', 'abc', 'def']);
@@ -70,10 +70,10 @@ describe('WordSearchSolver', function () {
 
   it('Jagged diagonal array', function () {
     const matrix = [
-      [ 'x', 'x', 'x', 'b' ],
-      [ 'x', 'x', 'a' ],
-      [ 'x', 'r', 'o', 'o', 'f' ],
-      [ 'x', 'x', 'x', 'x' ]
+      ['x', 'x', 'x', 'b'],
+      ['x', 'x', 'a'],
+      ['x', 'r', 'o', 'o', 'f'],
+      ['x', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['foo', 'bar', 'baz']);
@@ -87,10 +87,10 @@ describe('WordSearchSolver', function () {
 
   it('Validate path', function () {
     const matrix = [
-      [ 'x', 'x', 'x', 'x' ],
-      [ 'x', 'f', 'o', 'o' ],
-      [ 'x', 'x', 'x', 'x' ],
-      [ 'x', 'x', 'x', 'x' ]
+      ['x', 'x', 'x', 'x'],
+      ['x', 'f', 'o', 'o'],
+      ['x', 'x', 'x', 'x'],
+      ['x', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['foo', 'bar', 'baz']);
@@ -112,8 +112,8 @@ describe('WordSearchSolver', function () {
 
   it('Overlapping words', function () {
     const matrix = [
-      [ 'x', 'x', 'x', 'x' ],
-      [ 'x', 'f', 'o', 'o', 'b', 'a', 'r', 'x' ]
+      ['x', 'x', 'x', 'x'],
+      ['x', 'f', 'o', 'o', 'b', 'a', 'r', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['foo', 'foobar', 'bar']);
@@ -128,10 +128,10 @@ describe('WordSearchSolver', function () {
 
   it('Disabled directions', function () {
     const matrix = [
-      [ 'p', 'x', 'x', 'x' ],
-      [ 'u', 'w', 'i', 'n' ],
-      [ 'z', 'x', 'a', 'x' ],
-      [ 'z', 'x', 'x', 'x' ]
+      ['p', 'x', 'x', 'x'],
+      ['u', 'w', 'i', 'n'],
+      ['z', 'x', 'a', 'x'],
+      ['z', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setDirections(WordSearchDirection.Diagonal);
@@ -152,10 +152,10 @@ describe('WordSearchSolver', function () {
 
   it('Set words clears state', function () {
     const matrix = [
-      [ 'p', 'x', 'x', 'x' ],
-      [ 'u', 'w', 'i', 'n' ],
-      [ 'z', 'x', 'x', 'x' ],
-      [ 'z', 'x', 'x', 'x' ]
+      ['p', 'x', 'x', 'x'],
+      ['u', 'w', 'i', 'n'],
+      ['z', 'x', 'x', 'x'],
+      ['z', 'x', 'x', 'x']
     ];
     const solver = new WordSearchSolver();
     solver.setWords(['x']);

@@ -103,22 +103,22 @@ describe('Semaphore', function () {
 
     it('getDegrees', function () {
       const char = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast);
-      let [ first, second ] = char.getDegrees();
+      let [first, second] = char.getDegrees();
       assert.strictEqual(first, 45);
       assert.strictEqual(second, 225);
 
       char.clear();
-      [ first, second ] = char.getDegrees();
+      [first, second] = char.getDegrees();
       assert.strictEqual(first, undefined);
       assert.strictEqual(second, undefined);
 
       char.addDirection(SemaphoreDirection.NorthWest);
-      [ first, second ] = char.getDegrees();
+      [first, second] = char.getDegrees();
       assert.strictEqual(first, 315);
       assert.strictEqual(second, undefined);
 
       char.addDirection(SemaphoreDirection.NorthEast);
-      [ first, second ] = char.getDegrees();
+      [first, second] = char.getDegrees();
       assert.strictEqual(first, 45);
       assert.strictEqual(second, 315);
     });

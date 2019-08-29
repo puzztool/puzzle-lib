@@ -7,7 +7,7 @@ describe('Nato', function () {
   it('Entries', function () {
     const chars = NatoData.instance.entries;
     assert.strictEqual(chars.length, 26);
-    for (let ch of chars) {
+    for (const ch of chars) {
       assert.strictEqual(ch.character.length, 1);
       assert.strictEqual(ch.character, ch.word.substring(0, 1));
     }
