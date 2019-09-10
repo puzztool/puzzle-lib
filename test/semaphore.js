@@ -4,44 +4,22 @@ const assert = require('assert');
 const {
   EncodingCategory,
   EncodingEntry,
-  SemaphoreDirection,
   SemaphoreCharacter,
-  SemaphoreDegrees
+  SemaphoreDegrees,
+  SemaphoreDirection,
+  SemaphoreEncoding
 } = require('../');
 
 // eslint:disable:
 
 describe('Semaphore', function () {
-  describe('Degrees', function () {
-    it('To Degrees Happy cases', function () {
-      const north = SemaphoreDegrees.ToDegrees(SemaphoreDirection.North);
-      assert.strictEqual(north, 0);
-
-      const se = SemaphoreDegrees.ToDegrees(SemaphoreDirection.SouthEast);
-      assert.strictEqual(se, 135);
-    });
-
-    it('From Degrees Happy cases', function () {
-      const north = SemaphoreDegrees.FromDegrees(0);
-      assert.strictEqual(north, SemaphoreDirection.North);
-
-      const sw = SemaphoreDegrees.FromDegrees(135);
-      assert.strictEqual(sw, SemaphoreDirection.SouthEast);
-    });
-
-    it('Full rotation cases', function () {
-      const north = SemaphoreDegrees.FromDegrees(1080);
-      assert.strictEqual(north, SemaphoreDirection.North);
-
-      const south = SemaphoreDegrees.FromDegrees(1260);
-      assert.strictEqual(south, SemaphoreDirection.South);
-    });
-  });
-
   describe('Characters', function () {
     it('Char Matches', function () {
       const aChar = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.South);
       assert.strictEqual(aChar.toString(), 'A/1');
+
+      const iChar = new SemaphoreCharacter(SemaphoreEncoding.Number9);
+      assert.strictEqual(iChar.toString(), 'I/9');
 
       const qChar = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.NorthEast);
       assert.strictEqual(qChar.toString(), 'Q');
@@ -229,6 +207,47 @@ describe('Semaphore', function () {
 
       // Test an invalid combination which has no match.
       assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.SouthEast), null);
+    });
+  });
+
+  describe('Degrees', function () {
+    it('To Degrees Happy cases', function () {
+      const north = SemaphoreDegrees.ToDegrees(SemaphoreDirection.North);
+      assert.strictEqual(north, 0);
+
+      const se = SemaphoreDegrees.ToDegrees(SemaphoreDirection.SouthEast);
+      assert.strictEqual(se, 135);
+    });
+
+    it('From Degrees Happy cases', function () {
+      const north = SemaphoreDegrees.FromDegrees(0);
+      assert.strictEqual(north, SemaphoreDirection.North);
+
+      const sw = SemaphoreDegrees.FromDegrees(135);
+      assert.strictEqual(sw, SemaphoreDirection.SouthEast);
+    });
+
+    it('Full rotation cases', function () {
+      const north = SemaphoreDegrees.FromDegrees(1080);
+      assert.strictEqual(north, SemaphoreDirection.North);
+
+      const south = SemaphoreDegrees.FromDegrees(1260);
+      assert.strictEqual(south, SemaphoreDirection.South);
+    });
+  });
+
+  describe('Encoding', function () {
+    it('Letters match numbers', function () {
+      assert.strictEqual(SemaphoreEncoding.LetterA, SemaphoreEncoding.Number1);
+      assert.strictEqual(SemaphoreEncoding.LetterB, SemaphoreEncoding.Number2);
+      assert.strictEqual(SemaphoreEncoding.LetterC, SemaphoreEncoding.Number3);
+      assert.strictEqual(SemaphoreEncoding.LetterD, SemaphoreEncoding.Number4);
+      assert.strictEqual(SemaphoreEncoding.LetterE, SemaphoreEncoding.Number5);
+      assert.strictEqual(SemaphoreEncoding.LetterF, SemaphoreEncoding.Number6);
+      assert.strictEqual(SemaphoreEncoding.LetterG, SemaphoreEncoding.Number7);
+      assert.strictEqual(SemaphoreEncoding.LetterH, SemaphoreEncoding.Number8);
+      assert.strictEqual(SemaphoreEncoding.LetterI, SemaphoreEncoding.Number9);
+      assert.strictEqual(SemaphoreEncoding.LetterK, SemaphoreEncoding.Number0);
     });
   });
 });
