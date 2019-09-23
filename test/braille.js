@@ -191,6 +191,21 @@ describe('Braille', function () {
       assert.strictEqual(stream.toString(), '#123 D');
     });
 
+    it('constructor - with parameter', function () {
+      const stream = new BrailleStream();
+      stream.append(new BrailleCharacter(BrailleEncoding.LetterA));
+      stream.space();
+      stream.append(new BrailleCharacter(BrailleEncoding.LetterB));
+      assert.strictEqual(stream.toString(), 'A B');
+
+      const stream2 = new BrailleStream(stream.chars);
+      assert.strictEqual(stream2.toString(), 'A B');
+      stream2.append(new BrailleCharacter(BrailleEncoding.LetterC));
+
+      assert.strictEqual(stream.toString(), 'A B');
+      assert.strictEqual(stream2.toString(), 'A BC');
+    });
+
     it('clear', function () {
       const stream = new BrailleStream();
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);

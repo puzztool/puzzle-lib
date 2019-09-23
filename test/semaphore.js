@@ -7,7 +7,8 @@ const {
   SemaphoreCharacter,
   SemaphoreDegrees,
   SemaphoreDirection,
-  SemaphoreEncoding
+  SemaphoreEncoding,
+  SemaphoreStream
 } = require('../');
 
 // eslint:disable:
@@ -248,6 +249,23 @@ describe('Semaphore', function () {
       assert.strictEqual(SemaphoreEncoding.LetterH, SemaphoreEncoding.Number8);
       assert.strictEqual(SemaphoreEncoding.LetterI, SemaphoreEncoding.Number9);
       assert.strictEqual(SemaphoreEncoding.LetterK, SemaphoreEncoding.Number0);
+    });
+  });
+
+  describe('Stream', function () {
+    it('constructor - with parameter', function () {
+      const stream = new SemaphoreStream();
+      stream.append(new SemaphoreCharacter(SemaphoreEncoding.LetterA));
+      stream.space();
+      stream.append(new SemaphoreCharacter(SemaphoreEncoding.LetterB));
+      assert.strictEqual(stream.toString(), 'A B');
+
+      const stream2 = new SemaphoreStream(stream.chars);
+      assert.strictEqual(stream2.toString(), 'A B');
+      stream2.append(new SemaphoreCharacter(SemaphoreEncoding.LetterC));
+
+      assert.strictEqual(stream.toString(), 'A B');
+      assert.strictEqual(stream2.toString(), 'A BC');
     });
   });
 });

@@ -13,7 +13,11 @@ export class SemaphoreStream {
   private _currentStr = '';
   private _processPosition = 0;
 
-  constructor() {
+  constructor(chars?: SemaphoreEncoding[]) {
+    if (chars) {
+      this._chars = Array.from(chars);
+    }
+
     this._state = {
       numberMode: false,
     };
