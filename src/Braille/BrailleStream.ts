@@ -9,7 +9,11 @@ export class BrailleStream {
   private _processPosition = 0;
   private _numberMode = false;
 
-  constructor() {
+  constructor(chars?: BrailleEncoding[]) {
+    if (chars) {
+      this._chars = Array.from(chars);
+    }
+
     this.invalidate();
   }
 
