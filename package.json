@@ -29,7 +29,7 @@
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
     "gts": "^1.1.0",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "semistandard": "^14.2.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
