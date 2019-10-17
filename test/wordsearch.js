@@ -167,4 +167,23 @@ describe('WordSearchSolver', function () {
 
     assert.strictEqual(results.length, 2);
   });
+
+  it('Bent directions', function () {
+    const matrix = [
+      ['p', 'x', 'x', 'x'],
+      ['u', 'w', 'i', 'x'],
+      ['z', 'z', 'n', 'x'],
+      ['x', 'x', 'x', 'x']
+    ];
+    const solver = new WordSearchSolver();
+    solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
+    solver.setGrid(matrix);
+    solver.setDirections(WordSearchDirection.Cardinal);
+    solver.setCanBend(true);
+    const results = solver.findWords();
+    assertResultsContainsWord(results, 'puzz');
+    assertResultsContainsWord(results, 'win');
+
+    assert.strictEqual(results.length, 2);
+  });
 });
