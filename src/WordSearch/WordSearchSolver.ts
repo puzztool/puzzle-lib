@@ -11,12 +11,13 @@ export class WordSearchSolver {
   private _directions: number[][];
   // Potential words to find in the letter grid
   private _targets: ReturnType<typeof trie>;
+  // Should we search for words not following a line
+  private _canBend: boolean;
 
   constructor() {
     // Use empty grid and list by default
     this._matrix = [[]];
     this._targets = trie([]);
-
     // Use both sets of directions by default
     this._directions = [
       // Cardinal directions
@@ -30,6 +31,7 @@ export class WordSearchSolver {
       [1, -1],
       [-1, 1],
     ];
+    this._canBend = false;
   }
 
   setWords(words: string[]) {
@@ -77,6 +79,10 @@ export class WordSearchSolver {
     }
   }
 
+  setCanBend(canBend: boolean) {
+    this._canBend = canBend;
+  }
+
   findWords(): Result[] {
     const results: Result[] = [];
     const numRows = this._matrix.length;
@@ -84,23 +90,74 @@ export class WordSearchSolver {
       const lineLength = this._matrix[yIdx].length;
       for (let xIdx = 0; xIdx < lineLength; xIdx++) {
         const p: Point = { x: xIdx, y: yIdx };
-        const pointResults = this.startSearch(p);
+        const pointResults = this.search(p);
         results.push(...pointResults);
       }
     }
     return results;
   }
 
-  private startSearch(start: Point): Result[] {
+  private search(start: Point): Result[] {
     const results: Result[] = [];
-    for (const translation of this._directions) {
-      const directionalResults = this.checkDirection(start, translation);
-      results.push(...directionalResults);
+    if (this._canBend) {
+      const history: Point[] = [];
+      const dfsResults = this.dfsCheck(start, new Set(), history);
+      results.push(...dfsResults);
+    } else {
+      for (const translation of this._directions) {
+        const directionalResults = this.lineCheck(start, translation);
+        results.push(...directionalResults);
+      }
     }
     return results;
   }
 
-  private checkDirection(start: Point, direction: number[]): Result[] {
+  private dfsCheck(
+    start: Point,
+    visited: Set<Point>,
+    history: Point[]
+  ): Result[] {
+    const results: Result[] = [];
+    if (visited.has(start)) {
+      return results;
+    }
+    visited.add(start);
+    history.push(start);
+
+    let currentString = '';
+
+    for (let i = 0; i < history.length; i++) {
+      const pt = history[i];
+      currentString = currentString + this._matrix[pt.y][pt.x];
+    }
+    const wordsWithPrefix = this._targets.getPrefix(currentString);
+
+    if (wordsWithPrefix.length === 0) {
+      visited.delete(start);
+      history.pop();
+      return results;
+    }
+    const idx = wordsWithPrefix.indexOf(currentString);
+    if (wordsWithPrefix.indexOf(currentString) !== -1) {
+      const foundWord = new Result(currentString, history);
+      results.push(foundWord);
+    }
+    for (const translation of this._directions) {
+      const next: Point = {
+        x: start.x + translation[0],
+        y: start.y + translation[1],
+      };
+      if (this.isInBounds(next)) {
+        results.push(...this.dfsCheck(next, visited, history));
+      }
+    }
+    visited.delete(start);
+    history.pop();
+
+    return results;
+  }
+
+  private lineCheck(start: Point, direction: number[]): Result[] {
     const results: Result[] = [];
 
     // Working set
