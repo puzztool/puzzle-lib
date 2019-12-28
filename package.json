@@ -32,7 +32,7 @@
     "mocha": "^6.2.2",
     "semistandard": "^14.2.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "dependencies": {
     "trie-prefix-tree": "^1.5.1"
