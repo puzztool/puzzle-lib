@@ -1,4 +1,4 @@
-name: Node.js CI
+name: puzzle-lib CI
 
 on:
   push:
