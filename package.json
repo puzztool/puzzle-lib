@@ -28,10 +28,11 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
+    "eslint-config-standard": "^13.0.1",
     "gts": "^1.1.2",
     "mocha": "^7.1.0",
     "semistandard": "^14.2.0",
-    "tslint": "^6.0.0",
+    "tslint": "^6.1.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
