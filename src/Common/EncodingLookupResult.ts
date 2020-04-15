@@ -1,4 +1,4 @@
-import { EncodingEntry } from './EncodingEntry';
+import {EncodingEntry} from './EncodingEntry';
 
 export class EncodingLookupResult<T> {
   readonly exact: Array<EncodingEntry<T>> = [];

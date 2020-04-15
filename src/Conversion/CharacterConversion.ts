@@ -1,4 +1,4 @@
-import { CharacterTableEntry } from './CharacterTableEntry';
+import {CharacterTableEntry} from './CharacterTableEntry';
 
 export class CharacterConversion {
   static getAsciiTable() {

@@ -1,7 +1,7 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { BrailleCharacter } from './BrailleCharacter';
-import { BrailleData } from './BrailleData';
-import { BrailleEncoding } from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {BrailleCharacter} from './BrailleCharacter';
+import {BrailleData} from './BrailleData';
+import {BrailleEncoding} from './BrailleEncoding';
 
 export class BrailleStream {
   private readonly _chars: BrailleEncoding[] = [];
@@ -62,28 +62,23 @@ export class BrailleStream {
     while (this._processPosition < this._chars.length) {
       const ch = this._chars[this._processPosition];
 
-      switch (ch) {
-        case BrailleEncoding.None:
-          this._numberMode = false;
-          this._currentStr += ' ';
-          break;
+      if (ch === BrailleEncoding.None) {
+        this._numberMode = false;
+        this._currentStr += ' ';
+      } else if (ch === BrailleEncoding.FormattingNumber) {
+        this._numberMode = true;
+        this._currentStr += '#';
+      } else {
+        const category =
+          EncodingCategory.Punctuation |
+          (this._numberMode
+            ? EncodingCategory.Number
+            : EncodingCategory.Letter);
+        const exact = BrailleData.instance.lookup(ch, category).exact;
 
-        case BrailleEncoding.FormattingNumber:
-          this._numberMode = true;
-          this._currentStr += '#';
-          break;
-
-        default:
-          const category =
-            EncodingCategory.Punctuation |
-            (this._numberMode
-              ? EncodingCategory.Number
-              : EncodingCategory.Letter);
-          const exact = BrailleData.instance.lookup(ch, category).exact;
-
-          if (exact.length > 0) {
-            this._currentStr += exact[0].toString();
-          }
+        if (exact.length > 0) {
+          this._currentStr += exact[0].toString();
+        }
       }
 
       this._processPosition++;

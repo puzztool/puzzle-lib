@@ -1,11 +1,11 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { EncodingCharacterBase } from '../Common/EncodingCharacterBase';
-import { EncodingEntry } from '../Common/EncodingEntry';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {EncodingEntry} from '../Common/EncodingEntry';
 
-import { SemaphoreData } from './SemaphoreData';
-import { SemaphoreDegrees } from './SemaphoreDegrees';
-import { SemaphoreDirection } from './SemaphoreDirection';
-import { SemaphoreEncoding } from './SemaphoreEncoding';
+import {SemaphoreData} from './SemaphoreData';
+import {SemaphoreDegrees} from './SemaphoreDegrees';
+import {SemaphoreDirection} from './SemaphoreDirection';
+import {SemaphoreEncoding} from './SemaphoreEncoding';
 
 export class SemaphoreCharacter extends EncodingCharacterBase<
   SemaphoreEncoding

@@ -5,13 +5,13 @@
   "main": "./build/src/index.js",
   "types": "./build/src/index.d.ts",
   "files": [
-    "build/src/"
+    "build/src"
   ],
   "scripts": {
-    "check": "gts check && semistandard",
+    "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
-    "fix": "gts fix && semistandard --fix",
+    "compile": "tsc",
+    "fix": "gts fix",
     "posttest": "npm run check",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
@@ -28,12 +28,10 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
-    "eslint-config-standard": "^13.0.1",
-    "gts": "^1.1.2",
+    "@types/node": "^10.0.3",
+    "gts": "^2.0.0",
     "mocha": "^7.1.1",
-    "semistandard": "^14.2.0",
-    "tslint": "^6.1.1",
-    "typescript": "^3.8.3"
+    "typescript": "~3.8.0"
   },
   "dependencies": {
     "trie-prefix-tree": "^1.5.1"

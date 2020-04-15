@@ -1,7 +1,7 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { SemaphoreCharacter } from './SemaphoreCharacter';
-import { SemaphoreData } from './SemaphoreData';
-import { SemaphoreEncoding } from './SemaphoreEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {SemaphoreCharacter} from './SemaphoreCharacter';
+import {SemaphoreData} from './SemaphoreData';
+import {SemaphoreEncoding} from './SemaphoreEncoding';
 
 interface SemaphoreStreamState {
   numberMode: boolean;
@@ -64,28 +64,23 @@ export class SemaphoreStream {
     while (this._processPosition < this._chars.length) {
       const ch = this._chars[this._processPosition];
 
-      switch (ch) {
-        case SemaphoreEncoding.None:
-          this._state.numberMode = false;
-          this._currentStr += ' ';
-          break;
+      if (ch === SemaphoreEncoding.None) {
+        this._state.numberMode = false;
+        this._currentStr += ' ';
+      } else if (ch === SemaphoreEncoding.FormattingNumber) {
+        this._state.numberMode = true;
+        this._currentStr += '#';
+      } else {
+        const category =
+          EncodingCategory.Punctuation |
+          (this._state.numberMode
+            ? EncodingCategory.Number
+            : EncodingCategory.Letter);
+        const exact = SemaphoreData.instance.lookup(ch, category).exact;
 
-        case SemaphoreEncoding.FormattingNumber:
-          this._state.numberMode = true;
-          this._currentStr += '#';
-          break;
-
-        default:
-          const category =
-            EncodingCategory.Punctuation |
-            (this._state.numberMode
-              ? EncodingCategory.Number
-              : EncodingCategory.Letter);
-          const exact = SemaphoreData.instance.lookup(ch, category).exact;
-
-          if (exact.length > 0) {
-            this._currentStr += exact[0].toString();
-          }
+        if (exact.length > 0) {
+          this._currentStr += exact[0].toString();
+        }
       }
 
       this._processPosition++;

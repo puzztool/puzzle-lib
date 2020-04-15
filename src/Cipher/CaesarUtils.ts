@@ -1,4 +1,4 @@
-import { CharacterConversion } from '../Conversion/CharacterConversion';
+import {CharacterConversion} from '../Conversion/CharacterConversion';
 
 export class CaesarUtils {
   static rotateLetter(ch: string, rot: number) {

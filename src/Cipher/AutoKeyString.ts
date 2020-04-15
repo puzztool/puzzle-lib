@@ -1,5 +1,5 @@
-import { CaesarUtils } from './CaesarUtils';
-import { KeyedCipherStringBase } from './KeyedCipherStringBase';
+import {CaesarUtils} from './CaesarUtils';
+import {KeyedCipherStringBase} from './KeyedCipherStringBase';
 
 export class AutoKeyString extends KeyedCipherStringBase {
   protected convert(decrypt: boolean) {

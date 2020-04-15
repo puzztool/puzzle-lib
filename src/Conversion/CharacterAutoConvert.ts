@@ -1,4 +1,4 @@
-import { CharacterEncoding } from './CharacterEncoding';
+import {CharacterEncoding} from './CharacterEncoding';
 
 export class CharacterAutoConvert {
   // Forced encoding can be useful when converting an entire string

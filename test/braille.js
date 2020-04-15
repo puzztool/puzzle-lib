@@ -1,11 +1,17 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { EncodingCategory, BrailleCharacter, BrailleDot, BrailleEncoding, BrailleStream } = require('../');
+const {
+  EncodingCategory,
+  BrailleCharacter,
+  BrailleDot,
+  BrailleEncoding,
+  BrailleStream,
+} = require('../');
 
-describe('Braille', function () {
-  describe('Character', function () {
-    it('constructor - Letter/Number', function () {
+describe('Braille', () => {
+  describe('Character', () => {
+    it('constructor - Letter/Number', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       assert.strictEqual(ch.toString(), 'A/1');
 
@@ -19,7 +25,7 @@ describe('Braille', function () {
       assert.strictEqual(partial[0].toString(), 'B');
     });
 
-    it('constructor - Letter', function () {
+    it('constructor - Letter', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterK);
       assert.strictEqual(ch.toString(), 'K');
 
@@ -32,7 +38,7 @@ describe('Braille', function () {
       assert.strictEqual(partial[0].toString(), 'L');
     });
 
-    it('constructor - Empty', function () {
+    it('constructor - Empty', () => {
       const ch = new BrailleCharacter();
       assert.strictEqual(ch.toString(), '');
 
@@ -44,7 +50,7 @@ describe('Braille', function () {
       assert.strictEqual(partial[0].toString(), 'A');
     });
 
-    it('toggle - Basic', function () {
+    it('toggle - Basic', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       assert.strictEqual(ch.toString(), 'A/1');
 
@@ -80,8 +86,11 @@ describe('Braille', function () {
       assert.strictEqual(partial[0].toString(), 'D');
     });
 
-    it('category - Basic', function () {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA, EncodingCategory.Letter);
+    it('category - Basic', () => {
+      const ch = new BrailleCharacter(
+        BrailleEncoding.LetterA,
+        EncodingCategory.Letter
+      );
       assert.strictEqual(ch.toString(), 'A');
 
       let exact = ch.getExactMatches();
@@ -104,7 +113,7 @@ describe('Braille', function () {
       assert.strictEqual(partial[0].toString(), '2');
     });
 
-    it('clear - Basic', function () {
+    it('clear - Basic', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       assert.strictEqual(ch.toString(), 'A/1');
 
@@ -112,7 +121,7 @@ describe('Braille', function () {
       assert.strictEqual(ch.toString(), '');
     });
 
-    it('empty', function () {
+    it('empty', () => {
       const ch = new BrailleCharacter();
       assert.strictEqual(ch.empty(), true);
 
@@ -123,7 +132,7 @@ describe('Braille', function () {
       assert.strictEqual(ch.empty(), true);
     });
 
-    it('valid', function () {
+    it('valid', () => {
       const ch = new BrailleCharacter();
       assert.strictEqual(ch.valid(), false);
 
@@ -141,8 +150,8 @@ describe('Braille', function () {
     });
   });
 
-  describe('Stream', function () {
-    it('Basic test - starts with a letter', function () {
+  describe('Stream', () => {
+    it('Basic test - starts with a letter', () => {
       const stream = new BrailleStream();
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       stream.append(ch);
@@ -164,7 +173,7 @@ describe('Braille', function () {
       assert.strictEqual(stream.toString(), 'A BC D');
     });
 
-    it('Basic test - starts with number', function () {
+    it('Basic test - starts with number', () => {
       const stream = new BrailleStream();
       const ch = new BrailleCharacter(BrailleEncoding.FormattingNumber);
       stream.append(ch);
@@ -191,7 +200,7 @@ describe('Braille', function () {
       assert.strictEqual(stream.toString(), '#123 D');
     });
 
-    it('constructor - with parameter', function () {
+    it('constructor - with parameter', () => {
       const stream = new BrailleStream();
       stream.append(new BrailleCharacter(BrailleEncoding.LetterA));
       stream.space();
@@ -206,7 +215,7 @@ describe('Braille', function () {
       assert.strictEqual(stream2.toString(), 'A BC');
     });
 
-    it('clear', function () {
+    it('clear', () => {
       const stream = new BrailleStream();
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       stream.append(ch);
@@ -228,7 +237,7 @@ describe('Braille', function () {
       assert.strictEqual(stream.toString(), 'C D');
     });
 
-    it('backspace', function () {
+    it('backspace', () => {
       const stream = new BrailleStream();
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       stream.append(ch);

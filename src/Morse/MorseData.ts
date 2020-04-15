@@ -1,6 +1,6 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { EncodingDataBase } from '../Common/EncodingDataBase';
-import { MorseEncoding } from './MorseEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingDataBase} from '../Common/EncodingDataBase';
+import {MorseEncoding} from './MorseEncoding';
 
 export class MorseData extends EncodingDataBase<MorseEncoding> {
   static readonly instance: MorseData = new MorseData();

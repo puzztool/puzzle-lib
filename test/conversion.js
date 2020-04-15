@@ -6,19 +6,21 @@ const {
   CharacterEncoding,
   CharacterAutoConvert,
   StringAutoConvert,
-  SignificantFigures
+  SignificantFigures,
 } = require('../');
 
-describe('Conversions', function () {
-  describe('StringAutoConvert', function () {
-    it('determineStringEncoding', function () {
+describe('Conversions', () => {
+  describe('StringAutoConvert', () => {
+    it('determineStringEncoding', () => {
       const ordinal = StringAutoConvert.determineStringEncoding('12 13 65');
       assert.strictEqual(ordinal, CharacterEncoding.Ordinal);
 
       const ascii = StringAutoConvert.determineStringEncoding('65 83 43 j');
       assert.strictEqual(ascii, CharacterEncoding.Ascii);
 
-      const variedSpacing = StringAutoConvert.determineStringEncoding('00010      00001 10010');
+      const variedSpacing = StringAutoConvert.determineStringEncoding(
+        '00010      00001 10010'
+      );
       assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
 
       const none = StringAutoConvert.determineStringEncoding('999 999 999');
@@ -28,31 +30,43 @@ describe('Conversions', function () {
       assert.strictEqual(empty, CharacterEncoding.None);
     });
 
-    it('convertString - consistent encoding', function () {
+    it('convertString - consistent encoding', () => {
       const foo = StringAutoConvert.convertString('foo', true);
       assert.strictEqual(foo, 'foo');
 
-      const variedSpacing = StringAutoConvert.convertString('00010    00001 10010', true);
+      const variedSpacing = StringAutoConvert.convertString(
+        '00010    00001 10010',
+        true
+      );
       assert.strictEqual(variedSpacing, 'BAR');
 
-      const variedEncoding = StringAutoConvert.convertString('00010 00001 26', true);
+      const variedEncoding = StringAutoConvert.convertString(
+        '00010 00001 26',
+        true
+      );
       assert.strictEqual(variedEncoding, 'BA');
 
-      const planet = StringAutoConvert.convertString('01010000 01001100 01000001 01001110 01000101 01010100', true);
+      const planet = StringAutoConvert.convertString(
+        '01010000 01001100 01000001 01001110 01000101 01010100',
+        true
+      );
       assert.strictEqual('PLANET', planet);
     });
 
-    it('convertString - varied encoding', function () {
+    it('convertString - varied encoding', () => {
       const noEncoding = StringAutoConvert.convertString('999 999');
       assert.strictEqual('', noEncoding);
 
-      const express = StringAutoConvert.convertString('01000101 24 16 10010 5    SS', false);
+      const express = StringAutoConvert.convertString(
+        '01000101 24 16 10010 5    SS',
+        false
+      );
       assert.strictEqual('EXPRESS', express);
     });
   });
 
-  describe('CharacterAutoConvert', function () {
-    it('determineCharacterEncoding', function () {
+  describe('CharacterAutoConvert', () => {
+    it('determineCharacterEncoding', () => {
       const latin = CharacterAutoConvert.determineCharacterEncoding('L');
       assert.strictEqual(latin, CharacterEncoding.Latin);
 
@@ -62,10 +76,14 @@ describe('Conversions', function () {
       const fiveBit = CharacterAutoConvert.determineCharacterEncoding('01100');
       assert.strictEqual(fiveBit, CharacterEncoding.FiveBitBinary);
 
-      const eightBit = CharacterAutoConvert.determineCharacterEncoding('01101100');
+      const eightBit = CharacterAutoConvert.determineCharacterEncoding(
+        '01101100'
+      );
       assert.strictEqual(eightBit, CharacterEncoding.EightBitBinary);
 
-      const eightBitLen7 = CharacterAutoConvert.determineCharacterEncoding('1000011');
+      const eightBitLen7 = CharacterAutoConvert.determineCharacterEncoding(
+        '1000011'
+      );
       assert.strictEqual(eightBitLen7, CharacterEncoding.EightBitBinary);
 
       const ascii = CharacterAutoConvert.determineCharacterEncoding('76');
@@ -75,7 +93,7 @@ describe('Conversions', function () {
       assert.strictEqual(none, CharacterEncoding.None);
     });
 
-    it('determineCharacterEncoding - Ambigious Cases', function () {
+    it('determineCharacterEncoding - Ambigious Cases', () => {
       // Overlap between ascii and binary
       const asciiE = CharacterAutoConvert.determineCharacterEncoding('101');
       assert.strictEqual(asciiE, CharacterEncoding.Ascii);
@@ -89,7 +107,7 @@ describe('Conversions', function () {
       assert.strictEqual(ordinalA, CharacterEncoding.Ordinal);
     });
 
-    it('convertCharacter', function () {
+    it('convertCharacter', () => {
       const latin = CharacterAutoConvert.convertCharacter('A');
       assert.strictEqual(latin, 'A');
 
@@ -111,7 +129,9 @@ describe('Conversions', function () {
       const eightBitZ = CharacterAutoConvert.convertCharacter('01011010');
       assert.strictEqual(eightBitZ, 'Z');
 
-      const eightBitTruncatedC = CharacterAutoConvert.convertCharacter('1000011');
+      const eightBitTruncatedC = CharacterAutoConvert.convertCharacter(
+        '1000011'
+      );
       assert.strictEqual(eightBitTruncatedC, 'C');
 
       const unknown = CharacterAutoConvert.convertCharacter('999');
@@ -121,28 +141,43 @@ describe('Conversions', function () {
       assert.strictEqual(asciiMiddle, '');
     });
 
-    it('forceCharacterEncoding', function () {
-      const fiveBitA = CharacterAutoConvert.convertCharacter('1', CharacterEncoding.FiveBitBinary);
+    it('forceCharacterEncoding', () => {
+      const fiveBitA = CharacterAutoConvert.convertCharacter(
+        '1',
+        CharacterEncoding.FiveBitBinary
+      );
       assert.strictEqual(fiveBitA, 'A');
 
-      const fiveBitD = CharacterAutoConvert.convertCharacter('100', CharacterEncoding.FiveBitBinary);
+      const fiveBitD = CharacterAutoConvert.convertCharacter(
+        '100',
+        CharacterEncoding.FiveBitBinary
+      );
       assert.strictEqual(fiveBitD, 'D');
 
-      const eightBitD = CharacterAutoConvert.convertCharacter('1000100', CharacterEncoding.EightBitBinary);
+      const eightBitD = CharacterAutoConvert.convertCharacter(
+        '1000100',
+        CharacterEncoding.EightBitBinary
+      );
       assert.strictEqual(eightBitD, 'D');
     });
 
-    it('nonPrintable', function () {
-      const asciiControl = CharacterAutoConvert.convertCharacter('28', CharacterEncoding.Ascii);
+    it('nonPrintable', () => {
+      const asciiControl = CharacterAutoConvert.convertCharacter(
+        '28',
+        CharacterEncoding.Ascii
+      );
       assert.strictEqual(asciiControl, '');
 
-      const asciiDel = CharacterAutoConvert.convertCharacter('127', CharacterEncoding.Ascii);
+      const asciiDel = CharacterAutoConvert.convertCharacter(
+        '127',
+        CharacterEncoding.Ascii
+      );
       assert.strictEqual(asciiDel, '');
     });
   });
 
-  describe('CharacterConversion', function () {
-    it('getAsciiTable - Basic tests', function () {
+  describe('CharacterConversion', () => {
+    it('getAsciiTable - Basic tests', () => {
       const table = CharacterConversion.getAsciiTable();
       const entry0 = table[0];
       assert.strictEqual(entry0.character, '0');
@@ -193,7 +228,7 @@ describe('Conversions', function () {
       assert.strictEqual(entryz.hexadecimal, '7a');
     });
 
-    it('getOrdinalTable - Basic tests', function () {
+    it('getOrdinalTable - Basic tests', () => {
       const table = CharacterConversion.getOrdinalTable();
       const entryA = table[0];
       assert.strictEqual(entryA.character, 'A');
@@ -212,7 +247,7 @@ describe('Conversions', function () {
       assert.strictEqual(entryZ.hexadecimal, '1a');
     });
 
-    it('toAscii - Basic tests', function () {
+    it('toAscii - Basic tests', () => {
       assert.strictEqual(CharacterConversion.toAscii('0'), 48);
       assert.strictEqual(CharacterConversion.toAscii('9'), 57);
       assert.strictEqual(CharacterConversion.toAscii('A'), 65);
@@ -221,28 +256,52 @@ describe('Conversions', function () {
       assert.strictEqual(CharacterConversion.toAscii('z'), 122);
     });
 
-    it('toAscii - Invalid tests', function () {
-      assert.strictEqual(CharacterConversion.toAscii(String.fromCharCode(128)), -1);
-      assert.strictEqual(CharacterConversion.toAscii(String.fromCharCode(256)), -1);
+    it('toAscii - Invalid tests', () => {
+      assert.strictEqual(
+        CharacterConversion.toAscii(String.fromCharCode(128)),
+        -1
+      );
+      assert.strictEqual(
+        CharacterConversion.toAscii(String.fromCharCode(256)),
+        -1
+      );
     });
 
-    it('toAscii - Error tests', function () {
-      assert.throws(() => CharacterConversion.toAscii(), /A single character is required/);
-      assert.throws(() => CharacterConversion.toAscii(null), /A single character is required/);
-      assert.throws(() => CharacterConversion.toAscii(''), /A single character is required/);
-      assert.throws(() => CharacterConversion.toAscii('ab'), /A single character is required/);
-      assert.throws(() => CharacterConversion.toAscii(0), /A single character is required/);
-      assert.throws(() => CharacterConversion.toAscii(false), /A single character is required/);
+    it('toAscii - Error tests', () => {
+      assert.throws(
+        () => CharacterConversion.toAscii(),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toAscii(null),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toAscii(''),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toAscii('ab'),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toAscii(0),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toAscii(false),
+        /A single character is required/
+      );
     });
 
-    it('toOrdinal - Basic tests', function () {
+    it('toOrdinal - Basic tests', () => {
       assert.strictEqual(CharacterConversion.toOrdinal('A'), 1);
       assert.strictEqual(CharacterConversion.toOrdinal('Z'), 26);
       assert.strictEqual(CharacterConversion.toOrdinal('a'), 1);
       assert.strictEqual(CharacterConversion.toOrdinal('z'), 26);
     });
 
-    it('toOrdinal - Invalid tests', function () {
+    it('toOrdinal - Invalid tests', () => {
       assert.strictEqual(CharacterConversion.toOrdinal('0'), -1);
       assert.strictEqual(CharacterConversion.toOrdinal('9'), -1);
       assert.strictEqual(CharacterConversion.toOrdinal('@'), -1);
@@ -251,18 +310,36 @@ describe('Conversions', function () {
       assert.strictEqual(CharacterConversion.toOrdinal('{'), -1);
     });
 
-    it('toOrdinal - Error tests', function () {
-      assert.throws(() => CharacterConversion.toOrdinal(), /A single character is required/);
-      assert.throws(() => CharacterConversion.toOrdinal(null), /A single character is required/);
-      assert.throws(() => CharacterConversion.toOrdinal(''), /A single character is required/);
-      assert.throws(() => CharacterConversion.toOrdinal('ab'), /A single character is required/);
-      assert.throws(() => CharacterConversion.toOrdinal(0), /A single character is required/);
-      assert.throws(() => CharacterConversion.toOrdinal(false), /A single character is required/);
+    it('toOrdinal - Error tests', () => {
+      assert.throws(
+        () => CharacterConversion.toOrdinal(),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toOrdinal(null),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toOrdinal(''),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toOrdinal('ab'),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toOrdinal(0),
+        /A single character is required/
+      );
+      assert.throws(
+        () => CharacterConversion.toOrdinal(false),
+        /A single character is required/
+      );
     });
   });
 
-  describe('SignificantFigures', function () {
-    it('ceil - Positive numbers', function () {
+  describe('SignificantFigures', () => {
+    it('ceil - Positive numbers', () => {
       // Zero
       assert.strictEqual(SignificantFigures.ceil(0, 10), 0);
 
@@ -280,7 +357,7 @@ describe('Conversions', function () {
       assert.strictEqual(SignificantFigures.ceil(0.11, 1), 0.2);
     });
 
-    it('ceil - Negative numbers', function () {
+    it('ceil - Negative numbers', () => {
       // Integers
       assert.strictEqual(SignificantFigures.ceil(-90000, 2), -90000);
       assert.strictEqual(SignificantFigures.ceil(-98000, 2), -98000);
@@ -295,7 +372,7 @@ describe('Conversions', function () {
       assert.strictEqual(SignificantFigures.ceil(-0.99, 1), -0.9);
     });
 
-    it('floor - Positive numbers', function () {
+    it('floor - Positive numbers', () => {
       // Zero
       assert.strictEqual(SignificantFigures.floor(0, 10), 0);
 
@@ -313,7 +390,7 @@ describe('Conversions', function () {
       assert.strictEqual(SignificantFigures.floor(0.99, 1), 0.9);
     });
 
-    it('floor - Negative numbers', function () {
+    it('floor - Negative numbers', () => {
       // Integers
       assert.strictEqual(SignificantFigures.floor(-90000, 2), -90000);
       assert.strictEqual(SignificantFigures.floor(-98000, 2), -98000);
@@ -328,7 +405,7 @@ describe('Conversions', function () {
       assert.strictEqual(SignificantFigures.floor(-0.11, 1), -0.2);
     });
 
-    it('round - Positive numbers', function () {
+    it('round - Positive numbers', () => {
       // Zero
       assert.strictEqual(SignificantFigures.round(0, 10), 0);
 
@@ -350,7 +427,7 @@ describe('Conversions', function () {
       assert.strictEqual(SignificantFigures.round(0.55, 1), 0.6);
     });
 
-    it('round - Negative numbers', function () {
+    it('round - Negative numbers', () => {
       // Integers
       assert.strictEqual(SignificantFigures.round(-90000, 2), -90000);
       assert.strictEqual(SignificantFigures.round(-98000, 2), -98000);

@@ -1,6 +1,6 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { EncodingDataBase } from '../Common/EncodingDataBase';
-import { BrailleEncoding } from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingDataBase} from '../Common/EncodingDataBase';
+import {BrailleEncoding} from './BrailleEncoding';
 
 export class BrailleData extends EncodingDataBase<BrailleEncoding> {
   static readonly instance: BrailleData = new BrailleData();
