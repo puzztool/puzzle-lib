@@ -8,36 +8,41 @@ const {
   SemaphoreDegrees,
   SemaphoreDirection,
   SemaphoreEncoding,
-  SemaphoreStream
+  SemaphoreStream,
 } = require('../');
 
 // eslint:disable:
 
-describe('Semaphore', function () {
-  describe('Characters', function () {
-    it('Char Matches', function () {
-      const aChar = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.South);
+describe('Semaphore', () => {
+  describe('Characters', () => {
+    it('Char Matches', () => {
+      const aChar = new SemaphoreCharacter(
+        SemaphoreDirection.SouthWest | SemaphoreDirection.South
+      );
       assert.strictEqual(aChar.toString(), 'A/1');
 
       const iChar = new SemaphoreCharacter(SemaphoreEncoding.Number9);
       assert.strictEqual(iChar.toString(), 'I/9');
 
-      const qChar = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.NorthEast);
+      const qChar = new SemaphoreCharacter(
+        SemaphoreDirection.West | SemaphoreDirection.NorthEast
+      );
       assert.strictEqual(qChar.toString(), 'Q');
 
-      const zChar = new SemaphoreCharacter(SemaphoreDirection.SouthEast | SemaphoreDirection.East);
+      const zChar = new SemaphoreCharacter(
+        SemaphoreDirection.SouthEast | SemaphoreDirection.East
+      );
       assert.strictEqual(zChar.toString(), 'Z');
     });
 
-    it('No Matches', function () {
-      const noChar = new SemaphoreCharacter(SemaphoreDirection.South | SemaphoreDirection.South);
+    it('No Matches', () => {
+      const noChar = new SemaphoreCharacter(
+        SemaphoreDirection.South | SemaphoreDirection.South
+      );
       assert.strictEqual(noChar.toString(), '');
-
-      const emptyChar = new SemaphoreCharacter(SemaphoreDirection.South | SemaphoreDirection.South);
-      assert.strictEqual(emptyChar.toString(), '');
     });
 
-    it('constructor', function () {
+    it('constructor', () => {
       let char = new SemaphoreCharacter();
       assert.strictEqual(char.toString(), '');
       assert.strictEqual(char.directions.length, 0);
@@ -47,14 +52,16 @@ describe('Semaphore', function () {
       assert.strictEqual(char.directions.length, 1);
       assert.strictEqual(char.directions[0], SemaphoreDirection.West);
 
-      char = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.East);
+      char = new SemaphoreCharacter(
+        SemaphoreDirection.West | SemaphoreDirection.East
+      );
       assert.strictEqual(char.toString(), 'R');
       assert.strictEqual(char.directions.length, 2);
       assert.strictEqual(char.directions[0], SemaphoreDirection.East);
       assert.strictEqual(char.directions[1], SemaphoreDirection.West);
     });
 
-    it('addDirection/removeDirection', function () {
+    it('addDirection/removeDirection', () => {
       // Start with a partial match
       const char = new SemaphoreCharacter(SemaphoreDirection.South);
       assert.strictEqual(char.toString(), '');
@@ -80,8 +87,10 @@ describe('Semaphore', function () {
       assert.strictEqual(char.toString(), 'N');
     });
 
-    it('getDegrees', function () {
-      const char = new SemaphoreCharacter(SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast);
+    it('getDegrees', () => {
+      const char = new SemaphoreCharacter(
+        SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast
+      );
       let [first, second] = char.getDegrees();
       assert.strictEqual(first, 45);
       assert.strictEqual(second, 225);
@@ -102,7 +111,7 @@ describe('Semaphore', function () {
       assert.strictEqual(second, 315);
     });
 
-    it('All Results', function () {
+    it('All Results', () => {
       const ch = new SemaphoreCharacter();
       const results = ch.getPotentialMatches();
       const expected = [
@@ -142,12 +151,12 @@ describe('Semaphore', function () {
         new EncodingEntry(192, EncodingCategory.Number, '8'),
         new EncodingEntry(320, EncodingCategory.Number, '9'),
         new EncodingEntry(66, EncodingCategory.Number, '0'),
-        new EncodingEntry(6, EncodingCategory.Formatting, '#')
+        new EncodingEntry(6, EncodingCategory.Formatting, '#'),
       ];
       assert.deepStrictEqual(results, expected);
     });
 
-    it('Some Results', function () {
+    it('Some Results', () => {
       const ch = new SemaphoreCharacter(SemaphoreDirection.West);
       const results = ch.getPotentialMatches();
       const expected = [
@@ -159,16 +168,18 @@ describe('Semaphore', function () {
         new EncodingEntry(136, EncodingCategory.Letter, 'R'),
         new EncodingEntry(144, EncodingCategory.Letter, 'S'),
         new EncodingEntry(160, EncodingCategory.Number, '2'),
-        new EncodingEntry(192, EncodingCategory.Number, '8')
+        new EncodingEntry(192, EncodingCategory.Number, '8'),
       ];
       assert.deepStrictEqual(results, expected);
     });
 
-    it('One Result', function () {
-      const ch = new SemaphoreCharacter(SemaphoreDirection.West | SemaphoreDirection.North);
+    it('One Result', () => {
+      const ch = new SemaphoreCharacter(
+        SemaphoreDirection.West | SemaphoreDirection.North
+      );
       const exact = ch.getExactMatches();
       const exactExpected = [
-        new EncodingEntry(130, EncodingCategory.Letter, 'P')
+        new EncodingEntry(130, EncodingCategory.Letter, 'P'),
       ];
       assert.deepStrictEqual(exact, exactExpected);
 
@@ -176,8 +187,10 @@ describe('Semaphore', function () {
       assert.deepStrictEqual(potential, []);
     });
 
-    it('No Results', function () {
-      const ch = new SemaphoreCharacter(SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast);
+    it('No Results', () => {
+      const ch = new SemaphoreCharacter(
+        SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast
+      );
       const exact = ch.getExactMatches();
       assert.deepStrictEqual(exact, []);
 
@@ -185,7 +198,7 @@ describe('Semaphore', function () {
       assert.deepStrictEqual(potential, []);
     });
 
-    it('Potential Match', function () {
+    it('Potential Match', () => {
       const ch = new SemaphoreCharacter(SemaphoreDirection.West);
 
       // Can't ask for a direction that's already set.
@@ -194,7 +207,8 @@ describe('Semaphore', function () {
       // Ask for a valid direction.
       assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.NorthWest),
-        new EncodingEntry(384, EncodingCategory.Letter, 'O'));
+        new EncodingEntry(384, EncodingCategory.Letter, 'O')
+      );
 
       // Add another direction and verify that a match isn't returned.
       ch.addDirection(SemaphoreDirection.NorthWest);
@@ -204,15 +218,19 @@ describe('Semaphore', function () {
       ch.removeDirection(SemaphoreDirection.West);
       assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.West),
-        new EncodingEntry(384, EncodingCategory.Letter, 'O'));
+        new EncodingEntry(384, EncodingCategory.Letter, 'O')
+      );
 
       // Test an invalid combination which has no match.
-      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.SouthEast), null);
+      assert.strictEqual(
+        ch.getPotentialMatch(SemaphoreDirection.SouthEast),
+        null
+      );
     });
   });
 
-  describe('Degrees', function () {
-    it('To Degrees Happy cases', function () {
+  describe('Degrees', () => {
+    it('To Degrees Happy cases', () => {
       const north = SemaphoreDegrees.ToDegrees(SemaphoreDirection.North);
       assert.strictEqual(north, 0);
 
@@ -220,7 +238,7 @@ describe('Semaphore', function () {
       assert.strictEqual(se, 135);
     });
 
-    it('From Degrees Happy cases', function () {
+    it('From Degrees Happy cases', () => {
       const north = SemaphoreDegrees.FromDegrees(0);
       assert.strictEqual(north, SemaphoreDirection.North);
 
@@ -228,7 +246,7 @@ describe('Semaphore', function () {
       assert.strictEqual(sw, SemaphoreDirection.SouthEast);
     });
 
-    it('Full rotation cases', function () {
+    it('Full rotation cases', () => {
       const north = SemaphoreDegrees.FromDegrees(1080);
       assert.strictEqual(north, SemaphoreDirection.North);
 
@@ -237,8 +255,8 @@ describe('Semaphore', function () {
     });
   });
 
-  describe('Encoding', function () {
-    it('Letters match numbers', function () {
+  describe('Encoding', () => {
+    it('Letters match numbers', () => {
       assert.strictEqual(SemaphoreEncoding.LetterA, SemaphoreEncoding.Number1);
       assert.strictEqual(SemaphoreEncoding.LetterB, SemaphoreEncoding.Number2);
       assert.strictEqual(SemaphoreEncoding.LetterC, SemaphoreEncoding.Number3);
@@ -252,8 +270,8 @@ describe('Semaphore', function () {
     });
   });
 
-  describe('Stream', function () {
-    it('constructor - with parameter', function () {
+  describe('Stream', () => {
+    it('constructor - with parameter', () => {
       const stream = new SemaphoreStream();
       stream.append(new SemaphoreCharacter(SemaphoreEncoding.LetterA));
       stream.space();

@@ -1,8 +1,8 @@
 import trie = require('trie-prefix-tree');
 
-import { Point } from './Point';
-import { Result } from './Result';
-import { WordSearchDirection } from './WordSearchDirection';
+import {Point} from './Point';
+import {Result} from './Result';
+import {WordSearchDirection} from './WordSearchDirection';
 
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
@@ -89,7 +89,7 @@ export class WordSearchSolver {
     for (let yIdx = 0; yIdx < numRows; yIdx++) {
       const lineLength = this._matrix[yIdx].length;
       for (let xIdx = 0; xIdx < lineLength; xIdx++) {
-        const p: Point = { x: xIdx, y: yIdx };
+        const p: Point = {x: xIdx, y: yIdx};
         const pointResults = this.search(p);
         results.push(...pointResults);
       }
@@ -118,9 +118,11 @@ export class WordSearchSolver {
     history: Point[]
   ): Result[] {
     const results: Result[] = [];
+
     if (visited.has(start)) {
       return results;
     }
+
     visited.add(start);
     history.push(start);
 
@@ -130,27 +132,30 @@ export class WordSearchSolver {
       const pt = history[i];
       currentString = currentString + this._matrix[pt.y][pt.x];
     }
-    const wordsWithPrefix = this._targets.getPrefix(currentString);
 
+    const wordsWithPrefix = this._targets.getPrefix(currentString);
     if (wordsWithPrefix.length === 0) {
       visited.delete(start);
       history.pop();
       return results;
     }
-    const idx = wordsWithPrefix.indexOf(currentString);
+
     if (wordsWithPrefix.indexOf(currentString) !== -1) {
       const foundWord = new Result(currentString, history);
       results.push(foundWord);
     }
+
     for (const translation of this._directions) {
       const next: Point = {
         x: start.x + translation[0],
         y: start.y + translation[1],
       };
+
       if (this.isInBounds(next)) {
         results.push(...this.dfsCheck(next, visited, history));
       }
     }
+
     visited.delete(start);
     history.pop();
 
@@ -176,7 +181,7 @@ export class WordSearchSolver {
         break;
       }
 
-      const p: Point = { x: currentPoint.x, y: currentPoint.y };
+      const p: Point = {x: currentPoint.x, y: currentPoint.y};
       pointHistory.push(p);
 
       // Is a candidate an exact match for the current search string? Save it.

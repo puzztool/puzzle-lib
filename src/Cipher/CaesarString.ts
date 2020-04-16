@@ -1,4 +1,4 @@
-import { CaesarUtils } from './CaesarUtils';
+import {CaesarUtils} from './CaesarUtils';
 
 export class CaesarString {
   private _text: string;

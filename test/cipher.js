@@ -1,11 +1,11 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { CaesarString, VigenereString, AutoKeyString } = require('../');
+const {CaesarString, VigenereString, AutoKeyString} = require('../');
 
-describe('Cipher', function () {
-  describe('CaesarString', function () {
-    it('getRotation - Basic tests', function () {
+describe('Cipher', () => {
+  describe('CaesarString', () => {
+    it('getRotation - Basic tests', () => {
       const str = new CaesarString('abc');
 
       assert.strictEqual(str.getRotation(0), 'abc');
@@ -14,7 +14,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.getRotation(25), 'zab');
     });
 
-    it('getRotation - Advanced', function () {
+    it('getRotation - Advanced', () => {
       const str = new CaesarString('abc');
 
       assert.strictEqual(str.getRotation(26), 'abc');
@@ -23,7 +23,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.getRotation(-26), 'abc');
     });
 
-    it('getRotation - Empty', function () {
+    it('getRotation - Empty', () => {
       const str = new CaesarString();
       assert.strictEqual(str.getRotation(0), '');
       assert.strictEqual(str.getRotation(13), '');
@@ -37,7 +37,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.getRotation(13), '');
     });
 
-    it('getRotations - Basic tests', function () {
+    it('getRotations - Basic tests', () => {
       const str = new CaesarString('abc');
       const rotations = str.getRotations();
 
@@ -50,7 +50,7 @@ describe('Cipher', function () {
       assert.strictEqual(rotations[26], undefined);
     });
 
-    it('getRotations - Empty', function () {
+    it('getRotations - Empty', () => {
       const str = new CaesarString();
       assert.strictEqual(str.getRotations().length, 26);
 
@@ -61,7 +61,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.getRotations().length, 26);
     });
 
-    it('update - Basic tests', function () {
+    it('update - Basic tests', () => {
       const str = new CaesarString('abc');
       assert.strictEqual(str.getRotation(13), 'nop');
 
@@ -70,8 +70,8 @@ describe('Cipher', function () {
     });
   });
 
-  describe('VigenereString', function () {
-    it('encrypt - Basic tests', function () {
+  describe('VigenereString', () => {
+    it('encrypt - Basic tests', () => {
       const str = new VigenereString('ATTACKATDAWN', 'LEMON');
       assert.strictEqual(str.encrypt(), 'LXFOPVEFRNHR');
 
@@ -82,7 +82,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.encrypt(), 'LXFOPV EF RNHR');
     });
 
-    it('decrypt - Basic tests', function () {
+    it('decrypt - Basic tests', () => {
       const str = new VigenereString('LXFOPVEFRNHR', 'LEMON');
       assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
@@ -93,7 +93,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
     });
 
-    it('encrypt/decrypt - Empty', function () {
+    it('encrypt/decrypt - Empty', () => {
       const str = new VigenereString();
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');
@@ -117,8 +117,8 @@ describe('Cipher', function () {
     });
   });
 
-  describe('AutoKeyString', function () {
-    it('encrypt - Basic tests', function () {
+  describe('AutoKeyString', () => {
+    it('encrypt - Basic tests', () => {
       const str = new AutoKeyString('ATTACKATDAWN', 'QUEENLY');
       assert.strictEqual(str.encrypt(), 'QNXEPVYTWTWP');
 
@@ -126,7 +126,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.encrypt(), 'QNXEPV YT WTWP');
     });
 
-    it('decrypt - Basic tests', function () {
+    it('decrypt - Basic tests', () => {
       const str = new AutoKeyString('QNXEPVYTWTWP', 'QUEENLY');
       assert.strictEqual(str.decrypt(), 'ATTACKATDAWN');
 
@@ -134,7 +134,7 @@ describe('Cipher', function () {
       assert.strictEqual(str.decrypt(), 'ATTACK AT DAWN');
     });
 
-    it('encrypt/decrypt - Empty', function () {
+    it('encrypt/decrypt - Empty', () => {
       const str = new AutoKeyString('', '');
       assert.strictEqual(str.encrypt(), '');
       assert.strictEqual(str.decrypt(), '');

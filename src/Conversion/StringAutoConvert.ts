@@ -1,5 +1,5 @@
-import { CharacterAutoConvert } from './CharacterAutoConvert';
-import { CharacterEncoding } from './CharacterEncoding';
+import {CharacterAutoConvert} from './CharacterAutoConvert';
+import {CharacterEncoding} from './CharacterEncoding';
 
 export class StringAutoConvert {
   static convertString(input: string, homogeneous: boolean) {
@@ -22,7 +22,7 @@ export class StringAutoConvert {
   }
 
   static determineStringEncoding(input: string): CharacterEncoding {
-    const encodingCount: { [index: number]: number } = {};
+    const encodingCount: {[index: number]: number} = {};
     const parsed = this.splitString(input);
     const encodingKeys: number[] = [];
 

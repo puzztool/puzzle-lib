@@ -1,6 +1,6 @@
-import { EncodingCategory } from './EncodingCategory';
-import { EncodingEntry } from './EncodingEntry';
-import { EncodingLookupResult } from './EncodingLookupResult';
+import {EncodingCategory} from './EncodingCategory';
+import {EncodingEntry} from './EncodingEntry';
+import {EncodingLookupResult} from './EncodingLookupResult';
 
 export abstract class EncodingDataBase<T extends number> {
   private readonly _entries: Array<EncodingEntry<T>> = [];

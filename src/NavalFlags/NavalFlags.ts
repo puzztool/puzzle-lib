@@ -1,5 +1,5 @@
-import { CharacterImage } from '../Common/CharacterImage';
-import { InlineSvg } from '../Common/InlineSvg';
+import {CharacterImage} from '../Common/CharacterImage';
+import {InlineSvg} from '../Common/InlineSvg';
 
 export class NavalFlags {
   static readonly instance: NavalFlags = new NavalFlags();

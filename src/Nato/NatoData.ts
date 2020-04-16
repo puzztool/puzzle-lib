@@ -1,4 +1,4 @@
-import { NatoCharacter } from './NatoCharacter';
+import {NatoCharacter} from './NatoCharacter';
 
 // There's no concept of a 'partial match' for a NATO letter, so there's no
 // reason to derive from EncodingDataBase.

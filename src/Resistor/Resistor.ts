@@ -1,4 +1,4 @@
-import { ResistorColorEntry } from './ResistorColorEntry';
+import {ResistorColorEntry} from './ResistorColorEntry';
 
 export class Resistor {
   // Name, Color, Multiplier, Value, Tolerance

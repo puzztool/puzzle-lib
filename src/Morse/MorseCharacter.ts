@@ -1,8 +1,8 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { EncodingCharacterBase } from '../Common/EncodingCharacterBase';
-import { Helpers } from '../Common/Helpers';
-import { MorseData } from './MorseData';
-import { MorseEncoding } from './MorseEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {Helpers} from '../Common/Helpers';
+import {MorseData} from './MorseData';
+import {MorseEncoding} from './MorseEncoding';
 
 const MORSE_BITMASK = MorseEncoding.Dot | MorseEncoding.Dash;
 
@@ -94,10 +94,7 @@ export class MorseCharacter extends EncodingCharacterBase<MorseEncoding> {
   }
 
   reverse() {
-    this._morse = this._morse
-      .split('')
-      .reverse()
-      .join('');
+    this._morse = this._morse.split('').reverse().join('');
   }
 
   protected onClear() {

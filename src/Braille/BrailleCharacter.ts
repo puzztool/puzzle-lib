@@ -1,8 +1,8 @@
-import { EncodingCategory } from '../Common/EncodingCategory';
-import { EncodingCharacterBase } from '../Common/EncodingCharacterBase';
-import { BrailleData } from './BrailleData';
-import { BrailleDot } from './BrailleDot';
-import { BrailleEncoding } from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory';
+import {EncodingCharacterBase} from '../Common/EncodingCharacterBase';
+import {BrailleData} from './BrailleData';
+import {BrailleDot} from './BrailleDot';
+import {BrailleEncoding} from './BrailleEncoding';
 
 export class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
   private _encoding: BrailleEncoding;

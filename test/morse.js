@@ -1,11 +1,11 @@
 /* global describe, it */
 
 const assert = require('assert');
-const { MorseCharacter, MorseString } = require('../');
+const {MorseCharacter, MorseString} = require('../');
 
-describe('Morse', function () {
-  describe('Character', function () {
-    it('constructor - Basic', function () {
+describe('Morse', () => {
+  describe('Character', () => {
+    it('constructor - Basic', () => {
       const ch = new MorseCharacter('.');
       assert.strictEqual(ch.toString(), 'E');
       assert.strictEqual(ch.morseString, '.');
@@ -16,7 +16,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[1].toString(), 'F');
     });
 
-    it('constructor - Extended', function () {
+    it('constructor - Extended', () => {
       const ch = new MorseCharacter('--.');
       assert.strictEqual(ch.toString(), 'G');
       assert.strictEqual(ch.morseString, '--.');
@@ -27,7 +27,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[1].toString(), 'Z');
     });
 
-    it('constructor - Empty', function () {
+    it('constructor - Empty', () => {
       const ch = new MorseCharacter();
       assert.strictEqual(ch.toString(), '');
       assert.strictEqual(ch.morseString, '');
@@ -37,7 +37,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[0].toString(), 'A');
     });
 
-    it('dot/dash - Basic', function () {
+    it('dot/dash - Basic', () => {
       const ch = new MorseCharacter();
       ch.dash();
       assert.strictEqual(ch.toString(), 'T');
@@ -57,7 +57,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[1].toString(), 'Z');
     });
 
-    it('dot/dash - Additive', function () {
+    it('dot/dash - Additive', () => {
       const ch = new MorseCharacter('-.');
       assert.strictEqual(ch.toString(), 'N');
       assert.strictEqual(ch.morseString, '-.');
@@ -76,7 +76,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[1].toString(), ';');
     });
 
-    it('toString - No match', function () {
+    it('toString - No match', () => {
       const ch = new MorseCharacter('-.-.-');
       assert.strictEqual(ch.toString(), '');
       assert.strictEqual(ch.morseString, '-.-.-');
@@ -87,7 +87,7 @@ describe('Morse', function () {
       assert.strictEqual(partial[1].toString(), ';');
     });
 
-    it('getPotentialMatches - No potential matches', function () {
+    it('getPotentialMatches - No potential matches', () => {
       const ch = new MorseCharacter('...--');
       assert.strictEqual(ch.toString(), '3');
       assert.strictEqual(ch.morseString, '...--');
@@ -96,7 +96,7 @@ describe('Morse', function () {
       assert.strictEqual(partial.length, 0);
     });
 
-    it('backspace', function () {
+    it('backspace', () => {
       const ch = new MorseCharacter();
       ch.backspace();
       assert.strictEqual(ch.empty(), true);
@@ -112,7 +112,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.morseString, '..');
     });
 
-    it('empty', function () {
+    it('empty', () => {
       const ch = new MorseCharacter();
       assert.strictEqual(ch.empty(), true);
 
@@ -123,7 +123,7 @@ describe('Morse', function () {
       assert.strictEqual(ch.empty(), true);
     });
 
-    it('valid', function () {
+    it('valid', () => {
       const ch = new MorseCharacter();
       assert.strictEqual(ch.valid(), false);
 
@@ -147,39 +147,69 @@ describe('Morse', function () {
     });
   });
 
-  describe('String', function () {
-    it('constructor - Basic', function () {
+  describe('String', () => {
+    it('constructor - Basic', () => {
       assert.strictEqual(new MorseString('.').toString(), 'E');
       assert.strictEqual(new MorseString('.../---/...').toString(), 'SOS');
 
       assert.strictEqual(new MorseString('./.-/--./-').toString(), 'EAGT');
     });
 
-    it('Invert dots/dashes', function () {
+    it('Invert dots/dashes', () => {
       // Becomes ---/.../---
-      assert.strictEqual(new MorseString('.../---/...').invertDotsAndDashes().toString(), 'OSO');
+      assert.strictEqual(
+        new MorseString('.../---/...').invertDotsAndDashes().toString(),
+        'OSO'
+      );
 
       // Becomes -/-./..-/.
-      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().toString(), 'TNUE');
+      assert.strictEqual(
+        new MorseString('./.-/--./-').invertDotsAndDashes().toString(),
+        'TNUE'
+      );
 
       // Should undo itself if repeated
-      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().invertDotsAndDashes().toString(), 'EAGT');
+      assert.strictEqual(
+        new MorseString('./.-/--./-')
+          .invertDotsAndDashes()
+          .invertDotsAndDashes()
+          .toString(),
+        'EAGT'
+      );
     });
 
-    it('Reverse', function () {
+    it('Reverse', () => {
       // Becomes -/.--/-./.
-      assert.strictEqual(new MorseString('./.-/--./-').reverse().toString(), 'TWNE');
+      assert.strictEqual(
+        new MorseString('./.-/--./-').reverse().toString(),
+        'TWNE'
+      );
 
       // Should undo itself if repeated
-      assert.strictEqual(new MorseString('./.-/--./-').reverse().reverse().toString(), 'EAGT');
+      assert.strictEqual(
+        new MorseString('./.-/--./-').reverse().reverse().toString(),
+        'EAGT'
+      );
     });
 
-    it('Chaining', function () {
-      assert.strictEqual(new MorseString('./.-/--./-').invertDotsAndDashes().reverse().toString(), 'EDAT');
-      assert.strictEqual(new MorseString('./.-/--./-').reverse().invertDotsAndDashes().toString(), 'EDAT');
+    it('Chaining', () => {
+      assert.strictEqual(
+        new MorseString('./.-/--./-')
+          .invertDotsAndDashes()
+          .reverse()
+          .toString(),
+        'EDAT'
+      );
+      assert.strictEqual(
+        new MorseString('./.-/--./-')
+          .reverse()
+          .invertDotsAndDashes()
+          .toString(),
+        'EDAT'
+      );
     });
 
-    it('Separator Errors', function () {
+    it('Separator Errors', () => {
       assertSeparatorThrows('.', ' ');
       assertSeparatorThrows('-', ' ');
       assertSeparatorThrows('A', ' ');
@@ -190,16 +220,25 @@ describe('Morse', function () {
       assertSeparatorThrows('C', 'C');
     });
 
-    it('Word Delimiters', function () {
+    it('Word Delimiters', () => {
       const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
-      assert.strictEqual(new MorseString(someTestString).toString(), 'SOME TEST STRING');
-      assert.strictEqual(new MorseString(someTestString).reverse().toString(), 'WAIRTS TSET EMOS');
-      assert.strictEqual(new MorseString(someTestString).invertDotsAndDashes().toString(), 'OSIT ETOE OEKMAU');
+      assert.strictEqual(
+        new MorseString(someTestString).toString(),
+        'SOME TEST STRING'
+      );
+      assert.strictEqual(
+        new MorseString(someTestString).reverse().toString(),
+        'WAIRTS TSET EMOS'
+      );
+      assert.strictEqual(
+        new MorseString(someTestString).invertDotsAndDashes().toString(),
+        'OSIT ETOE OEKMAU'
+      );
     });
   });
 });
 
-function assertSeparatorThrows (charSep, wordSep) {
+function assertSeparatorThrows(charSep, wordSep) {
   assert.throws(() => {
     const m = new MorseString('.', charSep, wordSep);
     m.toString();

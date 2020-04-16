@@ -1,5 +1,5 @@
-import { Helpers } from '../Common/Helpers';
-import { MorseCharacter } from './MorseCharacter';
+import {Helpers} from '../Common/Helpers';
+import {MorseCharacter} from './MorseCharacter';
 
 // MorseString represents a string of multiple morse characters.  It allows for a longer representation
 // to be converted to a single string and allows for sentence-level transforms such as reversing
