@@ -40,11 +40,6 @@ describe('Semaphore', () => {
         SemaphoreDirection.South | SemaphoreDirection.South
       );
       assert.strictEqual(noChar.toString(), '');
-
-      const emptyChar = new SemaphoreCharacter(
-        SemaphoreDirection.South | SemaphoreDirection.South
-      );
-      assert.strictEqual(emptyChar.toString(), '');
     });
 
     it('constructor', () => {
