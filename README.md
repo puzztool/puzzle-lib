@@ -1,7 +1,6 @@
 # puzzle-lib
 
 ![puzzle-lib CI](https://github.com/puzztool/puzzle-lib/workflows/puzzle-lib%20CI/badge.svg)
-[![Build Status](https://travis-ci.com/puzztool/puzzle-lib.svg?branch=master)](https://travis-ci.com/puzztool/puzzle-lib)
 [![npm](https://img.shields.io/npm/v/puzzle-lib.svg)](https://www.npmjs.com/package/puzzle-lib)
 
 Library of puzzle-solving algorithms
