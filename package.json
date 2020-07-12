@@ -28,10 +28,10 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
-    "@types/node": "^14.0.13",
+    "@types/node": "^14.0.22",
     "gts": "^2.0.2",
     "mocha": "^8.0.1",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "trie-prefix-tree": "^1.5.1"
