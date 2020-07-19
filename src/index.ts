@@ -32,4 +32,7 @@ export {SemaphoreStream} from './Semaphore/SemaphoreStream';
 export {Point as WordSearchPoint} from './WordSearch/Point';
 export {Result as WordSearchResult} from './WordSearch/Result';
 export {WordSearchDirection} from './WordSearch/WordSearchDirection';
-export {WordSearchSolver} from './WordSearch/WordSearchSolver';
+export {
+  WordSearchSolver,
+  WordSearchSpaceTreatment,
+} from './WordSearch/WordSearchSolver';

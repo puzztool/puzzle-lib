@@ -4,6 +4,12 @@ import {Point} from './Point';
 import {Result} from './Result';
 import {WordSearchDirection} from './WordSearchDirection';
 
+export enum WordSearchSpaceTreatment {
+  None = 0,
+  RemoveWithinPuzzle = 1,
+  RemoveAll = 2,
+}
+
 export class WordSearchSolver {
   // The grid of letters which makes up the wordsearch puzzle
   private _matrix: string[][];
@@ -13,6 +19,8 @@ export class WordSearchSolver {
   private _targets: ReturnType<typeof trie>;
   // Should we search for words not following a line
   private _canBend: boolean;
+  // What should we do with spaces
+  private _spaceTreatment: WordSearchSpaceTreatment;
 
   constructor() {
     // Use empty grid and list by default
@@ -32,6 +40,7 @@ export class WordSearchSolver {
       [-1, 1],
     ];
     this._canBend = false;
+    this._spaceTreatment = WordSearchSpaceTreatment.None;
   }
 
   setWords(words: string[]) {
@@ -49,8 +58,18 @@ export class WordSearchSolver {
     }
   }
 
+  parseGrid(gridInputText: string) {
+    const lines = gridInputText.split(/\r?\n/);
+    const grid: string[][] = [];
+    for (const line of lines) {
+      grid.push(line.split(''));
+    }
+    this.setGrid(grid);
+  }
+
   setGrid(matrix: string[][]) {
     this._matrix = matrix;
+    this.checkSpaces();
   }
 
   setDirections(direction: WordSearchDirection) {
@@ -76,6 +95,14 @@ export class WordSearchSolver {
         [1, -1],
         [-1, 1],
       ]);
+    }
+  }
+
+  setSpaceTreatment(treatment: WordSearchSpaceTreatment) {
+    this._spaceTreatment = treatment;
+
+    if (this._matrix.length > 0) {
+      this.checkSpaces();
     }
   }
 
@@ -207,5 +234,38 @@ export class WordSearchSolver {
       return false;
     }
     return true;
+  }
+
+  private checkSpaces(): void {
+    if (
+      this._matrix.length === 0 ||
+      this._spaceTreatment === WordSearchSpaceTreatment.None
+    ) {
+      return;
+    }
+
+    const nextMatrix = [];
+    for (let yIdx = 0; yIdx < this._matrix.length; yIdx++) {
+      const line = [];
+      let inPuzzle = false;
+      for (let xIdx = 0; xIdx < this._matrix[yIdx].length; xIdx++) {
+        const letter = this._matrix[yIdx][xIdx];
+        if (letter !== ' ') {
+          inPuzzle = true;
+        }
+        if (
+          this._spaceTreatment === WordSearchSpaceTreatment.RemoveAll &&
+          letter !== ' '
+        ) {
+          line.push(this._matrix[yIdx][xIdx]);
+        } else if (letter !== ' ' && inPuzzle) {
+          line.push(this._matrix[yIdx][xIdx]);
+        }
+      }
+      if (line.length > 0) {
+        nextMatrix.push(line);
+      }
+    }
+    this._matrix = nextMatrix;
   }
 }
