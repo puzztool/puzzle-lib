@@ -1,7 +1,11 @@
 /* global describe, it */
 
 const assert = require('assert');
-const {WordSearchSolver, WordSearchDirection} = require('../');
+const {
+  WordSearchDirection,
+  WordSearchSolver,
+  WordSearchSpaceTreatment,
+} = require('../');
 
 function assertResultsContainsWord(results, word) {
   for (const result of results) {
@@ -159,6 +163,58 @@ describe('WordSearchSolver', () => {
       solver.setWords(['x']);
       solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
       solver.setGrid(matrix);
+      const results = solver.findWords();
+      assertResultsContainsWord(results, 'puzz');
+      assertResultsContainsWord(results, 'win');
+
+      assert.strictEqual(results.length, 2);
+    });
+
+    it('Remove all spaces', () => {
+      const matrix = [
+        ['p', 'x', 'x', ' ', 'x'],
+        ['u', 'w', 'i', ' ', 'n'],
+        ['z', 'x', 'x', ' ', 'x'],
+        [' ', ' ', ' ', ' ', ' '],
+        ['z', 'x', 'x', ' ', 'x'],
+      ];
+      const solver = new WordSearchSolver();
+      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
+      solver.setGrid(matrix);
+      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveAll);
+      const results = solver.findWords();
+      assertResultsContainsWord(results, 'puzz');
+      assertResultsContainsWord(results, 'win');
+
+      assert.strictEqual(results.length, 2);
+    });
+
+    it('Remove spaces in puzzle', () => {
+      const matrix = [
+        [' ', 'p', 'x', 'x', ' ', 'x'],
+        [' ', 'u', 'w', 'i', ' ', 'n'],
+        [' ', 'z', 'x', 'x', ' ', 'x'],
+        [' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', 'z', 'x', 'x', ' ', 'x'],
+      ];
+      const solver = new WordSearchSolver();
+      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveWithinPuzzle);
+      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
+      solver.setGrid(matrix);
+      const results = solver.findWords();
+      assertResultsContainsWord(results, 'puzz');
+      assertResultsContainsWord(results, 'win');
+
+      assert.strictEqual(results.length, 2);
+    });
+
+    it('Parse spaces', () => {
+      const solver = new WordSearchSolver();
+      const matrix = 'px xx\nuw  in\nzx  xx\nzx  xx\n';
+      solver.parseGrid(matrix);
+      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveAll);
+      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
+
       const results = solver.findWords();
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
