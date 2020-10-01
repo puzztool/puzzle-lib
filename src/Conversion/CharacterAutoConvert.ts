@@ -46,6 +46,11 @@ export class CharacterAutoConvert {
       return CharacterAutoConvert.asciiPrintable(binary);
     }
 
+    if (encoding === CharacterEncoding.Ternary) {
+      const ternary = Number.parseInt(input, 3);
+      return CharacterAutoConvert.asciiPrintable(ternary + asciiOffset);
+    }
+
     return '';
   }
 
@@ -71,6 +76,10 @@ export class CharacterAutoConvert {
       }
     }
 
+    if (this.appearsTernary(input)) {
+      return CharacterEncoding.Ternary;
+    }
+
     if (input.length < 3 && numeric > 0 && numeric < 27) {
       return CharacterEncoding.Ordinal;
     }
@@ -85,12 +94,15 @@ export class CharacterAutoConvert {
     return CharacterEncoding.None;
   }
 
-  private static appearsBinary(character: string) {
-    for (const letter of character) {
-      if (letter !== '0' && letter !== '1') {
-        return false;
-      }
-    }
-    return true;
+  private static readonly BINARY_REGEX = new RegExp('^[01]+$')
+
+  private static appearsBinary(str: string): boolean {
+    return this.BINARY_REGEX.test(str);
+  }
+
+  private static readonly TERNARY_REGEX = new RegExp('^[0-2]{3}$')
+
+  private static appearsTernary(str: string): boolean {
+    return this.TERNARY_REGEX.test(str);
   }
 }

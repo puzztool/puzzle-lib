@@ -5,4 +5,5 @@ export enum CharacterEncoding {
   FiveBitBinary, // 00001 = A, 00010 = B
   EightBitBinary, // 01100001 = A, 01100010 = B
   Ascii, // 65 = A, 66 = B
+  Ternary, // 001 = A, 010 = C, 200 = R
 }
