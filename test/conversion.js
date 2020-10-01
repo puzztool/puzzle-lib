@@ -23,6 +23,11 @@ describe('Conversions', () => {
       );
       assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
 
+      const ternary = StringAutoConvert.determineStringEncoding(
+        '100 120 222 001'
+      );
+      assert.strictEqual(ternary, CharacterEncoding.Ternary);
+
       const none = StringAutoConvert.determineStringEncoding('999 999 999');
       assert.strictEqual(none, CharacterEncoding.None);
 
@@ -51,6 +56,9 @@ describe('Conversions', () => {
         true
       );
       assert.strictEqual('PLANET', planet);
+
+      const fooTernary = StringAutoConvert.convertString('020 120 120', true);
+      assert.strictEqual('FOO', fooTernary);
     });
 
     it('convertString - varied encoding', () => {
@@ -58,7 +66,7 @@ describe('Conversions', () => {
       assert.strictEqual('', noEncoding);
 
       const express = StringAutoConvert.convertString(
-        '01000101 24 16 10010 5    SS',
+        '01000101 24 121 10010 5    SS',
         false
       );
       assert.strictEqual('EXPRESS', express);
@@ -75,6 +83,9 @@ describe('Conversions', () => {
 
       const fiveBit = CharacterAutoConvert.determineCharacterEncoding('01100');
       assert.strictEqual(fiveBit, CharacterEncoding.FiveBitBinary);
+
+      const ternary = CharacterAutoConvert.determineCharacterEncoding('011');
+      assert.strictEqual(ternary, CharacterEncoding.Ternary);
 
       const eightBit = CharacterAutoConvert.determineCharacterEncoding(
         '01101100'
@@ -94,9 +105,9 @@ describe('Conversions', () => {
     });
 
     it('determineCharacterEncoding - Ambigious Cases', () => {
-      // Overlap between ascii and binary
+      // Overlap between ascii and binary and ternary
       const asciiE = CharacterAutoConvert.determineCharacterEncoding('101');
-      assert.strictEqual(asciiE, CharacterEncoding.Ascii);
+      assert.strictEqual(asciiE, CharacterEncoding.Ternary);
 
       // Overlap between ascii and binary
       const binaryE = CharacterAutoConvert.determineCharacterEncoding('00101');
@@ -129,6 +140,12 @@ describe('Conversions', () => {
       const eightBitZ = CharacterAutoConvert.convertCharacter('01011010');
       assert.strictEqual(eightBitZ, 'Z');
 
+      const ternaryA = CharacterAutoConvert.convertCharacter('001');
+      assert.strictEqual(ternaryA, 'A');
+
+      const ternaryZ = CharacterAutoConvert.convertCharacter('222');
+      assert.strictEqual(ternaryZ, 'Z');
+
       const eightBitTruncatedC = CharacterAutoConvert.convertCharacter(
         '1000011'
       );
@@ -153,6 +170,12 @@ describe('Conversions', () => {
         CharacterEncoding.FiveBitBinary
       );
       assert.strictEqual(fiveBitD, 'D');
+
+      const ternaryD = CharacterAutoConvert.convertCharacter(
+        '11',
+        CharacterEncoding.Ternary
+      );
+      assert.strictEqual(ternaryD, 'D');
 
       const eightBitD = CharacterAutoConvert.convertCharacter(
         '1000100',
