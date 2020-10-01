@@ -94,13 +94,13 @@ export class CharacterAutoConvert {
     return CharacterEncoding.None;
   }
 
-  private static readonly BINARY_REGEX = new RegExp('^[01]+$')
+  private static readonly BINARY_REGEX = new RegExp('^[01]+$');
 
   private static appearsBinary(str: string): boolean {
     return this.BINARY_REGEX.test(str);
   }
 
-  private static readonly TERNARY_REGEX = new RegExp('^[0-2]{3}$')
+  private static readonly TERNARY_REGEX = new RegExp('^[0-2]{3}$');
 
   private static appearsTernary(str: string): boolean {
     return this.TERNARY_REGEX.test(str);

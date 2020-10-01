@@ -23,7 +23,9 @@ describe('Conversions', () => {
       );
       assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
 
-      const ternary = StringAutoConvert.determineStringEncoding('100 120 222 001');
+      const ternary = StringAutoConvert.determineStringEncoding(
+        '100 120 222 001'
+      );
       assert.strictEqual(ternary, CharacterEncoding.Ternary);
 
       const none = StringAutoConvert.determineStringEncoding('999 999 999');
@@ -55,9 +57,7 @@ describe('Conversions', () => {
       );
       assert.strictEqual('PLANET', planet);
 
-      const fooTernary = StringAutoConvert.convertString(
-        '020 120 120', true
-      );
+      const fooTernary = StringAutoConvert.convertString('020 120 120', true);
       assert.strictEqual('FOO', fooTernary);
     });
 
@@ -175,7 +175,7 @@ describe('Conversions', () => {
         '11',
         CharacterEncoding.Ternary
       );
-      assert.strictEqual(ternaryD, 'D')
+      assert.strictEqual(ternaryD, 'D');
 
       const eightBitD = CharacterAutoConvert.convertCharacter(
         '1000100',
