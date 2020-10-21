@@ -1,6 +1,3 @@
 {
-  "extends": "./node_modules/gts/",
-  "ignorePatterns": [
-    "build/src/*"
-  ]
+  "extends": "./node_modules/gts/"
 }
