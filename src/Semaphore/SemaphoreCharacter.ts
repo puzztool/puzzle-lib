@@ -7,9 +7,7 @@ import {SemaphoreDegrees} from './SemaphoreDegrees';
 import {SemaphoreDirection} from './SemaphoreDirection';
 import {SemaphoreEncoding} from './SemaphoreEncoding';
 
-export class SemaphoreCharacter extends EncodingCharacterBase<
-  SemaphoreEncoding
-> {
+export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding> {
   private static parseEncoding(
     encoding: SemaphoreDirection | SemaphoreEncoding
   ) {
