@@ -23,9 +23,8 @@ describe('Conversions', () => {
       );
       assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
 
-      const ternary = StringAutoConvert.determineStringEncoding(
-        '100 120 222 001'
-      );
+      const ternary =
+        StringAutoConvert.determineStringEncoding('100 120 222 001');
       assert.strictEqual(ternary, CharacterEncoding.Ternary);
 
       const none = StringAutoConvert.determineStringEncoding('999 999 999');
@@ -87,14 +86,12 @@ describe('Conversions', () => {
       const ternary = CharacterAutoConvert.determineCharacterEncoding('011');
       assert.strictEqual(ternary, CharacterEncoding.Ternary);
 
-      const eightBit = CharacterAutoConvert.determineCharacterEncoding(
-        '01101100'
-      );
+      const eightBit =
+        CharacterAutoConvert.determineCharacterEncoding('01101100');
       assert.strictEqual(eightBit, CharacterEncoding.EightBitBinary);
 
-      const eightBitLen7 = CharacterAutoConvert.determineCharacterEncoding(
-        '1000011'
-      );
+      const eightBitLen7 =
+        CharacterAutoConvert.determineCharacterEncoding('1000011');
       assert.strictEqual(eightBitLen7, CharacterEncoding.EightBitBinary);
 
       const ascii = CharacterAutoConvert.determineCharacterEncoding('76');
@@ -146,9 +143,8 @@ describe('Conversions', () => {
       const ternaryZ = CharacterAutoConvert.convertCharacter('222');
       assert.strictEqual(ternaryZ, 'Z');
 
-      const eightBitTruncatedC = CharacterAutoConvert.convertCharacter(
-        '1000011'
-      );
+      const eightBitTruncatedC =
+        CharacterAutoConvert.convertCharacter('1000011');
       assert.strictEqual(eightBitTruncatedC, 'C');
 
       const unknown = CharacterAutoConvert.convertCharacter('999');
