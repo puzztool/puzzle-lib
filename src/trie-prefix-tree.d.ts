@@ -7,9 +7,7 @@
 // The published typings don't seem to work correctly with ES6 module syntax,
 // switch to CommonJS module syntax instead.
 declare module 'trie-prefix-tree' {
-  function Trie(
-    strings: string[]
-  ): {
+  function Trie(strings: string[]): {
     /**
      * Get a string representation of the trie
      */

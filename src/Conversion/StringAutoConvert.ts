@@ -27,9 +27,8 @@ export class StringAutoConvert {
     const encodingKeys: number[] = [];
 
     for (const letter of parsed) {
-      const charEncoding = CharacterAutoConvert.determineCharacterEncoding(
-        letter
-      );
+      const charEncoding =
+        CharacterAutoConvert.determineCharacterEncoding(letter);
       if (!encodingCount[charEncoding]) {
         encodingCount[charEncoding] = 1;
         encodingKeys.push(charEncoding);
