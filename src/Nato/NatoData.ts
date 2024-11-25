@@ -15,7 +15,7 @@ export class NatoData {
     new NatoCharacter('G', 'Golf'),
     new NatoCharacter('H', 'Hotel'),
     new NatoCharacter('I', 'India'),
-    new NatoCharacter('J', 'Juliet'),
+    new NatoCharacter('J', 'Juliett'),
     new NatoCharacter('K', 'Kilo'),
     new NatoCharacter('L', 'Lima'),
     new NatoCharacter('M', 'Mike'),
