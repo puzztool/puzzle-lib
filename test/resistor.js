@@ -7,31 +7,31 @@ describe('Resistor', () => {
   it('Valid 3 Color Resistors', () => {
     assert.strictEqual(
       Resistor.getValue([Resistor.BROWN, Resistor.BLACK, Resistor.ORANGE]),
-      10000
+      10000,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.GREEN, Resistor.BLUE, Resistor.RED]),
-      5600
+      5600,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.BROWN]),
-      230
+      230,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.BLUE]),
-      23000000
+      23000000,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.VIOLET]),
-      230000000
+      230000000,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.GREY]),
-      2300000000
+      2300000000,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.WHITE]),
-      23000000000
+      23000000000,
     );
   });
 
@@ -43,7 +43,7 @@ describe('Resistor', () => {
         Resistor.VIOLET,
         Resistor.BLACK,
       ]),
-      147
+      147,
     );
     assert.strictEqual(
       Resistor.getValue([
@@ -52,25 +52,25 @@ describe('Resistor', () => {
         Resistor.VIOLET,
         Resistor.GREEN,
       ]),
-      89700000
+      89700000,
     );
   });
 
   it('Leading Black', () => {
     assert.strictEqual(
       Resistor.getValue([Resistor.BLACK, Resistor.BLACK, Resistor.BLACK]),
-      0
+      0,
     );
     assert.strictEqual(
       Resistor.getValue([Resistor.BLACK, Resistor.BROWN, Resistor.BLACK]),
-      1
+      1,
     );
   });
 
   it('Invalid Resistors', () => {
     assert.strictEqual(
       Resistor.getValue([Resistor.GOLD, Resistor.RED, Resistor.RED]),
-      Resistor.INVALID_RESISTOR
+      Resistor.INVALID_RESISTOR,
     );
     assert.strictEqual(
       Resistor.getValue([
@@ -79,7 +79,7 @@ describe('Resistor', () => {
         Resistor.SILVER,
         Resistor.YELLOW,
       ]),
-      Resistor.INVALID_RESISTOR
+      Resistor.INVALID_RESISTOR,
     );
   });
 
@@ -97,7 +97,7 @@ describe('Resistor', () => {
     assert.throws(() => Resistor.getValue([]), /Invalid resistor size/);
     assert.throws(
       () => Resistor.getValue([Resistor.RED, Resistor.RED]),
-      /Invalid resistor size/
+      /Invalid resistor size/,
     );
   });
 
@@ -111,7 +111,7 @@ describe('Resistor', () => {
           Resistor.GREEN,
           Resistor.BLUE,
         ]),
-      /Invalid resistor size/
+      /Invalid resistor size/,
     );
   });
 
@@ -127,7 +127,7 @@ describe('Resistor', () => {
         Resistor.WHITE,
         Resistor.GOLD,
       ]),
-      45.9
+      45.9,
     );
   });
 

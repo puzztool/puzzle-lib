@@ -89,7 +89,7 @@ describe('Braille', () => {
     it('category - Basic', () => {
       const ch = new BrailleCharacter(
         BrailleEncoding.LetterA,
-        EncodingCategory.Letter
+        EncodingCategory.Letter,
       );
       assert.strictEqual(ch.toString(), 'A');
 

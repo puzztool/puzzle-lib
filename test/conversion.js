@@ -19,7 +19,7 @@ describe('Conversions', () => {
       assert.strictEqual(ascii, CharacterEncoding.Ascii);
 
       const variedSpacing = StringAutoConvert.determineStringEncoding(
-        '00010      00001 10010'
+        '00010      00001 10010',
       );
       assert.strictEqual(variedSpacing, CharacterEncoding.FiveBitBinary);
 
@@ -40,19 +40,19 @@ describe('Conversions', () => {
 
       const variedSpacing = StringAutoConvert.convertString(
         '00010    00001 10010',
-        true
+        true,
       );
       assert.strictEqual(variedSpacing, 'BAR');
 
       const variedEncoding = StringAutoConvert.convertString(
         '00010 00001 26',
-        true
+        true,
       );
       assert.strictEqual(variedEncoding, 'BA');
 
       const planet = StringAutoConvert.convertString(
         '01010000 01001100 01000001 01001110 01000101 01010100',
-        true
+        true,
       );
       assert.strictEqual('PLANET', planet);
 
@@ -66,7 +66,7 @@ describe('Conversions', () => {
 
       const express = StringAutoConvert.convertString(
         '01000101 24 121 10010 5    SS',
-        false
+        false,
       );
       assert.strictEqual('EXPRESS', express);
     });
@@ -157,25 +157,25 @@ describe('Conversions', () => {
     it('forceCharacterEncoding', () => {
       const fiveBitA = CharacterAutoConvert.convertCharacter(
         '1',
-        CharacterEncoding.FiveBitBinary
+        CharacterEncoding.FiveBitBinary,
       );
       assert.strictEqual(fiveBitA, 'A');
 
       const fiveBitD = CharacterAutoConvert.convertCharacter(
         '100',
-        CharacterEncoding.FiveBitBinary
+        CharacterEncoding.FiveBitBinary,
       );
       assert.strictEqual(fiveBitD, 'D');
 
       const ternaryD = CharacterAutoConvert.convertCharacter(
         '11',
-        CharacterEncoding.Ternary
+        CharacterEncoding.Ternary,
       );
       assert.strictEqual(ternaryD, 'D');
 
       const eightBitD = CharacterAutoConvert.convertCharacter(
         '1000100',
-        CharacterEncoding.EightBitBinary
+        CharacterEncoding.EightBitBinary,
       );
       assert.strictEqual(eightBitD, 'D');
     });
@@ -183,13 +183,13 @@ describe('Conversions', () => {
     it('nonPrintable', () => {
       const asciiControl = CharacterAutoConvert.convertCharacter(
         '28',
-        CharacterEncoding.Ascii
+        CharacterEncoding.Ascii,
       );
       assert.strictEqual(asciiControl, '');
 
       const asciiDel = CharacterAutoConvert.convertCharacter(
         '127',
-        CharacterEncoding.Ascii
+        CharacterEncoding.Ascii,
       );
       assert.strictEqual(asciiDel, '');
     });
@@ -278,38 +278,38 @@ describe('Conversions', () => {
     it('toAscii - Invalid tests', () => {
       assert.strictEqual(
         CharacterConversion.toAscii(String.fromCharCode(128)),
-        -1
+        -1,
       );
       assert.strictEqual(
         CharacterConversion.toAscii(String.fromCharCode(256)),
-        -1
+        -1,
       );
     });
 
     it('toAscii - Error tests', () => {
       assert.throws(
         () => CharacterConversion.toAscii(),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toAscii(null),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toAscii(''),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toAscii('ab'),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toAscii(0),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toAscii(false),
-        /A single character is required/
+        /A single character is required/,
       );
     });
 
@@ -332,27 +332,27 @@ describe('Conversions', () => {
     it('toOrdinal - Error tests', () => {
       assert.throws(
         () => CharacterConversion.toOrdinal(),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toOrdinal(null),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toOrdinal(''),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toOrdinal('ab'),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toOrdinal(0),
-        /A single character is required/
+        /A single character is required/,
       );
       assert.throws(
         () => CharacterConversion.toOrdinal(false),
-        /A single character is required/
+        /A single character is required/,
       );
     });
   });

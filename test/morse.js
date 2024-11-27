@@ -159,13 +159,13 @@ describe('Morse', () => {
       // Becomes ---/.../---
       assert.strictEqual(
         new MorseString('.../---/...').invertDotsAndDashes().toString(),
-        'OSO'
+        'OSO',
       );
 
       // Becomes -/-./..-/.
       assert.strictEqual(
         new MorseString('./.-/--./-').invertDotsAndDashes().toString(),
-        'TNUE'
+        'TNUE',
       );
 
       // Should undo itself if repeated
@@ -174,7 +174,7 @@ describe('Morse', () => {
           .invertDotsAndDashes()
           .invertDotsAndDashes()
           .toString(),
-        'EAGT'
+        'EAGT',
       );
     });
 
@@ -182,13 +182,13 @@ describe('Morse', () => {
       // Becomes -/.--/-./.
       assert.strictEqual(
         new MorseString('./.-/--./-').reverse().toString(),
-        'TWNE'
+        'TWNE',
       );
 
       // Should undo itself if repeated
       assert.strictEqual(
         new MorseString('./.-/--./-').reverse().reverse().toString(),
-        'EAGT'
+        'EAGT',
       );
     });
 
@@ -198,14 +198,14 @@ describe('Morse', () => {
           .invertDotsAndDashes()
           .reverse()
           .toString(),
-        'EDAT'
+        'EDAT',
       );
       assert.strictEqual(
         new MorseString('./.-/--./-')
           .reverse()
           .invertDotsAndDashes()
           .toString(),
-        'EDAT'
+        'EDAT',
       );
     });
 
@@ -224,15 +224,15 @@ describe('Morse', () => {
       const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
       assert.strictEqual(
         new MorseString(someTestString).toString(),
-        'SOME TEST STRING'
+        'SOME TEST STRING',
       );
       assert.strictEqual(
         new MorseString(someTestString).reverse().toString(),
-        'WAIRTS TSET EMOS'
+        'WAIRTS TSET EMOS',
       );
       assert.strictEqual(
         new MorseString(someTestString).invertDotsAndDashes().toString(),
-        'OSIT ETOE OEKMAU'
+        'OSIT ETOE OEKMAU',
       );
     });
   });

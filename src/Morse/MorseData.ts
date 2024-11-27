@@ -52,92 +52,92 @@ export class MorseData extends EncodingDataBase<MorseEncoding> {
     this.addToList(
       MorseEncoding.PunctuationPeriod,
       EncodingCategory.Punctuation,
-      '.'
+      '.',
     );
     this.addToList(
       MorseEncoding.PunctuationComma,
       EncodingCategory.Punctuation,
-      ','
+      ',',
     );
     this.addToList(
       MorseEncoding.PunctuationQuestionMark,
       EncodingCategory.Punctuation,
-      '?'
+      '?',
     );
     this.addToList(
       MorseEncoding.PunctuationApostrophe,
       EncodingCategory.Punctuation,
-      "'"
+      "'",
     );
     this.addToList(
       MorseEncoding.PunctuationExclamationPoint,
       EncodingCategory.Punctuation,
-      '!'
+      '!',
     );
     this.addToList(
       MorseEncoding.PunctuationForwardSlash,
       EncodingCategory.Punctuation,
-      '/'
+      '/',
     );
     this.addToList(
       MorseEncoding.PunctuationOpenParenthesis,
       EncodingCategory.Punctuation,
-      '('
+      '(',
     );
     this.addToList(
       MorseEncoding.PunctuationCloseParenthesis,
       EncodingCategory.Punctuation,
-      ')'
+      ')',
     );
     this.addToList(
       MorseEncoding.PunctuationAmpersand,
       EncodingCategory.Punctuation,
-      '&'
+      '&',
     );
     this.addToList(
       MorseEncoding.PunctuationColon,
       EncodingCategory.Punctuation,
-      ':'
+      ':',
     );
     this.addToList(
       MorseEncoding.PunctuationSemicolon,
       EncodingCategory.Punctuation,
-      ';'
+      ';',
     );
     this.addToList(
       MorseEncoding.PunctuationDoubleDash,
       EncodingCategory.Punctuation,
-      '='
+      '=',
     );
     this.addToList(
       MorseEncoding.PunctuationPlusSign,
       EncodingCategory.Punctuation,
-      '+'
+      '+',
     );
     this.addToList(
       MorseEncoding.PunctuationHyphen,
       EncodingCategory.Punctuation,
-      '-'
+      '-',
     );
     this.addToList(
       MorseEncoding.PunctuationUnderscore,
       EncodingCategory.Punctuation,
-      '_'
+      '_',
     );
     this.addToList(
       MorseEncoding.PunctuationQuotationMark,
       EncodingCategory.Punctuation,
-      '"'
+      '"',
     );
     this.addToList(
       MorseEncoding.PunctuationDollarSign,
       EncodingCategory.Punctuation,
-      '$'
+      '$',
     );
     this.addToList(
       MorseEncoding.PunctuationAtSign,
       EncodingCategory.Punctuation,
-      '@'
+      '@',
     );
   }
 }

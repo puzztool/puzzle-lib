@@ -28,7 +28,7 @@ export class CaesarUtils {
     ch: string,
     key: string,
     keyIndex: number,
-    decrypt = false
+    decrypt = false,
   ) {
     if (key.length === 0) {
       return ch;

@@ -9,7 +9,7 @@ export class VigenereString extends KeyedCipherStringBase {
     for (const ch of this._text) {
       if (CaesarUtils.isAlpha(ch)) {
         rotStr.push(
-          CaesarUtils.rotateLetterWithKey(ch, this._key, keyIndex++, decrypt)
+          CaesarUtils.rotateLetterWithKey(ch, this._key, keyIndex++, decrypt),
         );
       } else {
         rotStr.push(ch);

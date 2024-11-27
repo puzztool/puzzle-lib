@@ -5,7 +5,7 @@ export class CharacterAutoConvert {
   // or simply dealing with binary which has no leading zeros
   static convertCharacter(
     input: string,
-    forcedCharacterEncoding?: CharacterEncoding
+    forcedCharacterEncoding?: CharacterEncoding,
   ) {
     let encoding = null;
     if (!forcedCharacterEncoding) {

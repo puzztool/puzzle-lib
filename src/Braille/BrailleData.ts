@@ -49,83 +49,83 @@ export class BrailleData extends EncodingDataBase<BrailleEncoding> {
     this.addToList(
       BrailleEncoding.FormattingNumber,
       EncodingCategory.Formatting,
-      '#'
+      '#',
     );
     this.addToList(
       BrailleEncoding.FormattingCapital,
       EncodingCategory.Formatting,
-      '^'
+      '^',
     );
 
     this.addToList(
       BrailleEncoding.PunctuationComma,
       EncodingCategory.Punctuation,
-      ','
+      ',',
     );
     this.addToList(
       BrailleEncoding.PunctuationSemicolon,
       EncodingCategory.Punctuation,
-      ';'
+      ';',
     );
     this.addToList(
       BrailleEncoding.PunctuationApostrophe,
       EncodingCategory.Punctuation,
-      "'"
+      "'",
     );
     this.addToList(
       BrailleEncoding.PunctuationColon,
       EncodingCategory.Punctuation,
-      ':'
+      ':',
     );
     this.addToList(
       BrailleEncoding.PunctuationHyphen,
       EncodingCategory.Punctuation,
-      '-'
+      '-',
     );
     this.addToList(
       BrailleEncoding.PunctuationDecimalPoint,
       EncodingCategory.Punctuation,
-      '.'
+      '.',
     );
     this.addToList(
       BrailleEncoding.PunctuationFullStop,
       EncodingCategory.Punctuation,
-      '.'
+      '.',
     );
     this.addToList(
       BrailleEncoding.PunctuationExclamationPoint,
       EncodingCategory.Punctuation,
-      '!'
+      '!',
     );
     this.addToList(
       BrailleEncoding.PunctuationOpenQuote,
       EncodingCategory.Punctuation,
-      '"'
+      '"',
     );
     this.addToList(
       BrailleEncoding.PunctuationQuestionMark,
       EncodingCategory.Punctuation,
-      '?'
+      '?',
     );
     this.addToList(
       BrailleEncoding.PunctuationCloseQuote,
       EncodingCategory.Punctuation,
-      '"'
+      '"',
     );
     this.addToList(
       BrailleEncoding.PunctuationBracket,
       EncodingCategory.Punctuation,
-      '('
+      '(',
     );
     this.addToList(
       BrailleEncoding.PunctuationBracket,
       EncodingCategory.Punctuation,
-      ')'
+      ')',
     );
     this.addToList(
       BrailleEncoding.PunctuationSlash,
       EncodingCategory.Punctuation,
-      '/'
+      '/',
     );
   }
 }
