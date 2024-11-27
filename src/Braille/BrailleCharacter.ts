@@ -9,7 +9,7 @@ export class BrailleCharacter extends EncodingCharacterBase<BrailleEncoding> {
 
   constructor(
     encoding: BrailleEncoding = BrailleEncoding.None,
-    category: EncodingCategory = EncodingCategory.All
+    category: EncodingCategory = EncodingCategory.All,
   ) {
     super(BrailleData.instance, category);
 

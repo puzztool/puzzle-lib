@@ -10,54 +10,54 @@ export class Resistor {
     'Yellow',
     '#FFFF00',
     10000,
-    4
+    4,
   );
   static readonly GREEN = new ResistorColorEntry(
     'Green',
     '#008000',
     100000,
     5,
-    0.5
+    0.5,
   );
   static readonly BLUE = new ResistorColorEntry(
     'Blue',
     '#0000FF',
     1000000,
     6,
-    0.25
+    0.25,
   );
   static readonly VIOLET = new ResistorColorEntry(
     'Violet',
     '#800080',
     10000000,
     7,
-    0.1
+    0.1,
   );
   static readonly GREY = new ResistorColorEntry(
     'Grey',
     '#808080',
     100000000,
-    8
+    8,
   );
   static readonly WHITE = new ResistorColorEntry(
     'White',
     '#FFFFFF',
     1000000000,
-    9
+    9,
   );
   static readonly GOLD = new ResistorColorEntry(
     'Gold',
     '#AB8D3F',
     0.1,
     undefined,
-    5
+    5,
   );
   static readonly SILVER = new ResistorColorEntry(
     'Silver',
     '#C0C0C0',
     0.01,
     undefined,
-    10
+    10,
   );
 
   static readonly colorTable: ResistorColorEntry[] = [
@@ -106,7 +106,7 @@ export class Resistor {
 
     return Resistor.applyMultiplier(
       value,
-      colors[colors.length - 1].multiplier
+      colors[colors.length - 1].multiplier,
     );
   }
 

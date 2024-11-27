@@ -52,7 +52,7 @@ export class SemaphoreData extends EncodingDataBase<SemaphoreEncoding> {
     this.addToList(
       SemaphoreEncoding.FormattingNumber,
       EncodingCategory.Formatting,
-      '#'
+      '#',
     );
   }
 }

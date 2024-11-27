@@ -16,7 +16,7 @@ export class AutoKeyString extends KeyedCipherStringBase {
             ch,
             fullKey,
             keyIndex++,
-            decrypt
+            decrypt,
           );
           rotStr.push(currentLetter);
           if (decrypt) {

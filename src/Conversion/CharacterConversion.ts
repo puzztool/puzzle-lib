@@ -8,21 +8,21 @@ export class CharacterConversion {
       48,
       57,
       CharacterConversion.toAscii,
-      127
+      127,
     );
     CharacterConversion.addAsciiRange(
       retVal,
       65,
       90,
       CharacterConversion.toAscii,
-      127
+      127,
     );
     CharacterConversion.addAsciiRange(
       retVal,
       97,
       122,
       CharacterConversion.toAscii,
-      127
+      127,
     );
 
     return retVal;
@@ -35,7 +35,7 @@ export class CharacterConversion {
       65,
       90,
       CharacterConversion.toOrdinal,
-      26
+      26,
     );
 
     return retVal;
@@ -79,7 +79,7 @@ export class CharacterConversion {
     start: number,
     end: number,
     conversion: (value: string) => number,
-    maxValue: number
+    maxValue: number,
   ) {
     for (let i = start; i <= end; i++) {
       const letter = String.fromCharCode(i);

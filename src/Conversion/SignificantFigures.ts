@@ -14,7 +14,7 @@ export class SignificantFigures {
   private static roundInternal(
     func: (num: number) => number,
     num: number,
-    sigFigs: number
+    sigFigs: number,
   ) {
     if (num === 0) {
       return num;

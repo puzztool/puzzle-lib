@@ -10,13 +10,13 @@ export class StringAutoConvert {
       return split.reduce(
         (result, letter) =>
           result + CharacterAutoConvert.convertCharacter(letter, encoding),
-        ''
+        '',
       );
     } else {
       return split.reduce(
         (result, letter) =>
           result + CharacterAutoConvert.convertCharacter(letter),
-        ''
+        '',
       );
     }
   }

@@ -142,7 +142,7 @@ export class WordSearchSolver {
   private dfsCheck(
     start: Point,
     visited: Set<Point>,
-    history: Point[]
+    history: Point[],
   ): Result[] {
     const results: Result[] = [];
 

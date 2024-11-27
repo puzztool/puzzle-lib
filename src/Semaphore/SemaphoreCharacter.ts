@@ -9,7 +9,7 @@ import {SemaphoreEncoding} from './SemaphoreEncoding';
 
 export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding> {
   private static parseEncoding(
-    encoding: SemaphoreDirection | SemaphoreEncoding
+    encoding: SemaphoreDirection | SemaphoreEncoding,
   ) {
     const directions: SemaphoreDirection[] = [];
 
@@ -27,7 +27,7 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
 
   constructor(
     encoding: SemaphoreEncoding = SemaphoreEncoding.None,
-    category: EncodingCategory = EncodingCategory.All
+    category: EncodingCategory = EncodingCategory.All,
   ) {
     super(SemaphoreData.instance, category);
 
@@ -77,14 +77,14 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
   }
 
   getPotentialMatch(
-    other: SemaphoreDirection
+    other: SemaphoreDirection,
   ): EncodingEntry<SemaphoreEncoding> | null {
     if (this.directions.length !== 1 || this.directions[0] === other) {
       return null;
     }
 
     const potentialMatch = this.getPotentialMatches().filter(
-      value => (value.encoding & other) === other
+      value => (value.encoding & other) === other,
     )[0];
 
     return potentialMatch || null;
@@ -101,7 +101,7 @@ export class SemaphoreCharacter extends EncodingCharacterBase<SemaphoreEncoding>
   protected getEncoding() {
     return this._directions.reduce(
       (previousValue, currentValue) => (previousValue |= currentValue),
-      SemaphoreEncoding.None
+      SemaphoreEncoding.None,
     );
   }
 }

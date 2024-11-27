@@ -17,7 +17,7 @@ describe('Semaphore', () => {
   describe('Characters', () => {
     it('Char Matches', () => {
       const aChar = new SemaphoreCharacter(
-        SemaphoreDirection.SouthWest | SemaphoreDirection.South
+        SemaphoreDirection.SouthWest | SemaphoreDirection.South,
       );
       assert.strictEqual(aChar.toString(), 'A/1');
 
@@ -25,19 +25,19 @@ describe('Semaphore', () => {
       assert.strictEqual(iChar.toString(), 'I/9');
 
       const qChar = new SemaphoreCharacter(
-        SemaphoreDirection.West | SemaphoreDirection.NorthEast
+        SemaphoreDirection.West | SemaphoreDirection.NorthEast,
       );
       assert.strictEqual(qChar.toString(), 'Q');
 
       const zChar = new SemaphoreCharacter(
-        SemaphoreDirection.SouthEast | SemaphoreDirection.East
+        SemaphoreDirection.SouthEast | SemaphoreDirection.East,
       );
       assert.strictEqual(zChar.toString(), 'Z');
     });
 
     it('No Matches', () => {
       const noChar = new SemaphoreCharacter(
-        SemaphoreDirection.South | SemaphoreDirection.South
+        SemaphoreDirection.South | SemaphoreDirection.South,
       );
       assert.strictEqual(noChar.toString(), '');
     });
@@ -53,7 +53,7 @@ describe('Semaphore', () => {
       assert.strictEqual(char.directions[0], SemaphoreDirection.West);
 
       char = new SemaphoreCharacter(
-        SemaphoreDirection.West | SemaphoreDirection.East
+        SemaphoreDirection.West | SemaphoreDirection.East,
       );
       assert.strictEqual(char.toString(), 'R');
       assert.strictEqual(char.directions.length, 2);
@@ -89,7 +89,7 @@ describe('Semaphore', () => {
 
     it('getDegrees', () => {
       const char = new SemaphoreCharacter(
-        SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast
+        SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast,
       );
       let [first, second] = char.getDegrees();
       assert.strictEqual(first, 45);
@@ -175,7 +175,7 @@ describe('Semaphore', () => {
 
     it('One Result', () => {
       const ch = new SemaphoreCharacter(
-        SemaphoreDirection.West | SemaphoreDirection.North
+        SemaphoreDirection.West | SemaphoreDirection.North,
       );
       const exact = ch.getExactMatches();
       const exactExpected = [
@@ -189,7 +189,7 @@ describe('Semaphore', () => {
 
     it('No Results', () => {
       const ch = new SemaphoreCharacter(
-        SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast
+        SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast,
       );
       const exact = ch.getExactMatches();
       assert.deepStrictEqual(exact, []);
@@ -207,7 +207,7 @@ describe('Semaphore', () => {
       // Ask for a valid direction.
       assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.NorthWest),
-        new EncodingEntry(384, EncodingCategory.Letter, 'O')
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'),
       );
 
       // Add another direction and verify that a match isn't returned.
@@ -218,13 +218,13 @@ describe('Semaphore', () => {
       ch.removeDirection(SemaphoreDirection.West);
       assert.deepStrictEqual(
         ch.getPotentialMatch(SemaphoreDirection.West),
-        new EncodingEntry(384, EncodingCategory.Letter, 'O')
+        new EncodingEntry(384, EncodingCategory.Letter, 'O'),
       );
 
       // Test an invalid combination which has no match.
       assert.strictEqual(
         ch.getPotentialMatch(SemaphoreDirection.SouthEast),
-        null
+        null,
       );
     });
   });

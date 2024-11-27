@@ -24,7 +24,7 @@ export abstract class EncodingDataBase<T extends number> {
   protected addToList(
     encoding: T,
     category: EncodingCategory,
-    display: string
+    display: string,
   ) {
     this._entries.push(new EncodingEntry<T>(encoding, category, display));
   }

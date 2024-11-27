@@ -10,7 +10,7 @@ export class ResistorColorEntry {
     colorCode: string,
     multiplier: number,
     value?: number,
-    toleranceInPercent?: number
+    toleranceInPercent?: number,
   ) {
     this.name = name;
     this.value = value;
