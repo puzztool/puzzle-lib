@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
-    "@types/node": "^22.19.11",
+    "@types/node": "^20.19.33",
     "gts": "^7.0.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
