@@ -1,19 +1,18 @@
-/* global describe, it */
-
-const assert = require('assert');
-const {
+import {describe, it, expect} from 'vitest';
+import {
   WordSearchDirection,
   WordSearchSolver,
   WordSearchSpaceTreatment,
-} = require('../');
+} from '../src';
+import {WordSearchResult} from '../src';
 
-function assertResultsContainsWord(results, word) {
+function assertResultsContainsWord(results: WordSearchResult[], word: string) {
   for (const result of results) {
     if (result.word === word) {
       return;
     }
   }
-  assert.fail('Results do not contain expected word ' + word);
+  expect.fail('Results do not contain expected word ' + word);
 }
 
 describe('WordSearchSolver', () => {
@@ -32,7 +31,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Diagonal directions', () => {
@@ -45,11 +44,11 @@ describe('WordSearchSolver', () => {
       const solver = new WordSearchSolver();
       solver.setWords(['puzz', 'baz']);
       solver.setGrid(matrix);
-      const results = solver.findWords(matrix);
+      const results = solver.findWords();
 
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'baz');
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Jagged array outside box', () => {
@@ -62,12 +61,12 @@ describe('WordSearchSolver', () => {
       const solver = new WordSearchSolver();
       solver.setWords(['foo', 'bar', 'baz', 'abc', 'def']);
       solver.setGrid(matrix);
-      const results = solver.findWords(matrix);
+      const results = solver.findWords();
 
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
       assertResultsContainsWord(results, 'baz');
-      assert.strictEqual(results.length, 3);
+      expect(results.length).toBe(3);
     });
 
     it('Jagged diagonal array', () => {
@@ -84,7 +83,7 @@ describe('WordSearchSolver', () => {
 
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Validate path', () => {
@@ -99,17 +98,17 @@ describe('WordSearchSolver', () => {
       solver.setGrid(matrix);
       const results = solver.findWords();
 
-      assert.strictEqual(results.length, 1);
-      assert.strictEqual(results[0].word, 'foo');
+      expect(results.length).toBe(1);
+      expect(results[0].word).toBe('foo');
 
-      assert.strictEqual(results[0].points.length, 3);
+      expect(results[0].points.length).toBe(3);
 
-      assert.strictEqual(results[0].points[0].x, 1);
-      assert.strictEqual(results[0].points[0].y, 1);
-      assert.strictEqual(results[0].points[1].x, 2);
-      assert.strictEqual(results[0].points[1].y, 1);
-      assert.strictEqual(results[0].points[2].x, 3);
-      assert.strictEqual(results[0].points[2].y, 1);
+      expect(results[0].points[0].x).toBe(1);
+      expect(results[0].points[0].y).toBe(1);
+      expect(results[0].points[1].x).toBe(2);
+      expect(results[0].points[1].y).toBe(1);
+      expect(results[0].points[2].x).toBe(3);
+      expect(results[0].points[2].y).toBe(1);
     });
 
     it('Overlapping words', () => {
@@ -125,7 +124,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
       assertResultsContainsWord(results, 'foobar');
-      assert.strictEqual(results.length, 3);
+      expect(results.length).toBe(3);
     });
 
     it('Disabled directions', () => {
@@ -141,15 +140,15 @@ describe('WordSearchSolver', () => {
       solver.setGrid(matrix);
       const diagResults = solver.findWords();
 
-      assert.strictEqual(diagResults.length, 1);
+      expect(diagResults.length).toBe(1);
       assertResultsContainsWord(diagResults, 'wax');
 
       solver.setDirections(WordSearchDirection.Cardinal);
-      const cardinalResults = solver.findWords(matrix);
+      const cardinalResults = solver.findWords();
       assertResultsContainsWord(cardinalResults, 'puzz');
       assertResultsContainsWord(cardinalResults, 'win');
 
-      assert.strictEqual(cardinalResults.length, 2);
+      expect(cardinalResults.length).toBe(2);
     });
 
     it('Set words clears state', () => {
@@ -167,7 +166,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Remove all spaces', () => {
@@ -186,7 +185,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Remove spaces in puzzle', () => {
@@ -205,7 +204,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Parse spaces', () => {
@@ -219,7 +218,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
   });
 
@@ -240,7 +239,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Cardinal bent directions', () => {
@@ -259,7 +258,7 @@ describe('WordSearchSolver', () => {
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
-      assert.strictEqual(results.length, 2);
+      expect(results.length).toBe(2);
     });
 
     it('Disabled directions', () => {
@@ -276,15 +275,15 @@ describe('WordSearchSolver', () => {
       solver.setGrid(matrix);
       const diagResults = solver.findWords();
 
-      assert.strictEqual(diagResults.length, 3);
+      expect(diagResults.length).toBe(3);
       assertResultsContainsWord(diagResults, 'wax');
 
       solver.setDirections(WordSearchDirection.Cardinal);
-      const cardinalResults = solver.findWords(matrix);
+      const cardinalResults = solver.findWords();
       assertResultsContainsWord(cardinalResults, 'puzz');
       assertResultsContainsWord(cardinalResults, 'win');
 
-      assert.strictEqual(cardinalResults.length, 2);
+      expect(cardinalResults.length).toBe(2);
     });
   });
 });

@@ -1,7 +1,5 @@
-/* global describe, it */
-
-const assert = require('assert');
-const {
+import {describe, it, expect} from 'vitest';
+import {
   EncodingCategory,
   EncodingEntry,
   SemaphoreCharacter,
@@ -9,9 +7,7 @@ const {
   SemaphoreDirection,
   SemaphoreEncoding,
   SemaphoreStream,
-} = require('../');
-
-// eslint:disable:
+} from '../src';
 
 describe('Semaphore', () => {
   describe('Characters', () => {
@@ -19,72 +15,76 @@ describe('Semaphore', () => {
       const aChar = new SemaphoreCharacter(
         SemaphoreDirection.SouthWest | SemaphoreDirection.South,
       );
-      assert.strictEqual(aChar.toString(), 'A/1');
+      expect(aChar.toString()).toBe('A/1');
 
       const iChar = new SemaphoreCharacter(SemaphoreEncoding.Number9);
-      assert.strictEqual(iChar.toString(), 'I/9');
+      expect(iChar.toString()).toBe('I/9');
 
       const qChar = new SemaphoreCharacter(
         SemaphoreDirection.West | SemaphoreDirection.NorthEast,
       );
-      assert.strictEqual(qChar.toString(), 'Q');
+      expect(qChar.toString()).toBe('Q');
 
       const zChar = new SemaphoreCharacter(
         SemaphoreDirection.SouthEast | SemaphoreDirection.East,
       );
-      assert.strictEqual(zChar.toString(), 'Z');
+      expect(zChar.toString()).toBe('Z');
     });
 
     it('No Matches', () => {
       const noChar = new SemaphoreCharacter(
         SemaphoreDirection.South | SemaphoreDirection.South,
       );
-      assert.strictEqual(noChar.toString(), '');
+      expect(noChar.toString()).toBe('');
     });
 
     it('constructor', () => {
       let char = new SemaphoreCharacter();
-      assert.strictEqual(char.toString(), '');
-      assert.strictEqual(char.directions.length, 0);
+      expect(char.toString()).toBe('');
+      expect(char.directions.length).toBe(0);
 
-      char = new SemaphoreCharacter(SemaphoreDirection.West);
-      assert.strictEqual(char.toString(), '');
-      assert.strictEqual(char.directions.length, 1);
-      assert.strictEqual(char.directions[0], SemaphoreDirection.West);
+      char = new SemaphoreCharacter(
+        SemaphoreDirection.West as number as SemaphoreEncoding,
+      );
+      expect(char.toString()).toBe('');
+      expect(char.directions.length).toBe(1);
+      expect(char.directions[0]).toBe(SemaphoreDirection.West);
 
       char = new SemaphoreCharacter(
         SemaphoreDirection.West | SemaphoreDirection.East,
       );
-      assert.strictEqual(char.toString(), 'R');
-      assert.strictEqual(char.directions.length, 2);
-      assert.strictEqual(char.directions[0], SemaphoreDirection.East);
-      assert.strictEqual(char.directions[1], SemaphoreDirection.West);
+      expect(char.toString()).toBe('R');
+      expect(char.directions.length).toBe(2);
+      expect(char.directions[0]).toBe(SemaphoreDirection.East);
+      expect(char.directions[1]).toBe(SemaphoreDirection.West);
     });
 
     it('addDirection/removeDirection', () => {
       // Start with a partial match
-      const char = new SemaphoreCharacter(SemaphoreDirection.South);
-      assert.strictEqual(char.toString(), '');
+      const char = new SemaphoreCharacter(
+        SemaphoreDirection.South as number as SemaphoreEncoding,
+      );
+      expect(char.toString()).toBe('');
 
       // Complete the match
       char.addDirection(SemaphoreDirection.SouthWest);
-      assert.strictEqual(char.toString(), 'A/1');
+      expect(char.toString()).toBe('A/1');
 
       // Push off the oldest direction
       char.addDirection(SemaphoreDirection.NorthEast);
-      assert.strictEqual(char.toString(), 'L');
+      expect(char.toString()).toBe('L');
 
       // Specifically remove the most recent one
       char.removeDirection(SemaphoreDirection.NorthEast);
-      assert.strictEqual(char.toString(), '');
+      expect(char.toString()).toBe('');
 
       // Add a different second direction
       char.addDirection(SemaphoreDirection.SouthEast);
-      assert.strictEqual(char.toString(), 'N');
+      expect(char.toString()).toBe('N');
 
       // Try to remove a non-existing direction
       char.removeDirection(SemaphoreDirection.North);
-      assert.strictEqual(char.toString(), 'N');
+      expect(char.toString()).toBe('N');
     });
 
     it('getDegrees', () => {
@@ -92,23 +92,23 @@ describe('Semaphore', () => {
         SemaphoreDirection.SouthWest | SemaphoreDirection.NorthEast,
       );
       let [first, second] = char.getDegrees();
-      assert.strictEqual(first, 45);
-      assert.strictEqual(second, 225);
+      expect(first).toBe(45);
+      expect(second).toBe(225);
 
       char.clear();
       [first, second] = char.getDegrees();
-      assert.strictEqual(first, undefined);
-      assert.strictEqual(second, undefined);
+      expect(first).toBe(undefined);
+      expect(second).toBe(undefined);
 
       char.addDirection(SemaphoreDirection.NorthWest);
       [first, second] = char.getDegrees();
-      assert.strictEqual(first, 315);
-      assert.strictEqual(second, undefined);
+      expect(first).toBe(315);
+      expect(second).toBe(undefined);
 
       char.addDirection(SemaphoreDirection.NorthEast);
       [first, second] = char.getDegrees();
-      assert.strictEqual(first, 45);
-      assert.strictEqual(second, 315);
+      expect(first).toBe(45);
+      expect(second).toBe(315);
     });
 
     it('All Results', () => {
@@ -153,11 +153,13 @@ describe('Semaphore', () => {
         new EncodingEntry(66, EncodingCategory.Number, '0'),
         new EncodingEntry(6, EncodingCategory.Formatting, '#'),
       ];
-      assert.deepStrictEqual(results, expected);
+      expect(results).toEqual(expected);
     });
 
     it('Some Results', () => {
-      const ch = new SemaphoreCharacter(SemaphoreDirection.West);
+      const ch = new SemaphoreCharacter(
+        SemaphoreDirection.West as number as SemaphoreEncoding,
+      );
       const results = ch.getPotentialMatches();
       const expected = [
         new EncodingEntry(160, EncodingCategory.Letter, 'B'),
@@ -170,7 +172,7 @@ describe('Semaphore', () => {
         new EncodingEntry(160, EncodingCategory.Number, '2'),
         new EncodingEntry(192, EncodingCategory.Number, '8'),
       ];
-      assert.deepStrictEqual(results, expected);
+      expect(results).toEqual(expected);
     });
 
     it('One Result', () => {
@@ -181,10 +183,10 @@ describe('Semaphore', () => {
       const exactExpected = [
         new EncodingEntry(130, EncodingCategory.Letter, 'P'),
       ];
-      assert.deepStrictEqual(exact, exactExpected);
+      expect(exact).toEqual(exactExpected);
 
       const potential = ch.getPotentialMatches();
-      assert.deepStrictEqual(potential, []);
+      expect(potential).toEqual([]);
     });
 
     it('No Results', () => {
@@ -192,81 +194,78 @@ describe('Semaphore', () => {
         SemaphoreDirection.NorthWest | SemaphoreDirection.SouthEast,
       );
       const exact = ch.getExactMatches();
-      assert.deepStrictEqual(exact, []);
+      expect(exact).toEqual([]);
 
       const potential = ch.getPotentialMatches();
-      assert.deepStrictEqual(potential, []);
+      expect(potential).toEqual([]);
     });
 
     it('Potential Match', () => {
-      const ch = new SemaphoreCharacter(SemaphoreDirection.West);
+      const ch = new SemaphoreCharacter(
+        SemaphoreDirection.West as number as SemaphoreEncoding,
+      );
 
       // Can't ask for a direction that's already set.
-      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.West), null);
+      expect(ch.getPotentialMatch(SemaphoreDirection.West)).toBe(null);
 
       // Ask for a valid direction.
-      assert.deepStrictEqual(
-        ch.getPotentialMatch(SemaphoreDirection.NorthWest),
+      expect(ch.getPotentialMatch(SemaphoreDirection.NorthWest)).toEqual(
         new EncodingEntry(384, EncodingCategory.Letter, 'O'),
       );
 
       // Add another direction and verify that a match isn't returned.
       ch.addDirection(SemaphoreDirection.NorthWest);
-      assert.strictEqual(ch.getPotentialMatch(SemaphoreDirection.South), null);
+      expect(ch.getPotentialMatch(SemaphoreDirection.South)).toBe(null);
 
       // Remove the original direction and verify the same potential match is returned.
       ch.removeDirection(SemaphoreDirection.West);
-      assert.deepStrictEqual(
-        ch.getPotentialMatch(SemaphoreDirection.West),
+      expect(ch.getPotentialMatch(SemaphoreDirection.West)).toEqual(
         new EncodingEntry(384, EncodingCategory.Letter, 'O'),
       );
 
       // Test an invalid combination which has no match.
-      assert.strictEqual(
-        ch.getPotentialMatch(SemaphoreDirection.SouthEast),
-        null,
-      );
+      expect(ch.getPotentialMatch(SemaphoreDirection.SouthEast)).toBe(null);
     });
   });
 
   describe('Degrees', () => {
     it('To Degrees Happy cases', () => {
       const north = SemaphoreDegrees.ToDegrees(SemaphoreDirection.North);
-      assert.strictEqual(north, 0);
+      expect(north).toBe(0);
 
       const se = SemaphoreDegrees.ToDegrees(SemaphoreDirection.SouthEast);
-      assert.strictEqual(se, 135);
+      expect(se).toBe(135);
     });
 
     it('From Degrees Happy cases', () => {
       const north = SemaphoreDegrees.FromDegrees(0);
-      assert.strictEqual(north, SemaphoreDirection.North);
+      expect(north).toBe(SemaphoreDirection.North);
 
       const sw = SemaphoreDegrees.FromDegrees(135);
-      assert.strictEqual(sw, SemaphoreDirection.SouthEast);
+      expect(sw).toBe(SemaphoreDirection.SouthEast);
     });
 
     it('Full rotation cases', () => {
       const north = SemaphoreDegrees.FromDegrees(1080);
-      assert.strictEqual(north, SemaphoreDirection.North);
+      expect(north).toBe(SemaphoreDirection.North);
 
       const south = SemaphoreDegrees.FromDegrees(1260);
-      assert.strictEqual(south, SemaphoreDirection.South);
+      expect(south).toBe(SemaphoreDirection.South);
     });
   });
 
   describe('Encoding', () => {
     it('Letters match numbers', () => {
-      assert.strictEqual(SemaphoreEncoding.LetterA, SemaphoreEncoding.Number1);
-      assert.strictEqual(SemaphoreEncoding.LetterB, SemaphoreEncoding.Number2);
-      assert.strictEqual(SemaphoreEncoding.LetterC, SemaphoreEncoding.Number3);
-      assert.strictEqual(SemaphoreEncoding.LetterD, SemaphoreEncoding.Number4);
-      assert.strictEqual(SemaphoreEncoding.LetterE, SemaphoreEncoding.Number5);
-      assert.strictEqual(SemaphoreEncoding.LetterF, SemaphoreEncoding.Number6);
-      assert.strictEqual(SemaphoreEncoding.LetterG, SemaphoreEncoding.Number7);
-      assert.strictEqual(SemaphoreEncoding.LetterH, SemaphoreEncoding.Number8);
-      assert.strictEqual(SemaphoreEncoding.LetterI, SemaphoreEncoding.Number9);
-      assert.strictEqual(SemaphoreEncoding.LetterK, SemaphoreEncoding.Number0);
+      expect(SemaphoreEncoding.LetterA).toBe(SemaphoreEncoding.Number1);
+      expect(SemaphoreEncoding.LetterB).toBe(SemaphoreEncoding.Number2);
+      expect(SemaphoreEncoding.LetterC).toBe(SemaphoreEncoding.Number3);
+      expect(SemaphoreEncoding.LetterD).toBe(SemaphoreEncoding.Number4);
+      expect(SemaphoreEncoding.LetterE).toBe(SemaphoreEncoding.Number5);
+      expect(SemaphoreEncoding.LetterF).toBe(SemaphoreEncoding.Number6);
+      expect(SemaphoreEncoding.LetterG).toBe(SemaphoreEncoding.Number7);
+      expect(SemaphoreEncoding.LetterH).toBe(SemaphoreEncoding.Number8);
+      expect(SemaphoreEncoding.LetterI).toBe(SemaphoreEncoding.Number9);
+      expect(SemaphoreEncoding.LetterK).toBe(SemaphoreEncoding.Number0);
     });
   });
 
@@ -276,14 +275,14 @@ describe('Semaphore', () => {
       stream.append(new SemaphoreCharacter(SemaphoreEncoding.LetterA));
       stream.space();
       stream.append(new SemaphoreCharacter(SemaphoreEncoding.LetterB));
-      assert.strictEqual(stream.toString(), 'A B');
+      expect(stream.toString()).toBe('A B');
 
       const stream2 = new SemaphoreStream(stream.chars);
-      assert.strictEqual(stream2.toString(), 'A B');
+      expect(stream2.toString()).toBe('A B');
       stream2.append(new SemaphoreCharacter(SemaphoreEncoding.LetterC));
 
-      assert.strictEqual(stream.toString(), 'A B');
-      assert.strictEqual(stream2.toString(), 'A BC');
+      expect(stream.toString()).toBe('A B');
+      expect(stream2.toString()).toBe('A BC');
     });
   });
 });
