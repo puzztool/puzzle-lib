@@ -11,8 +11,8 @@ Library of puzzle-solving algorithms
 $ npm install --save puzzle-lib
 ```
 
-```js
-const { MorseCharacter } = require('puzzle-lib');
+```ts
+import { MorseCharacter } from 'puzzle-lib';
 const ch = new MorseCharacter();
 ch.dot();
 console.log(ch.toString());
@@ -20,14 +20,20 @@ console.log(ch.toString());
 
 ## Contributing
 
-The library code is written in TypeScript and produces ECMAScript 5 output. The test code is written in JavaScript using
-[Mocha](https://mochajs.org/).
+The library and tests are written in TypeScript. Tests use
+[Vitest](https://vitest.dev/).
 
 ```console
 $ git clone https://github.com/puzztool/puzzle-lib.git
 $ cd puzzle-lib
 $ npm install
 $ npm test
+```
+
+To lint:
+
+```console
+$ npm run lint
 ```
 
 To use local changes in another project:
