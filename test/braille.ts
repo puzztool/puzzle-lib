@@ -1,89 +1,87 @@
-/* global describe, it */
-
-const assert = require('assert');
-const {
+import {describe, it, expect} from 'vitest';
+import {
   EncodingCategory,
   BrailleCharacter,
   BrailleDot,
   BrailleEncoding,
   BrailleStream,
-} = require('../');
+} from '../src';
 
 describe('Braille', () => {
   describe('Character', () => {
     it('constructor - Letter/Number', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      assert.strictEqual(ch.toString(), 'A/1');
+      expect(ch.toString()).toBe('A/1');
 
       const exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 2);
-      assert.strictEqual(exact[0].toString(), 'A');
-      assert.strictEqual(exact[1].toString(), '1');
+      expect(exact.length).toBe(2);
+      expect(exact[0].toString()).toBe('A');
+      expect(exact[1].toString()).toBe('1');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 27);
-      assert.strictEqual(partial[0].toString(), 'B');
+      expect(partial.length).toBe(27);
+      expect(partial[0].toString()).toBe('B');
     });
 
     it('constructor - Letter', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterK);
-      assert.strictEqual(ch.toString(), 'K');
+      expect(ch.toString()).toBe('K');
 
       const exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 1);
-      assert.strictEqual(exact[0].toString(), 'K');
+      expect(exact.length).toBe(1);
+      expect(exact[0].toString()).toBe('K');
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 12);
-      assert.strictEqual(partial[0].toString(), 'L');
+      expect(partial.length).toBe(12);
+      expect(partial[0].toString()).toBe('L');
     });
 
     it('constructor - Empty', () => {
       const ch = new BrailleCharacter();
-      assert.strictEqual(ch.toString(), '');
+      expect(ch.toString()).toBe('');
 
       const exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 0);
+      expect(exact.length).toBe(0);
 
       const partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 52);
-      assert.strictEqual(partial[0].toString(), 'A');
+      expect(partial.length).toBe(52);
+      expect(partial[0].toString()).toBe('A');
     });
 
     it('toggle - Basic', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      assert.strictEqual(ch.toString(), 'A/1');
+      expect(ch.toString()).toBe('A/1');
 
       let exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 2);
-      assert.strictEqual(exact[0].toString(), 'A');
-      assert.strictEqual(exact[1].toString(), '1');
+      expect(exact.length).toBe(2);
+      expect(exact[0].toString()).toBe('A');
+      expect(exact[1].toString()).toBe('1');
 
       let partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 27);
-      assert.strictEqual(partial[0].toString(), 'B');
+      expect(partial.length).toBe(27);
+      expect(partial[0].toString()).toBe('B');
 
       ch.toggle(BrailleEncoding.LetterT);
-      assert.strictEqual(ch.toString(), 'Q');
+      expect(ch.toString()).toBe('Q');
 
       exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 1);
-      assert.strictEqual(exact[0].toString(), 'Q');
+      expect(exact.length).toBe(1);
+      expect(exact[0].toString()).toBe('Q');
 
       partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 0);
+      expect(partial.length).toBe(0);
 
       ch.toggle(BrailleEncoding.LetterS);
-      assert.strictEqual(ch.toString(), 'E/5');
+      expect(ch.toString()).toBe('E/5');
 
       exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 2);
-      assert.strictEqual(exact[0].toString(), 'E');
-      assert.strictEqual(exact[1].toString(), '5');
+      expect(exact.length).toBe(2);
+      expect(exact[0].toString()).toBe('E');
+      expect(exact[1].toString()).toBe('5');
 
       partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 12);
-      assert.strictEqual(partial[0].toString(), 'D');
+      expect(partial.length).toBe(12);
+      expect(partial[0].toString()).toBe('D');
     });
 
     it('category - Basic', () => {
@@ -91,62 +89,62 @@ describe('Braille', () => {
         BrailleEncoding.LetterA,
         EncodingCategory.Letter,
       );
-      assert.strictEqual(ch.toString(), 'A');
+      expect(ch.toString()).toBe('A');
 
       let exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 1);
-      assert.strictEqual(exact[0].toString(), 'A');
+      expect(exact.length).toBe(1);
+      expect(exact[0].toString()).toBe('A');
 
       let partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 20);
-      assert.strictEqual(partial[0].toString(), 'B');
+      expect(partial.length).toBe(20);
+      expect(partial[0].toString()).toBe('B');
 
       ch.category = EncodingCategory.Number;
-      assert.strictEqual(ch.toString(), '1');
+      expect(ch.toString()).toBe('1');
 
       exact = ch.getExactMatches();
-      assert.strictEqual(exact.length, 1);
-      assert.strictEqual(exact[0].toString(), '1');
+      expect(exact.length).toBe(1);
+      expect(exact[0].toString()).toBe('1');
 
       partial = ch.getPotentialMatches();
-      assert.strictEqual(partial.length, 7);
-      assert.strictEqual(partial[0].toString(), '2');
+      expect(partial.length).toBe(7);
+      expect(partial[0].toString()).toBe('2');
     });
 
     it('clear - Basic', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      assert.strictEqual(ch.toString(), 'A/1');
+      expect(ch.toString()).toBe('A/1');
 
       ch.clear();
-      assert.strictEqual(ch.toString(), '');
+      expect(ch.toString()).toBe('');
     });
 
     it('empty', () => {
       const ch = new BrailleCharacter();
-      assert.strictEqual(ch.empty(), true);
+      expect(ch.empty()).toBe(true);
 
       ch.toggle(BrailleDot.UpperRight);
-      assert.strictEqual(ch.empty(), false);
+      expect(ch.empty()).toBe(false);
 
       ch.clear();
-      assert.strictEqual(ch.empty(), true);
+      expect(ch.empty()).toBe(true);
     });
 
     it('valid', () => {
       const ch = new BrailleCharacter();
-      assert.strictEqual(ch.valid(), false);
+      expect(ch.valid()).toBe(false);
 
       ch.toggle(BrailleDot.UpperRight);
-      assert.strictEqual(ch.valid(), false);
+      expect(ch.valid()).toBe(false);
 
       ch.toggle(BrailleDot.UpperLeft);
-      assert.strictEqual(ch.valid(), true);
+      expect(ch.valid()).toBe(true);
 
       ch.toggle(BrailleDot.LowerRight);
-      assert.strictEqual(ch.valid(), false);
+      expect(ch.valid()).toBe(false);
 
       ch.toggle(BrailleDot.LowerLeft);
-      assert.strictEqual(ch.valid(), true);
+      expect(ch.valid()).toBe(true);
     });
   });
 
@@ -156,7 +154,7 @@ describe('Braille', () => {
       const ch = new BrailleCharacter(BrailleEncoding.LetterA);
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), 'A');
+      expect(stream.toString()).toBe('A');
 
       ch.toggle(BrailleDot.MiddleLeft);
       stream.space();
@@ -165,12 +163,12 @@ describe('Braille', () => {
       ch.toggle(BrailleDot.MiddleLeft | BrailleDot.UpperRight);
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), 'A BC');
+      expect(stream.toString()).toBe('A BC');
 
       stream.space();
-      stream.append(BrailleEncoding.LetterD);
+      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
 
-      assert.strictEqual(stream.toString(), 'A BC D');
+      expect(stream.toString()).toBe('A BC D');
     });
 
     it('Basic test - starts with number', () => {
@@ -178,13 +176,13 @@ describe('Braille', () => {
       const ch = new BrailleCharacter(BrailleEncoding.FormattingNumber);
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), '#');
+      expect(stream.toString()).toBe('#');
 
       ch.clear();
       ch.toggle(BrailleEncoding.Number1);
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), '#1');
+      expect(stream.toString()).toBe('#1');
 
       ch.toggle(BrailleDot.MiddleLeft);
       stream.append(ch);
@@ -192,12 +190,12 @@ describe('Braille', () => {
       ch.toggle(BrailleDot.MiddleLeft | BrailleDot.UpperRight);
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), '#123');
+      expect(stream.toString()).toBe('#123');
 
       stream.space();
-      stream.append(BrailleEncoding.LetterD);
+      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
 
-      assert.strictEqual(stream.toString(), '#123 D');
+      expect(stream.toString()).toBe('#123 D');
     });
 
     it('constructor - with parameter', () => {
@@ -205,14 +203,14 @@ describe('Braille', () => {
       stream.append(new BrailleCharacter(BrailleEncoding.LetterA));
       stream.space();
       stream.append(new BrailleCharacter(BrailleEncoding.LetterB));
-      assert.strictEqual(stream.toString(), 'A B');
+      expect(stream.toString()).toBe('A B');
 
       const stream2 = new BrailleStream(stream.chars);
-      assert.strictEqual(stream2.toString(), 'A B');
+      expect(stream2.toString()).toBe('A B');
       stream2.append(new BrailleCharacter(BrailleEncoding.LetterC));
 
-      assert.strictEqual(stream.toString(), 'A B');
-      assert.strictEqual(stream2.toString(), 'A BC');
+      expect(stream.toString()).toBe('A B');
+      expect(stream2.toString()).toBe('A BC');
     });
 
     it('clear', () => {
@@ -224,7 +222,7 @@ describe('Braille', () => {
       stream.space();
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), 'A B');
+      expect(stream.toString()).toBe('A B');
 
       stream.clear();
 
@@ -232,9 +230,9 @@ describe('Braille', () => {
       stream.append(ch);
 
       stream.space();
-      stream.append(BrailleEncoding.LetterD);
+      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
 
-      assert.strictEqual(stream.toString(), 'C D');
+      expect(stream.toString()).toBe('C D');
     });
 
     it('backspace', () => {
@@ -252,35 +250,35 @@ describe('Braille', () => {
       ch.encoding = BrailleEncoding.Number1;
       stream.append(ch);
 
-      assert.strictEqual(stream.toString(), 'AB #1');
+      expect(stream.toString()).toBe('AB #1');
 
       stream.backspace();
-      assert.strictEqual(stream.toString(), 'AB #');
+      expect(stream.toString()).toBe('AB #');
 
       ch.encoding = BrailleEncoding.Number2;
       stream.append(ch);
-      assert.strictEqual(stream.toString(), 'AB #2');
+      expect(stream.toString()).toBe('AB #2');
 
       stream.backspace();
       stream.backspace();
-      assert.strictEqual(stream.toString(), 'AB ');
+      expect(stream.toString()).toBe('AB ');
 
       ch.encoding = BrailleEncoding.LetterC;
       stream.append(ch);
-      assert.strictEqual(stream.toString(), 'AB C');
+      expect(stream.toString()).toBe('AB C');
 
       stream.backspace();
       stream.backspace();
       stream.backspace();
-      assert.strictEqual(stream.toString(), 'A');
+      expect(stream.toString()).toBe('A');
 
       stream.backspace();
-      assert.strictEqual(stream.toString(), '');
+      expect(stream.toString()).toBe('');
 
       stream.backspace();
       stream.backspace();
       stream.backspace();
-      assert.strictEqual(stream.toString(), '');
+      expect(stream.toString()).toBe('');
     });
   });
 });

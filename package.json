@@ -13,10 +13,9 @@
     "compile": "tsc",
     "fix": "gts fix",
     "lint": "gts lint",
-    "posttest": "npm run lint",
     "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "test": "mocha"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -29,10 +28,10 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "devDependencies": {
-    "@types/node": "^22.10.0",
-    "gts": "^6.0.2",
-    "mocha": "^11.1.0",
-    "typescript": "~5.1.0"
+    "@types/node": "^22.19.11",
+    "gts": "^7.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "trie-prefix-tree": "^1.5.1"
