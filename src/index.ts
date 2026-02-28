@@ -54,8 +54,8 @@ export {
 } from './Morse/morse';
 export {MorseEncoding} from './Morse/MorseEncoding';
 export {NatoCharacter} from './Nato/NatoCharacter';
-export {NatoData} from './Nato/NatoData';
-export {NavalFlags} from './NavalFlags/NavalFlags';
+export {lookupNatoPhonetic, NATO_ALPHABET} from './Nato/nato';
+export {getNavalFlag, NAVAL_FLAGS} from './NavalFlags/navalFlags';
 export {
   getResistorDisplayValue,
   getResistorValue,
