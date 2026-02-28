@@ -1,7 +1,11 @@
-export {BrailleCharacter} from './Braille/BrailleCharacter';
+export {
+  decodeBrailleStream,
+  getBrailleDot,
+  lookupBrailleEncoding,
+  toggleBrailleDot,
+} from './Braille/braille';
 export {BrailleDot} from './Braille/BrailleDot';
 export {BrailleEncoding} from './Braille/BrailleEncoding';
-export {BrailleStream} from './Braille/BrailleStream';
 export {
   autokeyDecrypt,
   autokeyEncrypt,
