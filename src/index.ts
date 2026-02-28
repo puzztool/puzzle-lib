@@ -19,6 +19,7 @@ export {
 export {CharacterImage} from './Common/CharacterImage';
 export {EncodingCategory} from './Common/EncodingCategory';
 export {EncodingEntry} from './Common/EncodingEntry';
+export {EncodingLookupResult} from './Common/EncodingLookupResult';
 export {InlineSvg} from './Common/InlineSvg';
 export {
   convertCharacter,
