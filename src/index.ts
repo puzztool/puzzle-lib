@@ -35,9 +35,20 @@ export {
   sigFigFloor,
   sigFigRound,
 } from './Conversion/significantFigures';
-export {MorseCharacter} from './Morse/MorseCharacter';
+export {
+  decodeMorse,
+  invertAndReverseMorse,
+  invertMorse,
+  lookupMorseEncoding,
+  morseEncodingToString,
+  MORSE_CHARACTER_DIVIDER,
+  MORSE_DASH,
+  MORSE_DOT,
+  MORSE_WORD_DIVIDER,
+  parseMorseString,
+  reverseMorse,
+} from './Morse/morse';
 export {MorseEncoding} from './Morse/MorseEncoding';
-export {MorseString} from './Morse/MorseString';
 export {NatoCharacter} from './Nato/NatoCharacter';
 export {NatoData} from './Nato/NatoData';
 export {NavalFlags} from './NavalFlags/NavalFlags';
