@@ -58,11 +58,18 @@ export {NatoData} from './Nato/NatoData';
 export {NavalFlags} from './NavalFlags/NavalFlags';
 export {Resistor} from './Resistor/Resistor';
 export {ResistorColorEntry} from './Resistor/ResistorColorEntry';
-export {SemaphoreCharacter} from './Semaphore/SemaphoreCharacter';
-export {SemaphoreDegrees} from './Semaphore/SemaphoreDegrees';
+export {
+  addSemaphoreDirection,
+  decodeSemaphoreStream,
+  degreesToSemaphoreDirection,
+  directionsToEncoding,
+  hasSemaphoreDirection,
+  lookupSemaphoreEncoding,
+  removeSemaphoreDirection,
+  semaphoreDirectionToDegrees,
+} from './Semaphore/semaphore';
 export {SemaphoreDirection} from './Semaphore/SemaphoreDirection';
 export {SemaphoreEncoding} from './Semaphore/SemaphoreEncoding';
-export {SemaphoreStream} from './Semaphore/SemaphoreStream';
 export {Point as WordSearchPoint} from './WordSearch/Point';
 export {Result as WordSearchResult} from './WordSearch/Result';
 export {WordSearchDirection} from './WordSearch/WordSearchDirection';
