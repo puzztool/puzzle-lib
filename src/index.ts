@@ -16,12 +16,25 @@ export {CharacterImage} from './Common/CharacterImage';
 export {EncodingCategory} from './Common/EncodingCategory';
 export {EncodingEntry} from './Common/EncodingEntry';
 export {InlineSvg} from './Common/InlineSvg';
-export {CharacterAutoConvert} from './Conversion/CharacterAutoConvert';
-export {CharacterConversion} from './Conversion/CharacterConversion';
+export {
+  convertCharacter,
+  convertString,
+  determineCharacterEncoding,
+  determineStringEncoding,
+} from './Conversion/conversion';
+export {
+  getAsciiTable,
+  getOrdinalTable,
+  toAscii,
+  toOrdinal,
+} from './Conversion/characterConversion';
 export {CharacterEncoding} from './Conversion/CharacterEncoding';
 export {CharacterTableEntry} from './Conversion/CharacterTableEntry';
-export {SignificantFigures} from './Conversion/SignificantFigures';
-export {StringAutoConvert} from './Conversion/StringAutoConvert';
+export {
+  sigFigCeil,
+  sigFigFloor,
+  sigFigRound,
+} from './Conversion/significantFigures';
 export {MorseCharacter} from './Morse/MorseCharacter';
 export {MorseEncoding} from './Morse/MorseEncoding';
 export {MorseString} from './Morse/MorseString';

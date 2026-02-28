@@ -1,4 +1,4 @@
-import {CharacterConversion} from '../Conversion/CharacterConversion';
+import {toOrdinal} from '../Conversion/characterConversion';
 
 const UPPER_A = 'A'.charCodeAt(0);
 const UPPER_Z = 'Z'.charCodeAt(0);
@@ -60,7 +60,7 @@ function rotateLetterWithKey(
   }
 
   const keyCh = key.charAt(keyIndex % key.length);
-  let rot = CharacterConversion.toOrdinal(keyCh) - 1;
+  let rot = toOrdinal(keyCh) - 1;
 
   if (decrypt) {
     rot = -rot;
