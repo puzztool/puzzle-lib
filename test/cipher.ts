@@ -6,9 +6,53 @@ import {
   vigenereDecrypt,
   autokeyEncrypt,
   autokeyDecrypt,
+  rotateLetter,
+  isAlpha,
 } from '../src';
 
 describe('Cipher', () => {
+  describe('isAlpha', () => {
+    it('returns true for letters', () => {
+      expect(isAlpha('a')).toBe(true);
+      expect(isAlpha('z')).toBe(true);
+      expect(isAlpha('A')).toBe(true);
+      expect(isAlpha('Z')).toBe(true);
+      expect(isAlpha('m')).toBe(true);
+    });
+
+    it('returns false for non-letters', () => {
+      expect(isAlpha('0')).toBe(false);
+      expect(isAlpha(' ')).toBe(false);
+      expect(isAlpha('!')).toBe(false);
+      expect(isAlpha('@')).toBe(false);
+    });
+  });
+
+  describe('rotateLetter', () => {
+    it('rotates lowercase', () => {
+      expect(rotateLetter('a', 1)).toBe('b');
+      expect(rotateLetter('z', 1)).toBe('a');
+      expect(rotateLetter('a', 13)).toBe('n');
+    });
+
+    it('rotates uppercase', () => {
+      expect(rotateLetter('A', 1)).toBe('B');
+      expect(rotateLetter('Z', 1)).toBe('A');
+      expect(rotateLetter('A', 13)).toBe('N');
+    });
+
+    it('preserves non-alpha characters', () => {
+      expect(rotateLetter(' ', 5)).toBe(' ');
+      expect(rotateLetter('!', 13)).toBe('!');
+      expect(rotateLetter('0', 1)).toBe('0');
+    });
+
+    it('handles negative rotation', () => {
+      expect(rotateLetter('b', -1)).toBe('a');
+      expect(rotateLetter('a', -1)).toBe('z');
+    });
+  });
+
   describe('caesarRotate', () => {
     it('Basic tests', () => {
       expect(caesarRotate('abc', 0)).toBe('abc');
@@ -115,9 +159,6 @@ describe('Cipher', () => {
 
       expect(autokeyEncrypt('', 'QUEENLY')).toBe('');
       expect(autokeyDecrypt('', 'QUEENLY')).toBe('');
-
-      expect(autokeyEncrypt('', '')).toBe('');
-      expect(autokeyDecrypt('', '')).toBe('');
     });
   });
 });

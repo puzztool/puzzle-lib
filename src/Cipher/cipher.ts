@@ -73,7 +73,7 @@ function rotateLetterWithKey(
  * Applies a Caesar rotation to every character in the text.
  */
 export function caesarRotate(text: string, rotation: number): string {
-  const result = [];
+  const result: string[] = [];
   for (const ch of text) {
     result.push(rotateLetter(ch, rotation));
   }
@@ -84,7 +84,7 @@ export function caesarRotate(text: string, rotation: number): string {
  * Returns all 26 Caesar rotations of the text.
  */
 export function caesarRotations(text: string): string[] {
-  const rotations = [];
+  const rotations: string[] = [];
   for (let i = 0; i < ALPHA_LENGTH; i++) {
     rotations.push(caesarRotate(text, i));
   }
@@ -95,7 +95,7 @@ export function caesarRotations(text: string): string[] {
  * Encrypts text using the Vigenère cipher with the given key.
  */
 export function vigenereEncrypt(text: string, key: string): string {
-  const result = [];
+  const result: string[] = [];
   let keyIndex = 0;
 
   for (const ch of text) {
@@ -113,7 +113,7 @@ export function vigenereEncrypt(text: string, key: string): string {
  * Decrypts text using the Vigenère cipher with the given key.
  */
 export function vigenereDecrypt(text: string, key: string): string {
-  const result = [];
+  const result: string[] = [];
   let keyIndex = 0;
 
   for (const ch of text) {
@@ -135,7 +135,7 @@ export function autokeyEncrypt(text: string, key: string): string {
     return text;
   }
 
-  const result = [];
+  const result: string[] = [];
   let keyIndex = 0;
   let fullKey = key;
 
@@ -159,7 +159,7 @@ export function autokeyDecrypt(text: string, key: string): string {
     return text;
   }
 
-  const result = [];
+  const result: string[] = [];
   let keyIndex = 0;
   let fullKey = key;
 
