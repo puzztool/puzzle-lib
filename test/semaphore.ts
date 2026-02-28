@@ -95,6 +95,14 @@ describe('Semaphore', () => {
       expect(semaphoreDirectionToDegrees(SemaphoreDirection.SouthEast)).toBe(
         135,
       );
+      expect(
+        semaphoreDirectionToDegrees(SemaphoreDirection.None),
+      ).toBeUndefined();
+      expect(
+        semaphoreDirectionToDegrees(
+          SemaphoreDirection.North | SemaphoreDirection.South,
+        ),
+      ).toBeUndefined();
     });
 
     it('degreesToSemaphoreDirection', () => {

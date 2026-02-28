@@ -19,7 +19,7 @@ export interface WordSearchOptions {
 }
 
 export function parseWordSearchGrid(input: string): string[][] {
-  const lines = input.split(/\r?\n/);
+  const lines = input.split(/\r?\n/).filter(line => line.length > 0);
   const grid: string[][] = [];
   for (const line of lines) {
     grid.push(line.split(''));

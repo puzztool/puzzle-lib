@@ -15,7 +15,7 @@ $ npm install --save puzzle-lib
 import { decodeMorse, caesarRotations, vigenereEncrypt } from 'puzzle-lib';
 
 // Decode morse code
-decodeMorse('.---- ..--- ...--'); // '123'
+decodeMorse('.----/..---/...--'); // '123'
 
 // Get all Caesar cipher rotations
 caesarRotations('hello');

@@ -85,11 +85,11 @@ describe('Morse', () => {
       expect(invertMorse('./.-/--./-')).toBe('TNUE');
     });
 
-    it('Double invert restores original', () => {
-      // Inverting twice should produce the same decoding as the original
-      const morse = './.-/--./-';
-      expect(decodeMorse(morse)).toBe('EAGT');
-      // We can't chain on the string level, but the decoded result should match
+    it('Invert single character', () => {
+      // '.' (E) inverted is '-' (T)
+      expect(invertMorse('.')).toBe('T');
+      // '-' (T) inverted is '.' (E)
+      expect(invertMorse('-')).toBe('E');
     });
 
     it('Word Delimiters', () => {

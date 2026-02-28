@@ -143,15 +143,20 @@ export function degreesToSemaphoreDirection(
 
 /**
  * Converts a SemaphoreDirection to degrees.
+ * Returns undefined if the direction is not a single valid flag.
  */
 export function semaphoreDirectionToDegrees(
   direction: SemaphoreDirection,
-): number {
+): number | undefined {
   let position = SemaphoreDirection.North;
   let counter = 0;
   while (counter < 9 && position !== direction) {
     position = position << 1;
     counter++;
+  }
+
+  if (position !== direction) {
+    return undefined;
   }
 
   return counter * 45;
