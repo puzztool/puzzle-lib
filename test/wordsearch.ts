@@ -1,7 +1,8 @@
 import {describe, it, expect} from 'vitest';
 import {
+  findWords,
+  parseWordSearchGrid,
   WordSearchDirection,
-  WordSearchSolver,
   WordSearchSpaceTreatment,
 } from '../src';
 import {WordSearchResult} from '../src';
@@ -24,10 +25,10 @@ describe('WordSearchSolver', () => {
         ['z', 'x', 'x', 'x'],
         ['z', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -41,10 +42,10 @@ describe('WordSearchSolver', () => {
         ['x', 'x', 'z', 'x', 'x'],
         ['x', 'x', 'x', 'z', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['puzz', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'baz'],
+      });
 
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'baz');
@@ -58,10 +59,10 @@ describe('WordSearchSolver', () => {
         ['a', 'x', 'b', 'a', 'r'],
         ['z', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['foo', 'bar', 'baz', 'abc', 'def']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['foo', 'bar', 'baz', 'abc', 'def'],
+      });
 
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
@@ -76,10 +77,10 @@ describe('WordSearchSolver', () => {
         ['x', 'r', 'o', 'o', 'f'],
         ['x', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['foo', 'bar', 'baz'],
+      });
 
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
@@ -93,10 +94,10 @@ describe('WordSearchSolver', () => {
         ['x', 'x', 'x', 'x'],
         ['x', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['foo', 'bar', 'baz'],
+      });
 
       expect(results.length).toBe(1);
       expect(results[0].word).toBe('foo');
@@ -116,10 +117,10 @@ describe('WordSearchSolver', () => {
         ['x', 'x', 'x', 'x'],
         ['x', 'f', 'o', 'o', 'b', 'a', 'r', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['foo', 'foobar', 'bar']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['foo', 'foobar', 'bar'],
+      });
 
       assertResultsContainsWord(results, 'foo');
       assertResultsContainsWord(results, 'bar');
@@ -134,17 +135,21 @@ describe('WordSearchSolver', () => {
         ['z', 'x', 'a', 'x'],
         ['z', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setDirections(WordSearchDirection.Diagonal);
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz', 'wax']);
-      solver.setGrid(matrix);
-      const diagResults = solver.findWords();
+      const words = ['puzz', 'win', 'foo', 'bar', 'baz', 'wax'];
+      const diagResults = findWords({
+        grid: matrix,
+        words,
+        directions: WordSearchDirection.Diagonal,
+      });
 
       expect(diagResults.length).toBe(1);
       assertResultsContainsWord(diagResults, 'wax');
 
-      solver.setDirections(WordSearchDirection.Cardinal);
-      const cardinalResults = solver.findWords();
+      const cardinalResults = findWords({
+        grid: matrix,
+        words,
+        directions: WordSearchDirection.Cardinal,
+      });
       assertResultsContainsWord(cardinalResults, 'puzz');
       assertResultsContainsWord(cardinalResults, 'win');
 
@@ -158,11 +163,10 @@ describe('WordSearchSolver', () => {
         ['z', 'x', 'x', 'x'],
         ['z', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['x']);
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -177,11 +181,11 @@ describe('WordSearchSolver', () => {
         [' ', ' ', ' ', ' ', ' '],
         ['z', 'x', 'x', ' ', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveAll);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+        spaceTreatment: WordSearchSpaceTreatment.RemoveAll,
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -196,11 +200,11 @@ describe('WordSearchSolver', () => {
         [' ', ' ', ' ', ' ', ' ', ' '],
         [' ', 'z', 'x', 'x', ' ', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveWithinPuzzle);
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+        spaceTreatment: WordSearchSpaceTreatment.RemoveWithinPuzzle,
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -208,13 +212,13 @@ describe('WordSearchSolver', () => {
     });
 
     it('Parse spaces', () => {
-      const solver = new WordSearchSolver();
-      const matrix = 'px xx\nuw  in\nzx  xx\nzx  xx\n';
-      solver.parseGrid(matrix);
-      solver.setSpaceTreatment(WordSearchSpaceTreatment.RemoveAll);
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-
-      const results = solver.findWords();
+      const input = 'px xx\nuw  in\nzx  xx\nzx  xx\n';
+      const grid = parseWordSearchGrid(input);
+      const results = findWords({
+        grid,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+        spaceTreatment: WordSearchSpaceTreatment.RemoveAll,
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -230,12 +234,12 @@ describe('WordSearchSolver', () => {
         ['z', 'z', 'n', 'x'],
         ['x', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      solver.setDirections(WordSearchDirection.Cardinal);
-      solver.setCanBend(true);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+        directions: WordSearchDirection.Cardinal,
+        canBend: true,
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -249,12 +253,12 @@ describe('WordSearchSolver', () => {
         ['z', 'x', 'x', 'x'],
         ['z', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz']);
-      solver.setGrid(matrix);
-      solver.setDirections(WordSearchDirection.Cardinal);
-      solver.setCanBend(true);
-      const results = solver.findWords();
+      const results = findWords({
+        grid: matrix,
+        words: ['puzz', 'win', 'foo', 'bar', 'baz'],
+        directions: WordSearchDirection.Cardinal,
+        canBend: true,
+      });
       assertResultsContainsWord(results, 'puzz');
       assertResultsContainsWord(results, 'win');
 
@@ -268,18 +272,23 @@ describe('WordSearchSolver', () => {
         ['z', 'z', 'a', 'x'],
         ['x', 'x', 'x', 'x'],
       ];
-      const solver = new WordSearchSolver();
-      solver.setCanBend(true);
-      solver.setDirections(WordSearchDirection.Diagonal);
-      solver.setWords(['puzz', 'win', 'foo', 'bar', 'baz', 'wax']);
-      solver.setGrid(matrix);
-      const diagResults = solver.findWords();
+      const words = ['puzz', 'win', 'foo', 'bar', 'baz', 'wax'];
+      const diagResults = findWords({
+        grid: matrix,
+        words,
+        directions: WordSearchDirection.Diagonal,
+        canBend: true,
+      });
 
       expect(diagResults.length).toBe(3);
       assertResultsContainsWord(diagResults, 'wax');
 
-      solver.setDirections(WordSearchDirection.Cardinal);
-      const cardinalResults = solver.findWords();
+      const cardinalResults = findWords({
+        grid: matrix,
+        words,
+        directions: WordSearchDirection.Cardinal,
+        canBend: true,
+      });
       assertResultsContainsWord(cardinalResults, 'puzz');
       assertResultsContainsWord(cardinalResults, 'win');
 

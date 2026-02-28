@@ -1,284 +1,155 @@
 import {describe, it, expect} from 'vitest';
 import {
   EncodingCategory,
-  BrailleCharacter,
   BrailleDot,
   BrailleEncoding,
-  BrailleStream,
+  lookupBrailleEncoding,
+  toggleBrailleDot,
+  getBrailleDot,
+  decodeBrailleStream,
 } from '../src';
 
 describe('Braille', () => {
-  describe('Character', () => {
-    it('constructor - Letter/Number', () => {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      expect(ch.toString()).toBe('A/1');
-
-      const exact = ch.getExactMatches();
-      expect(exact.length).toBe(2);
-      expect(exact[0].toString()).toBe('A');
-      expect(exact[1].toString()).toBe('1');
-
-      const partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(27);
-      expect(partial[0].toString()).toBe('B');
+  describe('lookupBrailleEncoding', () => {
+    it('Letter/Number', () => {
+      const result = lookupBrailleEncoding(BrailleEncoding.LetterA);
+      expect(result.exactString).toBe('A/1');
+      expect(result.exact.length).toBe(2);
+      expect(result.exact[0].toString()).toBe('A');
+      expect(result.exact[1].toString()).toBe('1');
+      expect(result.partial.length).toBe(27);
+      expect(result.partial[0].toString()).toBe('B');
     });
 
-    it('constructor - Letter', () => {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterK);
-      expect(ch.toString()).toBe('K');
-
-      const exact = ch.getExactMatches();
-      expect(exact.length).toBe(1);
-      expect(exact[0].toString()).toBe('K');
-
-      const partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(12);
-      expect(partial[0].toString()).toBe('L');
+    it('Letter only', () => {
+      const result = lookupBrailleEncoding(BrailleEncoding.LetterK);
+      expect(result.exactString).toBe('K');
+      expect(result.exact.length).toBe(1);
+      expect(result.exact[0].toString()).toBe('K');
+      expect(result.partial.length).toBe(12);
+      expect(result.partial[0].toString()).toBe('L');
     });
 
-    it('constructor - Empty', () => {
-      const ch = new BrailleCharacter();
-      expect(ch.toString()).toBe('');
-
-      const exact = ch.getExactMatches();
-      expect(exact.length).toBe(0);
-
-      const partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(52);
-      expect(partial[0].toString()).toBe('A');
+    it('None encoding', () => {
+      const result = lookupBrailleEncoding(BrailleEncoding.None);
+      expect(result.exactString).toBe('');
+      expect(result.exact.length).toBe(0);
+      expect(result.partial.length).toBe(52);
+      expect(result.partial[0].toString()).toBe('A');
     });
 
-    it('toggle - Basic', () => {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      expect(ch.toString()).toBe('A/1');
-
-      let exact = ch.getExactMatches();
-      expect(exact.length).toBe(2);
-      expect(exact[0].toString()).toBe('A');
-      expect(exact[1].toString()).toBe('1');
-
-      let partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(27);
-      expect(partial[0].toString()).toBe('B');
-
-      ch.toggle(BrailleEncoding.LetterT);
-      expect(ch.toString()).toBe('Q');
-
-      exact = ch.getExactMatches();
-      expect(exact.length).toBe(1);
-      expect(exact[0].toString()).toBe('Q');
-
-      partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(0);
-
-      ch.toggle(BrailleEncoding.LetterS);
-      expect(ch.toString()).toBe('E/5');
-
-      exact = ch.getExactMatches();
-      expect(exact.length).toBe(2);
-      expect(exact[0].toString()).toBe('E');
-      expect(exact[1].toString()).toBe('5');
-
-      partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(12);
-      expect(partial[0].toString()).toBe('D');
-    });
-
-    it('category - Basic', () => {
-      const ch = new BrailleCharacter(
+    it('category - Letter', () => {
+      const result = lookupBrailleEncoding(
         BrailleEncoding.LetterA,
         EncodingCategory.Letter,
       );
-      expect(ch.toString()).toBe('A');
-
-      let exact = ch.getExactMatches();
-      expect(exact.length).toBe(1);
-      expect(exact[0].toString()).toBe('A');
-
-      let partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(20);
-      expect(partial[0].toString()).toBe('B');
-
-      ch.category = EncodingCategory.Number;
-      expect(ch.toString()).toBe('1');
-
-      exact = ch.getExactMatches();
-      expect(exact.length).toBe(1);
-      expect(exact[0].toString()).toBe('1');
-
-      partial = ch.getPotentialMatches();
-      expect(partial.length).toBe(7);
-      expect(partial[0].toString()).toBe('2');
+      expect(result.exactString).toBe('A');
+      expect(result.exact.length).toBe(1);
+      expect(result.exact[0].toString()).toBe('A');
+      expect(result.partial.length).toBe(20);
+      expect(result.partial[0].toString()).toBe('B');
     });
 
-    it('clear - Basic', () => {
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      expect(ch.toString()).toBe('A/1');
-
-      ch.clear();
-      expect(ch.toString()).toBe('');
-    });
-
-    it('empty', () => {
-      const ch = new BrailleCharacter();
-      expect(ch.empty()).toBe(true);
-
-      ch.toggle(BrailleDot.UpperRight);
-      expect(ch.empty()).toBe(false);
-
-      ch.clear();
-      expect(ch.empty()).toBe(true);
-    });
-
-    it('valid', () => {
-      const ch = new BrailleCharacter();
-      expect(ch.valid()).toBe(false);
-
-      ch.toggle(BrailleDot.UpperRight);
-      expect(ch.valid()).toBe(false);
-
-      ch.toggle(BrailleDot.UpperLeft);
-      expect(ch.valid()).toBe(true);
-
-      ch.toggle(BrailleDot.LowerRight);
-      expect(ch.valid()).toBe(false);
-
-      ch.toggle(BrailleDot.LowerLeft);
-      expect(ch.valid()).toBe(true);
+    it('category - Number', () => {
+      const result = lookupBrailleEncoding(
+        BrailleEncoding.LetterA,
+        EncodingCategory.Number,
+      );
+      expect(result.exactString).toBe('1');
+      expect(result.exact.length).toBe(1);
+      expect(result.exact[0].toString()).toBe('1');
+      expect(result.partial.length).toBe(7);
+      expect(result.partial[0].toString()).toBe('2');
     });
   });
 
-  describe('Stream', () => {
-    it('Basic test - starts with a letter', () => {
-      const stream = new BrailleStream();
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      stream.append(ch);
+  describe('toggleBrailleDot', () => {
+    it('basic toggle', () => {
+      let encoding = BrailleEncoding.LetterA;
+      const result1 = lookupBrailleEncoding(encoding);
+      expect(result1.exactString).toBe('A/1');
 
-      expect(stream.toString()).toBe('A');
+      encoding = toggleBrailleDot(encoding, BrailleEncoding.LetterT);
+      const result2 = lookupBrailleEncoding(encoding);
+      expect(result2.exactString).toBe('Q');
+      expect(result2.exact.length).toBe(1);
+      expect(result2.partial.length).toBe(0);
 
-      ch.toggle(BrailleDot.MiddleLeft);
-      stream.space();
-      stream.append(ch);
+      encoding = toggleBrailleDot(encoding, BrailleEncoding.LetterS);
+      const result3 = lookupBrailleEncoding(encoding);
+      expect(result3.exactString).toBe('E/5');
+      expect(result3.exact.length).toBe(2);
+      expect(result3.partial.length).toBe(12);
+      expect(result3.partial[0].toString()).toBe('D');
+    });
+  });
 
-      ch.toggle(BrailleDot.MiddleLeft | BrailleDot.UpperRight);
-      stream.append(ch);
-
-      expect(stream.toString()).toBe('A BC');
-
-      stream.space();
-      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
-
-      expect(stream.toString()).toBe('A BC D');
+  describe('getBrailleDot', () => {
+    it('check dot state', () => {
+      expect(getBrailleDot(BrailleEncoding.None, BrailleDot.UpperRight)).toBe(
+        false,
+      );
+      const encoding = toggleBrailleDot(
+        BrailleEncoding.None,
+        BrailleDot.UpperRight,
+      );
+      expect(getBrailleDot(encoding, BrailleDot.UpperRight)).toBe(true);
     });
 
-    it('Basic test - starts with number', () => {
-      const stream = new BrailleStream();
-      const ch = new BrailleCharacter(BrailleEncoding.FormattingNumber);
-      stream.append(ch);
+    it('valid encoding', () => {
+      const encoding = BrailleEncoding.LetterC;
+      const result = lookupBrailleEncoding(encoding);
+      expect(result.exact.length).toBeGreaterThan(0);
+    });
+  });
 
-      expect(stream.toString()).toBe('#');
+  describe('decodeBrailleStream', () => {
+    it('starts with a letter', () => {
+      const encodings: BrailleEncoding[] = [];
+      encodings.push(BrailleEncoding.LetterA);
+      expect(decodeBrailleStream(encodings)).toBe('A');
 
-      ch.clear();
-      ch.toggle(BrailleEncoding.Number1);
-      stream.append(ch);
+      encodings.push(BrailleEncoding.None);
+      encodings.push(BrailleEncoding.LetterB);
+      encodings.push(BrailleEncoding.LetterC);
+      expect(decodeBrailleStream(encodings)).toBe('A BC');
 
-      expect(stream.toString()).toBe('#1');
-
-      ch.toggle(BrailleDot.MiddleLeft);
-      stream.append(ch);
-
-      ch.toggle(BrailleDot.MiddleLeft | BrailleDot.UpperRight);
-      stream.append(ch);
-
-      expect(stream.toString()).toBe('#123');
-
-      stream.space();
-      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
-
-      expect(stream.toString()).toBe('#123 D');
+      encodings.push(BrailleEncoding.None);
+      encodings.push(BrailleEncoding.LetterD);
+      expect(decodeBrailleStream(encodings)).toBe('A BC D');
     });
 
-    it('constructor - with parameter', () => {
-      const stream = new BrailleStream();
-      stream.append(new BrailleCharacter(BrailleEncoding.LetterA));
-      stream.space();
-      stream.append(new BrailleCharacter(BrailleEncoding.LetterB));
-      expect(stream.toString()).toBe('A B');
+    it('starts with number', () => {
+      const encodings: BrailleEncoding[] = [];
+      encodings.push(BrailleEncoding.FormattingNumber);
+      expect(decodeBrailleStream(encodings)).toBe('#');
 
-      const stream2 = new BrailleStream(stream.chars);
-      expect(stream2.toString()).toBe('A B');
-      stream2.append(new BrailleCharacter(BrailleEncoding.LetterC));
+      encodings.push(BrailleEncoding.Number1);
+      expect(decodeBrailleStream(encodings)).toBe('#1');
 
-      expect(stream.toString()).toBe('A B');
-      expect(stream2.toString()).toBe('A BC');
+      encodings.push(BrailleEncoding.Number2);
+      encodings.push(BrailleEncoding.Number3);
+      expect(decodeBrailleStream(encodings)).toBe('#123');
+
+      encodings.push(BrailleEncoding.None);
+      encodings.push(BrailleEncoding.LetterD);
+      expect(decodeBrailleStream(encodings)).toBe('#123 D');
     });
 
-    it('clear', () => {
-      const stream = new BrailleStream();
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      stream.append(ch);
+    it('copy independence', () => {
+      const encodings: BrailleEncoding[] = [
+        BrailleEncoding.LetterA,
+        BrailleEncoding.None,
+        BrailleEncoding.LetterB,
+      ];
+      expect(decodeBrailleStream(encodings)).toBe('A B');
 
-      ch.toggle(BrailleDot.MiddleLeft);
-      stream.space();
-      stream.append(ch);
+      const copy = [...encodings];
+      expect(decodeBrailleStream(copy)).toBe('A B');
+      copy.push(BrailleEncoding.LetterC);
 
-      expect(stream.toString()).toBe('A B');
-
-      stream.clear();
-
-      ch.toggle(BrailleDot.MiddleLeft | BrailleDot.UpperRight);
-      stream.append(ch);
-
-      stream.space();
-      stream.append(new BrailleCharacter(BrailleEncoding.LetterD));
-
-      expect(stream.toString()).toBe('C D');
-    });
-
-    it('backspace', () => {
-      const stream = new BrailleStream();
-      const ch = new BrailleCharacter(BrailleEncoding.LetterA);
-      stream.append(ch);
-
-      ch.toggle(BrailleDot.MiddleLeft);
-      stream.append(ch);
-      stream.space();
-
-      ch.encoding = BrailleEncoding.FormattingNumber;
-      stream.append(ch);
-
-      ch.encoding = BrailleEncoding.Number1;
-      stream.append(ch);
-
-      expect(stream.toString()).toBe('AB #1');
-
-      stream.backspace();
-      expect(stream.toString()).toBe('AB #');
-
-      ch.encoding = BrailleEncoding.Number2;
-      stream.append(ch);
-      expect(stream.toString()).toBe('AB #2');
-
-      stream.backspace();
-      stream.backspace();
-      expect(stream.toString()).toBe('AB ');
-
-      ch.encoding = BrailleEncoding.LetterC;
-      stream.append(ch);
-      expect(stream.toString()).toBe('AB C');
-
-      stream.backspace();
-      stream.backspace();
-      stream.backspace();
-      expect(stream.toString()).toBe('A');
-
-      stream.backspace();
-      expect(stream.toString()).toBe('');
-
-      stream.backspace();
-      stream.backspace();
-      stream.backspace();
-      expect(stream.toString()).toBe('');
+      expect(decodeBrailleStream(encodings)).toBe('A B');
+      expect(decodeBrailleStream(copy)).toBe('A BC');
     });
   });
 });

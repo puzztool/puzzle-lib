@@ -12,10 +12,16 @@ $ npm install --save puzzle-lib
 ```
 
 ```ts
-import { MorseCharacter } from 'puzzle-lib';
-const ch = new MorseCharacter();
-ch.dot();
-console.log(ch.toString());
+import { decodeMorse, caesarRotations, vigenereEncrypt } from 'puzzle-lib';
+
+// Decode morse code
+decodeMorse('.----/..---/...--'); // '123'
+
+// Get all Caesar cipher rotations
+caesarRotations('hello');
+
+// Vigenère encrypt
+vigenereEncrypt('hello', 'key');
 ```
 
 ## Contributing

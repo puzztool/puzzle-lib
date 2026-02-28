@@ -1,201 +1,122 @@
 import {describe, it, expect} from 'vitest';
 import {
-  CharacterConversion,
+  toAscii,
+  toOrdinal,
+  getAsciiTable,
+  getOrdinalTable,
   CharacterEncoding,
-  CharacterAutoConvert,
-  StringAutoConvert,
-  SignificantFigures,
+  convertCharacter,
+  convertString,
+  determineCharacterEncoding,
+  determineStringEncoding,
+  sigFigCeil,
+  sigFigFloor,
+  sigFigRound,
 } from '../src';
 
 describe('Conversions', () => {
-  describe('StringAutoConvert', () => {
+  describe('convertString / determineStringEncoding', () => {
     it('determineStringEncoding', () => {
-      const ordinal = StringAutoConvert.determineStringEncoding('12 13 65');
-      expect(ordinal).toBe(CharacterEncoding.Ordinal);
-
-      const ascii = StringAutoConvert.determineStringEncoding('65 83 43 j');
-      expect(ascii).toBe(CharacterEncoding.Ascii);
-
-      const variedSpacing = StringAutoConvert.determineStringEncoding(
-        '00010      00001 10010',
+      expect(determineStringEncoding('12 13 65')).toBe(
+        CharacterEncoding.Ordinal,
       );
-      expect(variedSpacing).toBe(CharacterEncoding.FiveBitBinary);
-
-      const ternary =
-        StringAutoConvert.determineStringEncoding('100 120 222 001');
-      expect(ternary).toBe(CharacterEncoding.Ternary);
-
-      const none = StringAutoConvert.determineStringEncoding('999 999 999');
-      expect(none).toBe(CharacterEncoding.None);
-
-      const empty = StringAutoConvert.determineStringEncoding('');
-      expect(empty).toBe(CharacterEncoding.None);
+      expect(determineStringEncoding('65 83 43 j')).toBe(
+        CharacterEncoding.Ascii,
+      );
+      expect(determineStringEncoding('00010      00001 10010')).toBe(
+        CharacterEncoding.FiveBitBinary,
+      );
+      expect(determineStringEncoding('100 120 222 001')).toBe(
+        CharacterEncoding.Ternary,
+      );
+      expect(determineStringEncoding('999 999 999')).toBe(
+        CharacterEncoding.None,
+      );
+      expect(determineStringEncoding('')).toBe(CharacterEncoding.None);
     });
 
     it('convertString - consistent encoding', () => {
-      const foo = StringAutoConvert.convertString('foo', true);
-      expect(foo).toBe('foo');
-
-      const variedSpacing = StringAutoConvert.convertString(
-        '00010    00001 10010',
-        true,
-      );
-      expect(variedSpacing).toBe('BAR');
-
-      const variedEncoding = StringAutoConvert.convertString(
-        '00010 00001 26',
-        true,
-      );
-      expect(variedEncoding).toBe('BA');
-
-      const planet = StringAutoConvert.convertString(
-        '01010000 01001100 01000001 01001110 01000101 01010100',
-        true,
-      );
-      expect(planet).toBe('PLANET');
-
-      const fooTernary = StringAutoConvert.convertString('020 120 120', true);
-      expect(fooTernary).toBe('FOO');
+      expect(convertString('foo', true)).toBe('foo');
+      expect(convertString('00010    00001 10010', true)).toBe('BAR');
+      expect(convertString('00010 00001 26', true)).toBe('BA');
+      expect(
+        convertString(
+          '01010000 01001100 01000001 01001110 01000101 01010100',
+          true,
+        ),
+      ).toBe('PLANET');
+      expect(convertString('020 120 120', true)).toBe('FOO');
     });
 
     it('convertString - varied encoding', () => {
-      const noEncoding = StringAutoConvert.convertString('999 999', false);
-      expect(noEncoding).toBe('');
-
-      const express = StringAutoConvert.convertString(
-        '01000101 24 121 10010 5    SS',
-        false,
+      expect(convertString('999 999', false)).toBe('');
+      expect(convertString('01000101 24 121 10010 5    SS', false)).toBe(
+        'EXPRESS',
       );
-      expect(express).toBe('EXPRESS');
     });
   });
 
-  describe('CharacterAutoConvert', () => {
+  describe('convertCharacter / determineCharacterEncoding', () => {
     it('determineCharacterEncoding', () => {
-      const latin = CharacterAutoConvert.determineCharacterEncoding('L');
-      expect(latin).toBe(CharacterEncoding.Latin);
-
-      const ordinal = CharacterAutoConvert.determineCharacterEncoding('12');
-      expect(ordinal).toBe(CharacterEncoding.Ordinal);
-
-      const fiveBit = CharacterAutoConvert.determineCharacterEncoding('01100');
-      expect(fiveBit).toBe(CharacterEncoding.FiveBitBinary);
-
-      const ternary = CharacterAutoConvert.determineCharacterEncoding('011');
-      expect(ternary).toBe(CharacterEncoding.Ternary);
-
-      const eightBit =
-        CharacterAutoConvert.determineCharacterEncoding('01101100');
-      expect(eightBit).toBe(CharacterEncoding.EightBitBinary);
-
-      const eightBitLen7 =
-        CharacterAutoConvert.determineCharacterEncoding('1000011');
-      expect(eightBitLen7).toBe(CharacterEncoding.EightBitBinary);
-
-      const ascii = CharacterAutoConvert.determineCharacterEncoding('76');
-      expect(ascii).toBe(CharacterEncoding.Ascii);
-
-      const none = CharacterAutoConvert.determineCharacterEncoding('999');
-      expect(none).toBe(CharacterEncoding.None);
+      expect(determineCharacterEncoding('L')).toBe(CharacterEncoding.Latin);
+      expect(determineCharacterEncoding('12')).toBe(CharacterEncoding.Ordinal);
+      expect(determineCharacterEncoding('01100')).toBe(
+        CharacterEncoding.FiveBitBinary,
+      );
+      expect(determineCharacterEncoding('011')).toBe(CharacterEncoding.Ternary);
+      expect(determineCharacterEncoding('01101100')).toBe(
+        CharacterEncoding.EightBitBinary,
+      );
+      expect(determineCharacterEncoding('1000011')).toBe(
+        CharacterEncoding.EightBitBinary,
+      );
+      expect(determineCharacterEncoding('76')).toBe(CharacterEncoding.Ascii);
+      expect(determineCharacterEncoding('999')).toBe(CharacterEncoding.None);
     });
 
     it('determineCharacterEncoding - Ambigious Cases', () => {
-      // Overlap between ascii and binary and ternary
-      const asciiE = CharacterAutoConvert.determineCharacterEncoding('101');
-      expect(asciiE).toBe(CharacterEncoding.Ternary);
-
-      // Overlap between ascii and binary
-      const binaryE = CharacterAutoConvert.determineCharacterEncoding('00101');
-      expect(binaryE).toBe(CharacterEncoding.FiveBitBinary);
-
-      // Overlap between binary and ordinal
-      const ordinalA = CharacterAutoConvert.determineCharacterEncoding('1');
-      expect(ordinalA).toBe(CharacterEncoding.Ordinal);
+      expect(determineCharacterEncoding('101')).toBe(CharacterEncoding.Ternary);
+      expect(determineCharacterEncoding('00101')).toBe(
+        CharacterEncoding.FiveBitBinary,
+      );
+      expect(determineCharacterEncoding('1')).toBe(CharacterEncoding.Ordinal);
     });
 
     it('convertCharacter', () => {
-      const latin = CharacterAutoConvert.convertCharacter('A');
-      expect(latin).toBe('A');
-
-      const ordinalA = CharacterAutoConvert.convertCharacter('1');
-      expect(ordinalA).toBe('A');
-
-      const ordinalZ = CharacterAutoConvert.convertCharacter('26');
-      expect(ordinalZ).toBe('Z');
-
-      const fiveBitA = CharacterAutoConvert.convertCharacter('00001');
-      expect(fiveBitA).toBe('A');
-
-      const fiveBitZ = CharacterAutoConvert.convertCharacter('11010');
-      expect(fiveBitZ).toBe('Z');
-
-      const eightBitA = CharacterAutoConvert.convertCharacter('01100001');
-      expect(eightBitA).toBe('a');
-
-      const eightBitZ = CharacterAutoConvert.convertCharacter('01011010');
-      expect(eightBitZ).toBe('Z');
-
-      const ternaryA = CharacterAutoConvert.convertCharacter('001');
-      expect(ternaryA).toBe('A');
-
-      const ternaryZ = CharacterAutoConvert.convertCharacter('222');
-      expect(ternaryZ).toBe('Z');
-
-      const eightBitTruncatedC =
-        CharacterAutoConvert.convertCharacter('1000011');
-      expect(eightBitTruncatedC).toBe('C');
-
-      const unknown = CharacterAutoConvert.convertCharacter('999');
-      expect(unknown).toBe('');
-
-      const asciiMiddle = CharacterAutoConvert.convertCharacter('136');
-      expect(asciiMiddle).toBe('');
+      expect(convertCharacter('A')).toBe('A');
+      expect(convertCharacter('1')).toBe('A');
+      expect(convertCharacter('26')).toBe('Z');
+      expect(convertCharacter('00001')).toBe('A');
+      expect(convertCharacter('11010')).toBe('Z');
+      expect(convertCharacter('01100001')).toBe('a');
+      expect(convertCharacter('01011010')).toBe('Z');
+      expect(convertCharacter('001')).toBe('A');
+      expect(convertCharacter('222')).toBe('Z');
+      expect(convertCharacter('1000011')).toBe('C');
+      expect(convertCharacter('999')).toBe('');
+      expect(convertCharacter('136')).toBe('');
     });
 
     it('forceCharacterEncoding', () => {
-      const fiveBitA = CharacterAutoConvert.convertCharacter(
-        '1',
-        CharacterEncoding.FiveBitBinary,
+      expect(convertCharacter('1', CharacterEncoding.FiveBitBinary)).toBe('A');
+      expect(convertCharacter('100', CharacterEncoding.FiveBitBinary)).toBe(
+        'D',
       );
-      expect(fiveBitA).toBe('A');
-
-      const fiveBitD = CharacterAutoConvert.convertCharacter(
-        '100',
-        CharacterEncoding.FiveBitBinary,
-      );
-      expect(fiveBitD).toBe('D');
-
-      const ternaryD = CharacterAutoConvert.convertCharacter(
-        '11',
-        CharacterEncoding.Ternary,
-      );
-      expect(ternaryD).toBe('D');
-
-      const eightBitD = CharacterAutoConvert.convertCharacter(
-        '1000100',
-        CharacterEncoding.EightBitBinary,
-      );
-      expect(eightBitD).toBe('D');
+      expect(convertCharacter('11', CharacterEncoding.Ternary)).toBe('D');
+      expect(
+        convertCharacter('1000100', CharacterEncoding.EightBitBinary),
+      ).toBe('D');
     });
 
     it('nonPrintable', () => {
-      const asciiControl = CharacterAutoConvert.convertCharacter(
-        '28',
-        CharacterEncoding.Ascii,
-      );
-      expect(asciiControl).toBe('');
-
-      const asciiDel = CharacterAutoConvert.convertCharacter(
-        '127',
-        CharacterEncoding.Ascii,
-      );
-      expect(asciiDel).toBe('');
+      expect(convertCharacter('28', CharacterEncoding.Ascii)).toBe('');
+      expect(convertCharacter('127', CharacterEncoding.Ascii)).toBe('');
     });
   });
 
-  describe('CharacterConversion', () => {
+  describe('toAscii / toOrdinal / tables', () => {
     it('getAsciiTable - Basic tests', () => {
-      const table = CharacterConversion.getAsciiTable();
+      const table = getAsciiTable();
       const entry0 = table[0];
       expect(entry0.character).toBe('0');
       expect(entry0.binary).toBe('0110000');
@@ -246,7 +167,7 @@ describe('Conversions', () => {
     });
 
     it('getOrdinalTable - Basic tests', () => {
-      const table = CharacterConversion.getOrdinalTable();
+      const table = getOrdinalTable();
       const entryA = table[0];
       expect(entryA.character).toBe('A');
       expect(entryA.binary).toBe('00001');
@@ -265,192 +186,160 @@ describe('Conversions', () => {
     });
 
     it('toAscii - Basic tests', () => {
-      expect(CharacterConversion.toAscii('0')).toBe(48);
-      expect(CharacterConversion.toAscii('9')).toBe(57);
-      expect(CharacterConversion.toAscii('A')).toBe(65);
-      expect(CharacterConversion.toAscii('Z')).toBe(90);
-      expect(CharacterConversion.toAscii('a')).toBe(97);
-      expect(CharacterConversion.toAscii('z')).toBe(122);
+      expect(toAscii('0')).toBe(48);
+      expect(toAscii('9')).toBe(57);
+      expect(toAscii('A')).toBe(65);
+      expect(toAscii('Z')).toBe(90);
+      expect(toAscii('a')).toBe(97);
+      expect(toAscii('z')).toBe(122);
     });
 
     it('toAscii - Invalid tests', () => {
-      expect(CharacterConversion.toAscii(String.fromCharCode(128))).toBe(-1);
-      expect(CharacterConversion.toAscii(String.fromCharCode(256))).toBe(-1);
+      expect(toAscii(String.fromCharCode(128))).toBe(-1);
+      expect(toAscii(String.fromCharCode(256))).toBe(-1);
     });
 
     it('toAscii - Error tests', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toAscii()).toThrow(
+      expect(() => (toAscii as any)()).toThrow(
         /A single character is required/,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toAscii(null)).toThrow(
+      expect(() => (toAscii as any)(null)).toThrow(
         /A single character is required/,
       );
-      expect(() => CharacterConversion.toAscii('')).toThrow(
-        /A single character is required/,
-      );
-      expect(() => CharacterConversion.toAscii('ab')).toThrow(
+      expect(() => toAscii('')).toThrow(/A single character is required/);
+      expect(() => toAscii('ab')).toThrow(/A single character is required/);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(() => (toAscii as any)(0)).toThrow(
         /A single character is required/,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toAscii(0)).toThrow(
-        /A single character is required/,
-      );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toAscii(false)).toThrow(
+      expect(() => (toAscii as any)(false)).toThrow(
         /A single character is required/,
       );
     });
 
     it('toOrdinal - Basic tests', () => {
-      expect(CharacterConversion.toOrdinal('A')).toBe(1);
-      expect(CharacterConversion.toOrdinal('Z')).toBe(26);
-      expect(CharacterConversion.toOrdinal('a')).toBe(1);
-      expect(CharacterConversion.toOrdinal('z')).toBe(26);
+      expect(toOrdinal('A')).toBe(1);
+      expect(toOrdinal('Z')).toBe(26);
+      expect(toOrdinal('a')).toBe(1);
+      expect(toOrdinal('z')).toBe(26);
     });
 
     it('toOrdinal - Invalid tests', () => {
-      expect(CharacterConversion.toOrdinal('0')).toBe(-1);
-      expect(CharacterConversion.toOrdinal('9')).toBe(-1);
-      expect(CharacterConversion.toOrdinal('@')).toBe(-1);
-      expect(CharacterConversion.toOrdinal('[')).toBe(-1);
-      expect(CharacterConversion.toOrdinal('`')).toBe(-1);
-      expect(CharacterConversion.toOrdinal('{')).toBe(-1);
+      expect(toOrdinal('0')).toBe(-1);
+      expect(toOrdinal('9')).toBe(-1);
+      expect(toOrdinal('@')).toBe(-1);
+      expect(toOrdinal('[')).toBe(-1);
+      expect(toOrdinal('`')).toBe(-1);
+      expect(toOrdinal('{')).toBe(-1);
     });
 
     it('toOrdinal - Error tests', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toOrdinal()).toThrow(
+      expect(() => (toOrdinal as any)()).toThrow(
         /A single character is required/,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toOrdinal(null)).toThrow(
+      expect(() => (toOrdinal as any)(null)).toThrow(
         /A single character is required/,
       );
-      expect(() => CharacterConversion.toOrdinal('')).toThrow(
-        /A single character is required/,
-      );
-      expect(() => CharacterConversion.toOrdinal('ab')).toThrow(
+      expect(() => toOrdinal('')).toThrow(/A single character is required/);
+      expect(() => toOrdinal('ab')).toThrow(/A single character is required/);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(() => (toOrdinal as any)(0)).toThrow(
         /A single character is required/,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toOrdinal(0)).toThrow(
-        /A single character is required/,
-      );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect(() => (CharacterConversion as any).toOrdinal(false)).toThrow(
+      expect(() => (toOrdinal as any)(false)).toThrow(
         /A single character is required/,
       );
     });
   });
 
-  describe('SignificantFigures', () => {
+  describe('sigFigCeil / sigFigFloor / sigFigRound', () => {
     it('ceil - Positive numbers', () => {
-      // Zero
-      expect(SignificantFigures.ceil(0, 10)).toBe(0);
-
-      // Integers
-      expect(SignificantFigures.ceil(90000, 2)).toBe(90000);
-      expect(SignificantFigures.ceil(98000, 2)).toBe(98000);
-      expect(SignificantFigures.ceil(98001, 2)).toBe(99000);
-      expect(SignificantFigures.ceil(98101, 3)).toBe(98200);
-      expect(SignificantFigures.ceil(98001, 6)).toBe(98001);
-
-      // Floating point
-      expect(SignificantFigures.ceil(1.1, 2)).toBe(1.1);
-      expect(SignificantFigures.ceil(1.11, 2)).toBe(1.2);
-      expect(SignificantFigures.ceil(0.1, 1)).toBe(0.1);
-      expect(SignificantFigures.ceil(0.11, 1)).toBe(0.2);
+      expect(sigFigCeil(0, 10)).toBe(0);
+      expect(sigFigCeil(90000, 2)).toBe(90000);
+      expect(sigFigCeil(98000, 2)).toBe(98000);
+      expect(sigFigCeil(98001, 2)).toBe(99000);
+      expect(sigFigCeil(98101, 3)).toBe(98200);
+      expect(sigFigCeil(98001, 6)).toBe(98001);
+      expect(sigFigCeil(1.1, 2)).toBe(1.1);
+      expect(sigFigCeil(1.11, 2)).toBe(1.2);
+      expect(sigFigCeil(0.1, 1)).toBe(0.1);
+      expect(sigFigCeil(0.11, 1)).toBe(0.2);
     });
 
     it('ceil - Negative numbers', () => {
-      // Integers
-      expect(SignificantFigures.ceil(-90000, 2)).toBe(-90000);
-      expect(SignificantFigures.ceil(-98000, 2)).toBe(-98000);
-      expect(SignificantFigures.ceil(-98999, 2)).toBe(-98000);
-      expect(SignificantFigures.ceil(-98199, 3)).toBe(-98100);
-      expect(SignificantFigures.ceil(-98001, 6)).toBe(-98001);
-
-      // Floating point
-      expect(SignificantFigures.ceil(-1.9, 2)).toBe(-1.9);
-      expect(SignificantFigures.ceil(-1.99, 2)).toBe(-1.9);
-      expect(SignificantFigures.ceil(-0.9, 1)).toBe(-0.9);
-      expect(SignificantFigures.ceil(-0.99, 1)).toBe(-0.9);
+      expect(sigFigCeil(-90000, 2)).toBe(-90000);
+      expect(sigFigCeil(-98000, 2)).toBe(-98000);
+      expect(sigFigCeil(-98999, 2)).toBe(-98000);
+      expect(sigFigCeil(-98199, 3)).toBe(-98100);
+      expect(sigFigCeil(-98001, 6)).toBe(-98001);
+      expect(sigFigCeil(-1.9, 2)).toBe(-1.9);
+      expect(sigFigCeil(-1.99, 2)).toBe(-1.9);
+      expect(sigFigCeil(-0.9, 1)).toBe(-0.9);
+      expect(sigFigCeil(-0.99, 1)).toBe(-0.9);
     });
 
     it('floor - Positive numbers', () => {
-      // Zero
-      expect(SignificantFigures.floor(0, 10)).toBe(0);
-
-      // Integers
-      expect(SignificantFigures.floor(90000, 2)).toBe(90000);
-      expect(SignificantFigures.floor(98000, 2)).toBe(98000);
-      expect(SignificantFigures.floor(98999, 2)).toBe(98000);
-      expect(SignificantFigures.floor(98199, 3)).toBe(98100);
-      expect(SignificantFigures.floor(98999, 6)).toBe(98999);
-
-      // Floating point
-      expect(SignificantFigures.floor(1.9, 2)).toBe(1.9);
-      expect(SignificantFigures.floor(1.99, 2)).toBe(1.9);
-      expect(SignificantFigures.floor(0.9, 1)).toBe(0.9);
-      expect(SignificantFigures.floor(0.99, 1)).toBe(0.9);
+      expect(sigFigFloor(0, 10)).toBe(0);
+      expect(sigFigFloor(90000, 2)).toBe(90000);
+      expect(sigFigFloor(98000, 2)).toBe(98000);
+      expect(sigFigFloor(98999, 2)).toBe(98000);
+      expect(sigFigFloor(98199, 3)).toBe(98100);
+      expect(sigFigFloor(98999, 6)).toBe(98999);
+      expect(sigFigFloor(1.9, 2)).toBe(1.9);
+      expect(sigFigFloor(1.99, 2)).toBe(1.9);
+      expect(sigFigFloor(0.9, 1)).toBe(0.9);
+      expect(sigFigFloor(0.99, 1)).toBe(0.9);
     });
 
     it('floor - Negative numbers', () => {
-      // Integers
-      expect(SignificantFigures.floor(-90000, 2)).toBe(-90000);
-      expect(SignificantFigures.floor(-98000, 2)).toBe(-98000);
-      expect(SignificantFigures.floor(-98001, 2)).toBe(-99000);
-      expect(SignificantFigures.floor(-98101, 3)).toBe(-98200);
-      expect(SignificantFigures.floor(-98001, 6)).toBe(-98001);
-
-      // Floating point
-      expect(SignificantFigures.floor(-1.1, 2)).toBe(-1.1);
-      expect(SignificantFigures.floor(-1.11, 2)).toBe(-1.2);
-      expect(SignificantFigures.floor(-0.1, 1)).toBe(-0.1);
-      expect(SignificantFigures.floor(-0.11, 1)).toBe(-0.2);
+      expect(sigFigFloor(-90000, 2)).toBe(-90000);
+      expect(sigFigFloor(-98000, 2)).toBe(-98000);
+      expect(sigFigFloor(-98001, 2)).toBe(-99000);
+      expect(sigFigFloor(-98101, 3)).toBe(-98200);
+      expect(sigFigFloor(-98001, 6)).toBe(-98001);
+      expect(sigFigFloor(-1.1, 2)).toBe(-1.1);
+      expect(sigFigFloor(-1.11, 2)).toBe(-1.2);
+      expect(sigFigFloor(-0.1, 1)).toBe(-0.1);
+      expect(sigFigFloor(-0.11, 1)).toBe(-0.2);
     });
 
     it('round - Positive numbers', () => {
-      // Zero
-      expect(SignificantFigures.round(0, 10)).toBe(0);
-
-      // Integers
-      expect(SignificantFigures.round(90000, 2)).toBe(90000);
-      expect(SignificantFigures.round(98000, 2)).toBe(98000);
-      expect(SignificantFigures.round(98499, 2)).toBe(98000);
-      expect(SignificantFigures.round(98500, 2)).toBe(99000);
-      expect(SignificantFigures.round(98149, 3)).toBe(98100);
-      expect(SignificantFigures.round(98150, 3)).toBe(98200);
-      expect(SignificantFigures.round(98499, 6)).toBe(98499);
-
-      // Floating point
-      expect(SignificantFigures.round(1.5, 2)).toBe(1.5);
-      expect(SignificantFigures.round(1.54, 2)).toBe(1.5);
-      expect(SignificantFigures.round(1.55, 2)).toBe(1.6);
-      expect(SignificantFigures.round(0.5, 1)).toBe(0.5);
-      expect(SignificantFigures.round(0.549, 1)).toBe(0.5);
-      expect(SignificantFigures.round(0.55, 1)).toBe(0.6);
+      expect(sigFigRound(0, 10)).toBe(0);
+      expect(sigFigRound(90000, 2)).toBe(90000);
+      expect(sigFigRound(98000, 2)).toBe(98000);
+      expect(sigFigRound(98499, 2)).toBe(98000);
+      expect(sigFigRound(98500, 2)).toBe(99000);
+      expect(sigFigRound(98149, 3)).toBe(98100);
+      expect(sigFigRound(98150, 3)).toBe(98200);
+      expect(sigFigRound(98499, 6)).toBe(98499);
+      expect(sigFigRound(1.5, 2)).toBe(1.5);
+      expect(sigFigRound(1.54, 2)).toBe(1.5);
+      expect(sigFigRound(1.55, 2)).toBe(1.6);
+      expect(sigFigRound(0.5, 1)).toBe(0.5);
+      expect(sigFigRound(0.549, 1)).toBe(0.5);
+      expect(sigFigRound(0.55, 1)).toBe(0.6);
     });
 
     it('round - Negative numbers', () => {
-      // Integers
-      expect(SignificantFigures.round(-90000, 2)).toBe(-90000);
-      expect(SignificantFigures.round(-98000, 2)).toBe(-98000);
-      expect(SignificantFigures.round(-98500, 2)).toBe(-98000);
-      expect(SignificantFigures.round(-98501, 2)).toBe(-99000);
-      expect(SignificantFigures.round(-98150, 3)).toBe(-98100);
-      expect(SignificantFigures.round(-98151, 3)).toBe(-98200);
-      expect(SignificantFigures.round(-98599, 6)).toBe(-98599);
-
-      // Floating point
-      expect(SignificantFigures.round(-1.5, 2)).toBe(-1.5);
-      expect(SignificantFigures.round(-1.55, 2)).toBe(-1.5);
-      expect(SignificantFigures.round(-1.551, 2)).toBe(-1.6);
-      expect(SignificantFigures.round(-0.5, 1)).toBe(-0.5);
-      expect(SignificantFigures.round(-0.55, 1)).toBe(-0.5);
-      expect(SignificantFigures.round(-0.551, 1)).toBe(-0.6);
+      expect(sigFigRound(-90000, 2)).toBe(-90000);
+      expect(sigFigRound(-98000, 2)).toBe(-98000);
+      expect(sigFigRound(-98500, 2)).toBe(-98000);
+      expect(sigFigRound(-98501, 2)).toBe(-99000);
+      expect(sigFigRound(-98150, 3)).toBe(-98100);
+      expect(sigFigRound(-98151, 3)).toBe(-98200);
+      expect(sigFigRound(-98599, 6)).toBe(-98599);
+      expect(sigFigRound(-1.5, 2)).toBe(-1.5);
+      expect(sigFigRound(-1.55, 2)).toBe(-1.5);
+      expect(sigFigRound(-1.551, 2)).toBe(-1.6);
+      expect(sigFigRound(-0.5, 1)).toBe(-0.5);
+      expect(sigFigRound(-0.55, 1)).toBe(-0.5);
+      expect(sigFigRound(-0.551, 1)).toBe(-0.6);
     });
   });
 });
