@@ -2,10 +2,16 @@ export {BrailleCharacter} from './Braille/BrailleCharacter';
 export {BrailleDot} from './Braille/BrailleDot';
 export {BrailleEncoding} from './Braille/BrailleEncoding';
 export {BrailleStream} from './Braille/BrailleStream';
-export {AutoKeyString} from './Cipher/AutoKeyString';
-export {CaesarString} from './Cipher/CaesarString';
-export {KeyedCipherStringBase} from './Cipher/KeyedCipherStringBase';
-export {VigenereString} from './Cipher/VigenereString';
+export {
+  autokeyDecrypt,
+  autokeyEncrypt,
+  caesarRotate,
+  caesarRotations,
+  isAlpha,
+  rotateLetter,
+  vigenereDecrypt,
+  vigenereEncrypt,
+} from './Cipher/cipher';
 export {CharacterImage} from './Common/CharacterImage';
 export {EncodingCategory} from './Common/EncodingCategory';
 export {EncodingEntry} from './Common/EncodingEntry';
