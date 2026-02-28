@@ -56,8 +56,15 @@ export {MorseEncoding} from './Morse/MorseEncoding';
 export {NatoCharacter} from './Nato/NatoCharacter';
 export {NatoData} from './Nato/NatoData';
 export {NavalFlags} from './NavalFlags/NavalFlags';
-export {Resistor} from './Resistor/Resistor';
-export {ResistorColorEntry} from './Resistor/ResistorColorEntry';
+export {
+  getResistorDisplayValue,
+  getResistorValue,
+  hasResistorTolerance,
+  hasResistorValue,
+  INVALID_RESISTOR,
+  RESISTOR_COLOR_TABLE,
+} from './Resistor/resistor';
+export type {ResistorColor} from './Resistor/resistor';
 export {
   addSemaphoreDirection,
   decodeSemaphoreStream,
