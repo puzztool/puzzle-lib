@@ -81,6 +81,8 @@ export {Point as WordSearchPoint} from './WordSearch/Point';
 export {Result as WordSearchResult} from './WordSearch/Result';
 export {WordSearchDirection} from './WordSearch/WordSearchDirection';
 export {
-  WordSearchSolver,
+  findWords,
+  parseWordSearchGrid,
   WordSearchSpaceTreatment,
-} from './WordSearch/WordSearchSolver';
+} from './WordSearch/wordSearch';
+export type {WordSearchOptions} from './WordSearch/wordSearch';
