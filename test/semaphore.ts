@@ -4,6 +4,7 @@ import {
   decodeSemaphoreStream,
   degreesToSemaphoreDirection,
   directionsToEncoding,
+  getEncodingDegrees,
   hasSemaphoreDirection,
   lookupSemaphoreEncoding,
   removeSemaphoreDirection,
@@ -140,6 +141,27 @@ describe('Semaphore', () => {
     it('Full rotation cases', () => {
       expect(degreesToSemaphoreDirection(1080)).toBe(SemaphoreDirection.North);
       expect(degreesToSemaphoreDirection(1260)).toBe(SemaphoreDirection.South);
+    });
+
+    it('getEncodingDegrees with two directions', () => {
+      const enc = (SemaphoreDirection.North |
+        SemaphoreDirection.SouthEast) as SemaphoreEncoding;
+      expect(getEncodingDegrees(enc)).toEqual([0, 135]);
+    });
+
+    it('getEncodingDegrees with one direction', () => {
+      const enc = addSemaphoreDirection(
+        SemaphoreEncoding.None,
+        SemaphoreDirection.West,
+      );
+      expect(getEncodingDegrees(enc)).toEqual([270, undefined]);
+    });
+
+    it('getEncodingDegrees with no directions', () => {
+      expect(getEncodingDegrees(SemaphoreEncoding.None)).toEqual([
+        undefined,
+        undefined,
+      ]);
     });
   });
 
