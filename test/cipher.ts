@@ -1,43 +1,89 @@
 import {describe, it, expect} from 'vitest';
-import {CaesarString, VigenereString, AutoKeyString} from '../src';
+import {
+  caesarRotate,
+  caesarRotations,
+  vigenereEncrypt,
+  vigenereDecrypt,
+  autokeyEncrypt,
+  autokeyDecrypt,
+  rotateLetter,
+  isAlpha,
+} from '../src';
 
 describe('Cipher', () => {
-  describe('CaesarString', () => {
-    it('getRotation - Basic tests', () => {
-      const str = new CaesarString('abc');
-
-      expect(str.getRotation(0)).toBe('abc');
-      expect(str.getRotation(1)).toBe('bcd');
-      expect(str.getRotation(13)).toBe('nop');
-      expect(str.getRotation(25)).toBe('zab');
+  describe('isAlpha', () => {
+    it('returns true for letters', () => {
+      expect(isAlpha('a')).toBe(true);
+      expect(isAlpha('z')).toBe(true);
+      expect(isAlpha('A')).toBe(true);
+      expect(isAlpha('Z')).toBe(true);
+      expect(isAlpha('m')).toBe(true);
     });
 
-    it('getRotation - Advanced', () => {
-      const str = new CaesarString('abc');
+    it('returns false for non-letters', () => {
+      expect(isAlpha('0')).toBe(false);
+      expect(isAlpha(' ')).toBe(false);
+      expect(isAlpha('!')).toBe(false);
+      expect(isAlpha('@')).toBe(false);
+    });
+  });
 
-      expect(str.getRotation(26)).toBe('abc');
-      expect(str.getRotation(13 + 26)).toBe('nop');
-      expect(str.getRotation(-1)).toBe('zab');
-      expect(str.getRotation(-26)).toBe('abc');
+  describe('rotateLetter', () => {
+    it('rotates lowercase', () => {
+      expect(rotateLetter('a', 1)).toBe('b');
+      expect(rotateLetter('z', 1)).toBe('a');
+      expect(rotateLetter('a', 13)).toBe('n');
     });
 
-    it('getRotation - Empty', () => {
-      const str = new CaesarString();
-      expect(str.getRotation(0)).toBe('');
-      expect(str.getRotation(13)).toBe('');
-
-      str.text = 'a';
-      expect(str.getRotation(0)).toBe('a');
-      expect(str.getRotation(13)).toBe('n');
-
-      str.text = '';
-      expect(str.getRotation(0)).toBe('');
-      expect(str.getRotation(13)).toBe('');
+    it('rotates uppercase', () => {
+      expect(rotateLetter('A', 1)).toBe('B');
+      expect(rotateLetter('Z', 1)).toBe('A');
+      expect(rotateLetter('A', 13)).toBe('N');
     });
 
-    it('getRotations - Basic tests', () => {
-      const str = new CaesarString('abc');
-      const rotations = str.getRotations();
+    it('preserves non-alpha characters', () => {
+      expect(rotateLetter(' ', 5)).toBe(' ');
+      expect(rotateLetter('!', 13)).toBe('!');
+      expect(rotateLetter('0', 1)).toBe('0');
+    });
+
+    it('handles negative rotation', () => {
+      expect(rotateLetter('b', -1)).toBe('a');
+      expect(rotateLetter('a', -1)).toBe('z');
+    });
+  });
+
+  describe('caesarRotate', () => {
+    it('Basic tests', () => {
+      expect(caesarRotate('abc', 0)).toBe('abc');
+      expect(caesarRotate('abc', 1)).toBe('bcd');
+      expect(caesarRotate('abc', 13)).toBe('nop');
+      expect(caesarRotate('abc', 25)).toBe('zab');
+    });
+
+    it('Advanced', () => {
+      expect(caesarRotate('abc', 26)).toBe('abc');
+      expect(caesarRotate('abc', 13 + 26)).toBe('nop');
+      expect(caesarRotate('abc', -1)).toBe('zab');
+      expect(caesarRotate('abc', -26)).toBe('abc');
+    });
+
+    it('Empty', () => {
+      expect(caesarRotate('', 0)).toBe('');
+      expect(caesarRotate('', 13)).toBe('');
+      expect(caesarRotate('a', 0)).toBe('a');
+      expect(caesarRotate('a', 13)).toBe('n');
+    });
+
+    it('Different text', () => {
+      expect(caesarRotate('abc', 13)).toBe('nop');
+      expect(caesarRotate('bcd', 13)).toBe('opq');
+    });
+  });
+
+  describe('caesarRotations', () => {
+    it('Basic tests', () => {
+      const rotations = caesarRotations('abc');
 
       expect(rotations[0]).toBe('abc');
       expect(rotations[1]).toBe('bcd');
@@ -48,111 +94,71 @@ describe('Cipher', () => {
       expect(rotations[26]).toBe(undefined);
     });
 
-    it('getRotations - Empty', () => {
-      const str = new CaesarString();
-      expect(str.getRotations().length).toBe(26);
-
-      str.text = 'a';
-      expect(str.getRotations().length).toBe(26);
-
-      str.text = '';
-      expect(str.getRotations().length).toBe(26);
-    });
-
-    it('update - Basic tests', () => {
-      const str = new CaesarString('abc');
-      expect(str.getRotation(13)).toBe('nop');
-
-      str.text = 'bcd';
-      expect(str.getRotation(13)).toBe('opq');
+    it('Empty', () => {
+      expect(caesarRotations('').length).toBe(26);
+      expect(caesarRotations('a').length).toBe(26);
     });
   });
 
-  describe('VigenereString', () => {
+  describe('vigenereEncrypt / vigenereDecrypt', () => {
     it('encrypt - Basic tests', () => {
-      const str = new VigenereString('ATTACKATDAWN', 'LEMON');
-      expect(str.encrypt()).toBe('LXFOPVEFRNHR');
-
-      str.key = 'LEMONLEMON';
-      expect(str.encrypt()).toBe('LXFOPVEFRNHR');
-
-      str.text = 'ATTACK AT DAWN';
-      expect(str.encrypt()).toBe('LXFOPV EF RNHR');
+      expect(vigenereEncrypt('ATTACKATDAWN', 'LEMON')).toBe('LXFOPVEFRNHR');
+      expect(vigenereEncrypt('ATTACKATDAWN', 'LEMONLEMON')).toBe(
+        'LXFOPVEFRNHR',
+      );
+      expect(vigenereEncrypt('ATTACK AT DAWN', 'LEMON')).toBe('LXFOPV EF RNHR');
     });
 
     it('decrypt - Basic tests', () => {
-      const str = new VigenereString('LXFOPVEFRNHR', 'LEMON');
-      expect(str.decrypt()).toBe('ATTACKATDAWN');
-
-      str.key = 'LEMONLEMON';
-      expect(str.decrypt()).toBe('ATTACKATDAWN');
-
-      str.text = 'LXFOPV EF RNHR';
-      expect(str.decrypt()).toBe('ATTACK AT DAWN');
+      expect(vigenereDecrypt('LXFOPVEFRNHR', 'LEMON')).toBe('ATTACKATDAWN');
+      expect(vigenereDecrypt('LXFOPVEFRNHR', 'LEMONLEMON')).toBe(
+        'ATTACKATDAWN',
+      );
+      expect(vigenereDecrypt('LXFOPV EF RNHR', 'LEMON')).toBe('ATTACK AT DAWN');
     });
 
     it('encrypt/decrypt - Empty', () => {
-      const str = new VigenereString();
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
+      expect(vigenereEncrypt('', '')).toBe('');
+      expect(vigenereDecrypt('', '')).toBe('');
 
-      str.text = 'ATTACKATDAWN';
-      expect(str.encrypt()).toBe('ATTACKATDAWN');
-      expect(str.decrypt()).toBe('ATTACKATDAWN');
+      expect(vigenereEncrypt('ATTACKATDAWN', '')).toBe('ATTACKATDAWN');
+      expect(vigenereDecrypt('ATTACKATDAWN', '')).toBe('ATTACKATDAWN');
 
-      str.text = 'ATTACK AT DAWN';
-      expect(str.encrypt()).toBe('ATTACK AT DAWN');
-      expect(str.decrypt()).toBe('ATTACK AT DAWN');
+      expect(vigenereEncrypt('ATTACK AT DAWN', '')).toBe('ATTACK AT DAWN');
+      expect(vigenereDecrypt('ATTACK AT DAWN', '')).toBe('ATTACK AT DAWN');
 
-      str.text = '';
-      str.key = 'LEMON';
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
-
-      str.key = '';
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
+      expect(vigenereEncrypt('', 'LEMON')).toBe('');
+      expect(vigenereDecrypt('', 'LEMON')).toBe('');
     });
   });
 
-  describe('AutoKeyString', () => {
+  describe('autokeyEncrypt / autokeyDecrypt', () => {
     it('encrypt - Basic tests', () => {
-      const str = new AutoKeyString('ATTACKATDAWN', 'QUEENLY');
-      expect(str.encrypt()).toBe('QNXEPVYTWTWP');
-
-      str.text = 'ATTACK AT DAWN';
-      expect(str.encrypt()).toBe('QNXEPV YT WTWP');
+      expect(autokeyEncrypt('ATTACKATDAWN', 'QUEENLY')).toBe('QNXEPVYTWTWP');
+      expect(autokeyEncrypt('ATTACK AT DAWN', 'QUEENLY')).toBe(
+        'QNXEPV YT WTWP',
+      );
     });
 
     it('decrypt - Basic tests', () => {
-      const str = new AutoKeyString('QNXEPVYTWTWP', 'QUEENLY');
-      expect(str.decrypt()).toBe('ATTACKATDAWN');
-
-      str.text = 'QNXEPV YT WTWP';
-      expect(str.decrypt()).toBe('ATTACK AT DAWN');
+      expect(autokeyDecrypt('QNXEPVYTWTWP', 'QUEENLY')).toBe('ATTACKATDAWN');
+      expect(autokeyDecrypt('QNXEPV YT WTWP', 'QUEENLY')).toBe(
+        'ATTACK AT DAWN',
+      );
     });
 
     it('encrypt/decrypt - Empty', () => {
-      const str = new AutoKeyString('', '');
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
+      expect(autokeyEncrypt('', '')).toBe('');
+      expect(autokeyDecrypt('', '')).toBe('');
 
-      str.text = 'ATTACKATDAWN';
-      expect(str.encrypt()).toBe('ATTACKATDAWN');
-      expect(str.decrypt()).toBe('ATTACKATDAWN');
+      expect(autokeyEncrypt('ATTACKATDAWN', '')).toBe('ATTACKATDAWN');
+      expect(autokeyDecrypt('ATTACKATDAWN', '')).toBe('ATTACKATDAWN');
 
-      str.text = 'ATTACK AT DAWN';
-      expect(str.encrypt()).toBe('ATTACK AT DAWN');
-      expect(str.decrypt()).toBe('ATTACK AT DAWN');
+      expect(autokeyEncrypt('ATTACK AT DAWN', '')).toBe('ATTACK AT DAWN');
+      expect(autokeyDecrypt('ATTACK AT DAWN', '')).toBe('ATTACK AT DAWN');
 
-      str.text = '';
-      str.key = 'QUEENLY';
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
-
-      str.key = '';
-      expect(str.encrypt()).toBe('');
-      expect(str.decrypt()).toBe('');
+      expect(autokeyEncrypt('', 'QUEENLY')).toBe('');
+      expect(autokeyDecrypt('', 'QUEENLY')).toBe('');
     });
   });
 });

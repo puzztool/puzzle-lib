@@ -1,125 +1,98 @@
 import {describe, it, expect} from 'vitest';
-import {Resistor} from '../src';
+import {
+  RESISTOR_COLOR_TABLE,
+  INVALID_RESISTOR,
+  getResistorValue,
+  getResistorDisplayValue,
+  hasResistorValue,
+  hasResistorTolerance,
+} from '../src';
+
+// Helper to look up colors by name
+function color(name: string) {
+  const entry = RESISTOR_COLOR_TABLE.find(c => c.name === name);
+  if (!entry) throw new Error(`Unknown color: ${name}`);
+  return entry;
+}
+
+const BLACK = color('Black');
+const BROWN = color('Brown');
+const RED = color('Red');
+const ORANGE = color('Orange');
+const YELLOW = color('Yellow');
+const GREEN = color('Green');
+const BLUE = color('Blue');
+const VIOLET = color('Violet');
+const GREY = color('Grey');
+const WHITE = color('White');
+const GOLD = color('Gold');
+const SILVER = color('Silver');
 
 describe('Resistor', () => {
   it('Valid 3 Color Resistors', () => {
-    expect(
-      Resistor.getValue([Resistor.BROWN, Resistor.BLACK, Resistor.ORANGE]),
-    ).toBe(10000);
-    expect(
-      Resistor.getValue([Resistor.GREEN, Resistor.BLUE, Resistor.RED]),
-    ).toBe(5600);
-    expect(
-      Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.BROWN]),
-    ).toBe(230);
-    expect(
-      Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.BLUE]),
-    ).toBe(23000000);
-    expect(
-      Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.VIOLET]),
-    ).toBe(230000000);
-    expect(
-      Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.GREY]),
-    ).toBe(2300000000);
-    expect(
-      Resistor.getValue([Resistor.RED, Resistor.ORANGE, Resistor.WHITE]),
-    ).toBe(23000000000);
+    expect(getResistorValue([BROWN, BLACK, ORANGE])).toBe(10000);
+    expect(getResistorValue([GREEN, BLUE, RED])).toBe(5600);
+    expect(getResistorValue([RED, ORANGE, BROWN])).toBe(230);
+    expect(getResistorValue([RED, ORANGE, BLUE])).toBe(23000000);
+    expect(getResistorValue([RED, ORANGE, VIOLET])).toBe(230000000);
+    expect(getResistorValue([RED, ORANGE, GREY])).toBe(2300000000);
+    expect(getResistorValue([RED, ORANGE, WHITE])).toBe(23000000000);
   });
 
   it('Valid 4 Color Resistors', () => {
-    expect(
-      Resistor.getValue([
-        Resistor.BROWN,
-        Resistor.YELLOW,
-        Resistor.VIOLET,
-        Resistor.BLACK,
-      ]),
-    ).toBe(147);
-    expect(
-      Resistor.getValue([
-        Resistor.GREY,
-        Resistor.WHITE,
-        Resistor.VIOLET,
-        Resistor.GREEN,
-      ]),
-    ).toBe(89700000);
+    expect(getResistorValue([BROWN, YELLOW, VIOLET, BLACK])).toBe(147);
+    expect(getResistorValue([GREY, WHITE, VIOLET, GREEN])).toBe(89700000);
   });
 
   it('Leading Black', () => {
-    expect(
-      Resistor.getValue([Resistor.BLACK, Resistor.BLACK, Resistor.BLACK]),
-    ).toBe(0);
-    expect(
-      Resistor.getValue([Resistor.BLACK, Resistor.BROWN, Resistor.BLACK]),
-    ).toBe(1);
+    expect(getResistorValue([BLACK, BLACK, BLACK])).toBe(0);
+    expect(getResistorValue([BLACK, BROWN, BLACK])).toBe(1);
   });
 
   it('Invalid Resistors', () => {
-    expect(Resistor.getValue([Resistor.GOLD, Resistor.RED, Resistor.RED])).toBe(
-      Resistor.INVALID_RESISTOR,
+    expect(getResistorValue([GOLD, RED, RED])).toBe(INVALID_RESISTOR);
+    expect(getResistorValue([ORANGE, RED, SILVER, YELLOW])).toBe(
+      INVALID_RESISTOR,
     );
-    expect(
-      Resistor.getValue([
-        Resistor.ORANGE,
-        Resistor.RED,
-        Resistor.SILVER,
-        Resistor.YELLOW,
-      ]),
-    ).toBe(Resistor.INVALID_RESISTOR);
   });
 
   it('Tolerance', () => {
-    expect(Resistor.GOLD.hasTolerance()).toBe(true);
-    expect(Resistor.BLACK.hasTolerance()).toBe(false);
+    expect(hasResistorTolerance(GOLD)).toBe(true);
+    expect(hasResistorTolerance(BLACK)).toBe(false);
   });
 
   it('Value', () => {
-    expect(Resistor.GOLD.hasValue()).toBe(false);
-    expect(Resistor.BLACK.hasValue()).toBe(true);
+    expect(hasResistorValue(GOLD)).toBe(false);
+    expect(hasResistorValue(BLACK)).toBe(true);
   });
 
   it('Too Short', () => {
-    expect(() => Resistor.getValue([])).toThrow(/Invalid resistor size/);
-    expect(() => Resistor.getValue([Resistor.RED, Resistor.RED])).toThrow(
+    expect(() => getResistorValue([])).toThrow(/Invalid resistor size/);
+    expect(() => getResistorValue([RED, RED])).toThrow(/Invalid resistor size/);
+  });
+
+  it('Too Long', () => {
+    expect(() => getResistorValue([RED, ORANGE, YELLOW, GREEN, BLUE])).toThrow(
       /Invalid resistor size/,
     );
   });
 
-  it('Too Long', () => {
-    expect(() =>
-      Resistor.getValue([
-        Resistor.RED,
-        Resistor.ORANGE,
-        Resistor.YELLOW,
-        Resistor.GREEN,
-        Resistor.BLUE,
-      ]),
-    ).toThrow(/Invalid resistor size/);
-  });
-
   it('Tolerance display', () => {
-    expect(Resistor.GOLD.getDisplayTolerance()).toBe('5%');
+    expect(GOLD.toleranceInPercent).toBe(5);
   });
 
   it('Rounding', () => {
-    expect(
-      Resistor.getValue([
-        Resistor.YELLOW,
-        Resistor.GREEN,
-        Resistor.WHITE,
-        Resistor.GOLD,
-      ]),
-    ).toBe(45.9);
+    expect(getResistorValue([YELLOW, GREEN, WHITE, GOLD])).toBe(45.9);
   });
 
   it('Display Values', () => {
-    expect(Resistor.getDisplayValue(0)).toBe('0');
-    expect(Resistor.getDisplayValue(0.3)).toBe('0.3');
-    expect(Resistor.getDisplayValue(1)).toBe('1');
-    expect(Resistor.getDisplayValue(999)).toBe('999');
-    expect(Resistor.getDisplayValue(1000)).toBe('1k');
-    expect(Resistor.getDisplayValue(1200)).toBe('1.2k');
-    expect(Resistor.getDisplayValue(30000000)).toBe('30M');
-    expect(Resistor.getDisplayValue(45900000000)).toBe('45.9G');
+    expect(getResistorDisplayValue(0)).toBe('0');
+    expect(getResistorDisplayValue(0.3)).toBe('0.3');
+    expect(getResistorDisplayValue(1)).toBe('1');
+    expect(getResistorDisplayValue(999)).toBe('999');
+    expect(getResistorDisplayValue(1000)).toBe('1k');
+    expect(getResistorDisplayValue(1200)).toBe('1.2k');
+    expect(getResistorDisplayValue(30000000)).toBe('30M');
+    expect(getResistorDisplayValue(45900000000)).toBe('45.9G');
   });
 });
