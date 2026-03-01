@@ -81,13 +81,33 @@ export function lookupSemaphoreEncoding(
 }
 
 /**
+ * Counts the number of direction flags set in an encoding.
+ */
+function countDirections(encoding: SemaphoreEncoding): number {
+  let count = 0;
+  let bits = encoding as number;
+  while (bits) {
+    count += bits & 1;
+    bits >>= 1;
+  }
+  return count;
+}
+
+/**
  * Adds a direction flag to an encoding, returns a new encoding.
+ * Semaphore positions use at most two directions. If adding the
+ * direction would exceed two, the oldest (lowest) flag is removed.
  */
 export function addSemaphoreDirection(
   encoding: SemaphoreEncoding,
   direction: SemaphoreDirection,
 ): SemaphoreEncoding {
-  return (encoding | direction) as SemaphoreEncoding;
+  let result = (encoding | direction) as SemaphoreEncoding;
+  while (countDirections(result) > 2) {
+    // Remove the lowest set bit
+    result = (result & (result - 1)) as SemaphoreEncoding;
+  }
+  return result;
 }
 
 /**
@@ -112,12 +132,14 @@ export function hasSemaphoreDirection(
 
 /**
  * Converts an array of SemaphoreDirection values to a SemaphoreEncoding.
+ * Only the last two directions are used, matching semaphore's two-flag limit.
  */
 export function directionsToEncoding(
   directions: SemaphoreDirection[],
 ): SemaphoreEncoding {
+  const capped = directions.slice(-2);
   let result: SemaphoreEncoding = SemaphoreEncoding.None;
-  for (const dir of directions) {
+  for (const dir of capped) {
     result = (result | dir) as SemaphoreEncoding;
   }
   return result;

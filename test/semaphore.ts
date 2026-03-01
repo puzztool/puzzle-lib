@@ -87,6 +87,31 @@ describe('Semaphore', () => {
       ]);
       expect(lookupSemaphoreEncoding(enc).exactString).toBe('R');
     });
+
+    it('addSemaphoreDirection caps at two directions', () => {
+      let enc = addSemaphoreDirection(
+        SemaphoreEncoding.None,
+        SemaphoreDirection.North,
+      );
+      enc = addSemaphoreDirection(enc, SemaphoreDirection.East);
+      enc = addSemaphoreDirection(enc, SemaphoreDirection.South);
+      // Should only have 2 directions; oldest dropped
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.East)).toBe(true);
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.South)).toBe(true);
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.North)).toBe(false);
+    });
+
+    it('directionsToEncoding caps at two directions', () => {
+      const enc = directionsToEncoding([
+        SemaphoreDirection.North,
+        SemaphoreDirection.East,
+        SemaphoreDirection.South,
+      ]);
+      // Only last two used
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.East)).toBe(true);
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.South)).toBe(true);
+      expect(hasSemaphoreDirection(enc, SemaphoreDirection.North)).toBe(false);
+    });
   });
 
   describe('Degrees', () => {
