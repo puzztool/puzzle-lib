@@ -71,6 +71,7 @@ export {
   decodeSemaphoreStream,
   degreesToSemaphoreDirection,
   directionsToEncoding,
+  getEncodingDegrees,
   hasSemaphoreDirection,
   lookupSemaphoreEncoding,
   removeSemaphoreDirection,

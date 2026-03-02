@@ -184,6 +184,44 @@ export function semaphoreDirectionToDegrees(
   return counter * 45;
 }
 
+const ALL_DIRECTIONS: SemaphoreDirection[] = [
+  SemaphoreDirection.North,
+  SemaphoreDirection.NorthEast,
+  SemaphoreDirection.East,
+  SemaphoreDirection.SouthEast,
+  SemaphoreDirection.South,
+  SemaphoreDirection.SouthWest,
+  SemaphoreDirection.West,
+  SemaphoreDirection.NorthWest,
+];
+
+/**
+ * Extracts the degrees of the two active directions in an encoding.
+ * Directions are returned in clockwise order starting from North.
+ * Returns [first, second] where either may be undefined if fewer than
+ * two directions are set.
+ */
+export function getEncodingDegrees(
+  encoding: SemaphoreEncoding,
+): [number | undefined, number | undefined] {
+  let first: number | undefined;
+  let second: number | undefined;
+  for (const dir of ALL_DIRECTIONS) {
+    if (hasSemaphoreDirection(encoding, dir)) {
+      const deg = semaphoreDirectionToDegrees(dir);
+      if (deg !== undefined) {
+        if (first === undefined) {
+          first = deg;
+        } else {
+          second = deg;
+          break;
+        }
+      }
+    }
+  }
+  return [first, second];
+}
+
 /**
  * Decodes an array of semaphore encodings to a string, handling number mode.
  */
