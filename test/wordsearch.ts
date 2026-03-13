@@ -213,9 +213,9 @@ describe('WordSearchSolver', () => {
     it('Diamond-shaped grid with findWords', () => {
       // Diamond shape using spaces:
       //   f
-      //  oox
-      // ooxxx
-      //  xxx
+      //  oo
+      // oox
+      //  xx
       //   x
       const input = '  f\n oo\noox\n xx\n  x\n';
       const grid = parseWordSearchGrid(input);
