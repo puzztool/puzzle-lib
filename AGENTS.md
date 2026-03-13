@@ -6,7 +6,7 @@ puzzle-lib is a TypeScript library providing encoding, decoding, and puzzle-solv
 
 ## Development Environment
 
-- **Runtime**: Node.js 20+ (tested on 20.x, 22.x, 24.x)
+- **Runtime**: Node.js 20+ (tested on 20.x, 22.x, 24.x; a `shell.nix` is provided for NixOS users)
 - **Package Manager**: npm
 
 ## Commands
