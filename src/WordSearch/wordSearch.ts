@@ -27,7 +27,7 @@ function collapseSpaceColumns(matrix: string[][]): string[][] {
 }
 
 export function parseWordSearchGrid(input: string): string[][] {
-  const lines = input.split(/\r?\n/).filter(line => line.length > 0);
+  const lines = input.split(/\r?\n/).filter(line => line.trimEnd().length > 0);
   const grid: string[][] = [];
   for (const line of lines) {
     grid.push(line.split(''));

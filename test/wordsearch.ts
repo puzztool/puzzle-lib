@@ -201,6 +201,14 @@ describe('WordSearchSolver', () => {
       expect(grid[1]).toEqual(['A', ' ', 'C']);
       expect(grid[2]).toEqual(['A', 'B', 'C']);
     });
+
+    it('parseWordSearchGrid filters blank and all-spaces lines', () => {
+      const input = 'ABCD\n\n   \nEFGH\n';
+      const grid = parseWordSearchGrid(input);
+      expect(grid.length).toBe(2);
+      expect(grid[0]).toEqual(['A', 'B', 'C', 'D']);
+      expect(grid[1]).toEqual(['E', 'F', 'G', 'H']);
+    });
   });
 
   describe('Bent Search', () => {
