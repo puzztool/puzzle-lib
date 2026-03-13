@@ -98,12 +98,19 @@ export function convertCharacter(
   return '';
 }
 
-// Auto-chunk a continuous binary string into 8-bit or 5-bit groups.
+// Auto-chunk a continuous binary string into 8-bit, 7-bit, or 5-bit groups.
 function chunkBinary(token: string): string[] {
   if (!appearsBinary(token) || token.length <= 8) {
     return [token];
   }
-  const chunkSize = token.length % 8 === 0 ? 8 : token.length % 5 === 0 ? 5 : 8;
+  const chunkSize =
+    token.length % 8 === 0
+      ? 8
+      : token.length % 7 === 0
+        ? 7
+        : token.length % 5 === 0
+          ? 5
+          : 8;
   return token.match(new RegExp(`.{1,${chunkSize}}`, 'g'))!;
 }
 
