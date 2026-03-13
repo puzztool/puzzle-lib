@@ -103,8 +103,7 @@ function chunkBinary(token: string): string[] {
   if (!appearsBinary(token) || token.length <= 8) {
     return [token];
   }
-  const chunkSize =
-    token.length % 8 === 0 ? 8 : token.length % 5 === 0 ? 5 : 8;
+  const chunkSize = token.length % 8 === 0 ? 8 : token.length % 5 === 0 ? 5 : 8;
   return token.match(new RegExp(`.{1,${chunkSize}}`, 'g'))!;
 }
 
