@@ -48,6 +48,20 @@ describe('Conversions', () => {
       expect(convertString('020 120 120', true)).toBe('FOO');
     });
 
+    it('convertString - continuous binary auto-chunking', () => {
+      // 8-bit continuous binary
+      expect(
+        convertString(
+          '010110010110111101110101011100100010000001100010011000010111001101100101001000000110001001100101011011000110111101101110011001110111001100100000011101000110111100100000011101010111001100101110',
+          true,
+        ),
+      ).toBe('Your base belongs to us.');
+      // 5-bit continuous binary
+      expect(convertString('0000100010000110010000101', true)).toBe('ABCDE');
+      // Short binary should still work normally
+      expect(convertString('01100001', true)).toBe('a');
+    });
+
     it('convertString - varied encoding', () => {
       expect(convertString('999 999', false)).toBe('');
       expect(convertString('01000101 24 121 10010 5    SS', false)).toBe(
