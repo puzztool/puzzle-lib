@@ -209,6 +209,39 @@ describe('WordSearchSolver', () => {
       expect(grid[0]).toEqual(['A', 'B', 'C', 'D']);
       expect(grid[1]).toEqual(['E', 'F', 'G', 'H']);
     });
+
+    it('Diamond-shaped grid with findWords', () => {
+      // Diamond shape using spaces:
+      //   f
+      //  oox
+      // ooxxx
+      //  xxx
+      //   x
+      const input = '  f\n oo\noox\n xx\n  x\n';
+      const grid = parseWordSearchGrid(input);
+      expect(grid.length).toBe(5);
+      expect(grid[0]).toEqual([' ', ' ', 'f']);
+      expect(grid[1]).toEqual([' ', 'o', 'o']);
+      expect(grid[2]).toEqual(['o', 'o', 'x']);
+      const results = findWords({grid, words: ['foo']});
+      assertResultsContainsWord(results, 'foo');
+      expect(results.length).toBe(1);
+    });
+
+    it('Grid with interior cutout preserves shape for search', () => {
+      // 5x5 grid with a hole in the middle
+      const input = 'abcde\nfghij\nkl mn\nopqrs\ntuvwx\n';
+      const grid = parseWordSearchGrid(input);
+      // No columns are entirely spaces, so grid is unchanged
+      expect(grid.length).toBe(5);
+      expect(grid[2]).toEqual(['k', 'l', ' ', 'm', 'n']);
+      // Vertical word 'afkot' crosses through column 0 (no spaces)
+      const results = findWords({grid, words: ['afkot']});
+      assertResultsContainsWord(results, 'afkot');
+      // Word 'glq' would need to cross the space — should not match
+      const crossHole = findWords({grid, words: ['glq']});
+      expect(crossHole.length).toBe(0);
+    });
   });
 
   describe('Bent Search', () => {
