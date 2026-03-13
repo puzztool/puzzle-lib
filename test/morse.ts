@@ -69,20 +69,20 @@ describe('Morse', () => {
   describe('decodeMorse', () => {
     it('Basic', () => {
       expect(decodeMorse('.')).toBe('E');
-      expect(decodeMorse('.../---/...')).toBe('SOS');
-      expect(decodeMorse('./.-/--./-')).toBe('EAGT');
+      expect(decodeMorse('... --- ...')).toBe('SOS');
+      expect(decodeMorse('. .- --. -')).toBe('EAGT');
     });
 
     it('Word Delimiters', () => {
-      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
+      const someTestString = '... --- -- ./- . ... -/... - .-. .. -. --.';
       expect(decodeMorse(someTestString)).toBe('SOME TEST STRING');
     });
   });
 
   describe('invertMorse', () => {
     it('Basic', () => {
-      expect(invertMorse('.../---/...')).toBe('OSO');
-      expect(invertMorse('./.-/--./-')).toBe('TNUE');
+      expect(invertMorse('... --- ...')).toBe('OSO');
+      expect(invertMorse('. .- --. -')).toBe('TNUE');
     });
 
     it('Invert single character', () => {
@@ -93,29 +93,29 @@ describe('Morse', () => {
     });
 
     it('Word Delimiters', () => {
-      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
+      const someTestString = '... --- -- ./- . ... -/... - .-. .. -. --.';
       expect(invertMorse(someTestString)).toBe('OSIT ETOE OEKMAU');
     });
   });
 
   describe('reverseMorse', () => {
     it('Basic', () => {
-      expect(reverseMorse('./.-/--./-')).toBe('TWNE');
+      expect(reverseMorse('. .- --. -')).toBe('TWNE');
     });
 
     it('Double reverse restores original', () => {
-      expect(reverseMorse('.../---/...')).toBe('SOS');
+      expect(reverseMorse('... --- ...')).toBe('SOS');
     });
 
     it('Word Delimiters', () => {
-      const someTestString = '.../---/--/. -/./.../- .../-/.-./../-./--.';
+      const someTestString = '... --- -- ./- . ... -/... - .-. .. -. --.';
       expect(reverseMorse(someTestString)).toBe('WAIRTS TSET EMOS');
     });
   });
 
   describe('invertAndReverseMorse', () => {
     it('Basic', () => {
-      expect(invertAndReverseMorse('./.-/--./-')).toBe('EDAT');
+      expect(invertAndReverseMorse('. .- --. -')).toBe('EDAT');
     });
   });
 
@@ -125,13 +125,13 @@ describe('Morse', () => {
         expect(() => decodeMorse('.', charSep, wordSep)).toThrow();
       };
 
-      assertSeparatorThrows('.', ' ');
-      assertSeparatorThrows('-', ' ');
-      assertSeparatorThrows('A', ' ');
-      assertSeparatorThrows('/', '.');
-      assertSeparatorThrows('/', '-');
-      assertSeparatorThrows('/', 'A');
-      assertSeparatorThrows('/', '/');
+      assertSeparatorThrows('.', '/');
+      assertSeparatorThrows('-', '/');
+      assertSeparatorThrows('A', '/');
+      assertSeparatorThrows(' ', '.');
+      assertSeparatorThrows(' ', '-');
+      assertSeparatorThrows(' ', 'A');
+      assertSeparatorThrows(' ', ' ');
       assertSeparatorThrows('C', 'C');
     });
   });

@@ -5,8 +5,8 @@ import {MorseEncoding} from './MorseEncoding';
 
 export const MORSE_DOT = '.';
 export const MORSE_DASH = '-';
-export const MORSE_CHARACTER_DIVIDER = '/';
-export const MORSE_WORD_DIVIDER = ' ';
+export const MORSE_CHARACTER_DIVIDER = ' ';
+export const MORSE_WORD_DIVIDER = '/';
 
 // Reserved character used internally for dot/dash swap
 const RESERVED_DIVIDER = 'A';
