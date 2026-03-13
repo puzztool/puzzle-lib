@@ -82,9 +82,5 @@ export {SemaphoreEncoding} from './Semaphore/SemaphoreEncoding';
 export {Point as WordSearchPoint} from './WordSearch/Point';
 export {Result as WordSearchResult} from './WordSearch/Result';
 export {WordSearchDirection} from './WordSearch/WordSearchDirection';
-export {
-  findWords,
-  parseWordSearchGrid,
-  WordSearchSpaceTreatment,
-} from './WordSearch/wordSearch';
+export {findWords, parseWordSearchGrid} from './WordSearch/wordSearch';
 export type {WordSearchOptions} from './WordSearch/wordSearch';

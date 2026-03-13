@@ -4,18 +4,26 @@ import {Point} from './Point';
 import {Result} from './Result';
 import {WordSearchDirection} from './WordSearchDirection';
 
-export enum WordSearchSpaceTreatment {
-  None = 0,
-  RemoveWithinPuzzle = 1,
-  RemoveAll = 2,
-}
-
 export interface WordSearchOptions {
   grid: string[][];
   words: string[];
   directions?: WordSearchDirection;
   canBend?: boolean;
-  spaceTreatment?: WordSearchSpaceTreatment;
+}
+
+// Remove columns that are entirely spaces across all rows.
+function collapseSpaceColumns(matrix: string[][]): string[][] {
+  if (matrix.length === 0) {
+    return matrix;
+  }
+
+  const maxCols = Math.max(...matrix.map(row => row.length));
+  const keepColumn: boolean[] = [];
+  for (let col = 0; col < maxCols; col++) {
+    keepColumn.push(matrix.some(row => col < row.length && row[col] !== ' '));
+  }
+
+  return matrix.map(row => row.filter((_, col) => keepColumn[col]));
 }
 
 export function parseWordSearchGrid(input: string): string[][] {
@@ -24,7 +32,7 @@ export function parseWordSearchGrid(input: string): string[][] {
   for (const line of lines) {
     grid.push(line.split(''));
   }
-  return grid;
+  return collapseSpaceColumns(grid);
 }
 
 export function findWords(options: WordSearchOptions): Result[] {
@@ -32,9 +40,8 @@ export function findWords(options: WordSearchOptions): Result[] {
     words,
     directions: directionOption = WordSearchDirection.CardinalAndDiagonal,
     canBend = false,
-    spaceTreatment = WordSearchSpaceTreatment.None,
   } = options;
-  let matrix = options.grid;
+  const matrix = options.grid;
 
   // Build trie from words
   const targets = trie([]);
@@ -52,9 +59,6 @@ export function findWords(options: WordSearchOptions): Result[] {
 
   // Resolve directions
   const directionVectors = resolveDirections(directionOption);
-
-  // Handle space treatment
-  matrix = applySpaceTreatment(matrix, spaceTreatment);
 
   // Search
   const results: Result[] = [];
@@ -101,36 +105,6 @@ function resolveDirections(direction: WordSearchDirection): number[][] {
     ]);
   }
   return directions;
-}
-
-function applySpaceTreatment(
-  matrix: string[][],
-  treatment: WordSearchSpaceTreatment,
-): string[][] {
-  if (matrix.length === 0 || treatment === WordSearchSpaceTreatment.None) {
-    return matrix;
-  }
-
-  const nextMatrix: string[][] = [];
-  for (let yIdx = 0; yIdx < matrix.length; yIdx++) {
-    const line: string[] = [];
-    let inPuzzle = false;
-    for (let xIdx = 0; xIdx < matrix[yIdx].length; xIdx++) {
-      const letter = matrix[yIdx][xIdx];
-      if (letter !== ' ') {
-        inPuzzle = true;
-      }
-      if (treatment === WordSearchSpaceTreatment.RemoveAll && letter !== ' ') {
-        line.push(matrix[yIdx][xIdx]);
-      } else if (letter !== ' ' && inPuzzle) {
-        line.push(matrix[yIdx][xIdx]);
-      }
-    }
-    if (line.length > 0) {
-      nextMatrix.push(line);
-    }
-  }
-  return nextMatrix;
 }
 
 function search(
