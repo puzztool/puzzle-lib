@@ -1,4 +1,4 @@
-import {NatoCharacter} from './nato-character.js';
+import {NatoCharacter} from './character.js';
 
 export const NATO_ALPHABET: readonly NatoCharacter[] = [
   new NatoCharacter('A', 'Alfa'),

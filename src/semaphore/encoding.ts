@@ -1,4 +1,4 @@
-import {SemaphoreDirection} from './semaphore-direction.js';
+import {SemaphoreDirection} from './direction.js';
 
 export enum SemaphoreEncoding {
   None = 0,

@@ -11,4 +11,4 @@ export {
   parseMorseString,
   reverseMorse,
 } from './morse.js';
-export {MorseEncoding} from './morse-encoding.js';
+export {MorseEncoding} from './encoding.js';

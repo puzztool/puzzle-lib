@@ -9,5 +9,5 @@ export {
   removeSemaphoreDirection,
   semaphoreDirectionToDegrees,
 } from './semaphore.js';
-export {SemaphoreDirection} from './semaphore-direction.js';
-export {SemaphoreEncoding} from './semaphore-encoding.js';
+export {SemaphoreDirection} from './direction.js';
+export {SemaphoreEncoding} from './encoding.js';

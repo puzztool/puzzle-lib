@@ -2,7 +2,7 @@ import trie from 'trie-prefix-tree';
 
 import {Point} from './point.js';
 import {Result} from './result.js';
-import {WordSearchDirection} from './word-search-direction.js';
+import {WordSearchDirection} from './direction.js';
 
 export interface WordSearchOptions {
   grid: string[][];

@@ -4,5 +4,5 @@ export {
   lookupBrailleEncoding,
   toggleBrailleDot,
 } from './braille.js';
-export {BrailleDot} from './braille-dot.js';
-export {BrailleEncoding} from './braille-encoding.js';
+export {BrailleDot} from './dot.js';
+export {BrailleEncoding} from './encoding.js';
