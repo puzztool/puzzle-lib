@@ -1,4 +1,4 @@
-export interface Point {
+export interface WordSearchPoint {
   x: number;
   y: number;
 }

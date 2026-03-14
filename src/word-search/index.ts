@@ -1,4 +1,4 @@
-export type {Point} from './point.js';
+export type {WordSearchPoint} from './point.js';
 export {WordSearchResult} from './result.js';
 export {WordSearchDirection} from './direction.js';
 export {findWords, parseWordSearchGrid} from './word-search.js';

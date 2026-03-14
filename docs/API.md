@@ -251,14 +251,14 @@ import {
   WordSearchResult,
   WordSearchDirection,
 } from 'puzzle-lib/word-search';
-import type { Point, WordSearchOptions } from 'puzzle-lib/word-search';
+import type { WordSearchPoint, WordSearchOptions } from 'puzzle-lib/word-search';
 ```
 
 | Export | Type | Description |
 | --- | --- | --- |
 | `findWords(options)` | Function | Find words in a grid, returning their positions |
 | `parseWordSearchGrid(text)` | Function | Parse a text grid into a 2D character array |
-| `Point` | Interface | A 2D point with x and y coordinates |
+| `WordSearchPoint` | Interface | A 2D point with x and y coordinates |
 | `WordSearchResult` | Class | A found word with its position and direction |
 | `WordSearchDirection` | Enum | Search directions (None, Cardinal, Diagonal, CardinalAndDiagonal) |
 | `WordSearchOptions` | Interface | Options for word search (grid, words, directions) |

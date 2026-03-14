@@ -1,9 +1,9 @@
-import {Point} from './point.js';
+import {WordSearchPoint} from './point.js';
 
 export class WordSearchResult {
   word: string;
-  points: Point[];
-  constructor(word: string, wordPoints: Point[]) {
+  points: WordSearchPoint[];
+  constructor(word: string, wordPoints: WordSearchPoint[]) {
     this.word = word;
     this.points = Array.from(wordPoints);
   }

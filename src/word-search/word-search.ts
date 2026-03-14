@@ -1,6 +1,6 @@
 import trie from 'trie-prefix-tree';
 
-import {Point} from './point.js';
+import {WordSearchPoint} from './point.js';
 import {WordSearchResult} from './result.js';
 import {WordSearchDirection} from './direction.js';
 
@@ -66,7 +66,7 @@ export function findWords(options: WordSearchOptions): WordSearchResult[] {
   for (let yIdx = 0; yIdx < numRows; yIdx++) {
     const lineLength = matrix[yIdx].length;
     for (let xIdx = 0; xIdx < lineLength; xIdx++) {
-      const p: Point = {x: xIdx, y: yIdx};
+      const p: WordSearchPoint = {x: xIdx, y: yIdx};
       const pointResults = search(
         p,
         matrix,
@@ -108,7 +108,7 @@ function resolveDirections(direction: WordSearchDirection): number[][] {
 }
 
 function search(
-  start: Point,
+  start: WordSearchPoint,
   matrix: string[][],
   targets: ReturnType<typeof trie>,
   directions: number[][],
@@ -116,7 +116,7 @@ function search(
 ): WordSearchResult[] {
   const results: WordSearchResult[] = [];
   if (canBend) {
-    const history: Point[] = [];
+    const history: WordSearchPoint[] = [];
     const dfsResults = dfsCheck(
       start,
       new Set(),
@@ -136,9 +136,9 @@ function search(
 }
 
 function dfsCheck(
-  start: Point,
-  visited: Set<Point>,
-  history: Point[],
+  start: WordSearchPoint,
+  visited: Set<WordSearchPoint>,
+  history: WordSearchPoint[],
   matrix: string[][],
   targets: ReturnType<typeof trie>,
   directions: number[][],
@@ -172,7 +172,7 @@ function dfsCheck(
   }
 
   for (const translation of directions) {
-    const next: Point = {
+    const next: WordSearchPoint = {
       x: start.x + translation[0],
       y: start.y + translation[1],
     };
@@ -191,7 +191,7 @@ function dfsCheck(
 }
 
 function lineCheck(
-  start: Point,
+  start: WordSearchPoint,
   direction: number[],
   matrix: string[][],
   targets: ReturnType<typeof trie>,
@@ -200,7 +200,7 @@ function lineCheck(
 
   let currentPoint = start;
   let currentString = '';
-  const pointHistory: Point[] = [];
+  const pointHistory: WordSearchPoint[] = [];
   while (isInBounds(currentPoint, matrix)) {
     currentString = currentString + matrix[currentPoint.y][currentPoint.x];
 
@@ -210,14 +210,14 @@ function lineCheck(
       break;
     }
 
-    const p: Point = {x: currentPoint.x, y: currentPoint.y};
+    const p: WordSearchPoint = {x: currentPoint.x, y: currentPoint.y};
     pointHistory.push(p);
 
     if (wordsWithPrefix.indexOf(currentString) !== -1) {
       const foundWord = new WordSearchResult(currentString, pointHistory);
       results.push(foundWord);
     }
-    const next: Point = {
+    const next: WordSearchPoint = {
       x: currentPoint.x + direction[0],
       y: currentPoint.y + direction[1],
     };
@@ -227,7 +227,7 @@ function lineCheck(
   return results;
 }
 
-function isInBounds(point: Point, matrix: string[][]): boolean {
+function isInBounds(point: WordSearchPoint, matrix: string[][]): boolean {
   if (point.y < 0 || point.y >= matrix.length) {
     return false;
   }
