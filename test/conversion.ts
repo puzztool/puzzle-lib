@@ -12,7 +12,7 @@ import {
   sigFigCeil,
   sigFigFloor,
   sigFigRound,
-} from '../src/index.js';
+} from '../src/conversion/index.js';
 
 describe('Conversions', () => {
   describe('convertString / determineStringEncoding', () => {

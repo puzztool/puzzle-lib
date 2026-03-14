@@ -6,7 +6,7 @@ import {
   getResistorDisplayValue,
   hasResistorValue,
   hasResistorTolerance,
-} from '../src/index.js';
+} from '../src/resistor/index.js';
 
 // Helper to look up colors by name
 function color(name: string) {

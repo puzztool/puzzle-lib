@@ -1,10 +1,6 @@
 import {describe, it, expect} from 'vitest';
-import {
-  lookupNatoPhonetic,
-  NATO_ALPHABET,
-  getNavalFlag,
-  NAVAL_FLAGS,
-} from '../src/index.js';
+import {lookupNatoPhonetic, NATO_ALPHABET} from '../src/nato/index.js';
+import {getNavalFlag, NAVAL_FLAGS} from '../src/naval-flags/index.js';
 
 describe('Nato', () => {
   it('Entries', () => {

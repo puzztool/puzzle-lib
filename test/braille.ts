@@ -7,7 +7,7 @@ import {
   toggleBrailleDot,
   getBrailleDot,
   decodeBrailleStream,
-} from '../src/index.js';
+} from '../src/braille/index.js';
 
 describe('Braille', () => {
   describe('lookupBrailleEncoding', () => {

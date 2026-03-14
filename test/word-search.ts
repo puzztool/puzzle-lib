@@ -2,9 +2,9 @@ import {describe, it, expect} from 'vitest';
 import {
   findWords,
   parseWordSearchGrid,
+  Result as WordSearchResult,
   WordSearchDirection,
-} from '../src/index.js';
-import {WordSearchResult} from '../src/index.js';
+} from '../src/word-search/index.js';
 
 function assertResultsContainsWord(results: WordSearchResult[], word: string) {
   for (const result of results) {
