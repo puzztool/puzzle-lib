@@ -1,4 +1,4 @@
-import {InlineSvg} from './InlineSvg';
+import {InlineSvg} from './InlineSvg.js';
 
 export class CharacterImage {
   readonly character: string;

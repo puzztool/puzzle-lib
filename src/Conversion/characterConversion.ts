@@ -1,4 +1,4 @@
-import {CharacterTableEntry} from './CharacterTableEntry';
+import {CharacterTableEntry} from './CharacterTableEntry.js';
 
 function addAsciiRange(
   array: CharacterTableEntry[],

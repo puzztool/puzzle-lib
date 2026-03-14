@@ -8,7 +8,7 @@ import {
   autokeyDecrypt,
   rotateLetter,
   isAlpha,
-} from '../src';
+} from '../src/index.js';
 
 describe('Cipher', () => {
   describe('isAlpha', () => {

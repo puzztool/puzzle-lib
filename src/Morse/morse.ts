@@ -1,7 +1,7 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {EncodingEntry} from '../Common/EncodingEntry';
-import {EncodingLookupResult} from '../Common/EncodingLookupResult';
-import {MorseEncoding} from './MorseEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory.js';
+import {EncodingEntry} from '../Common/EncodingEntry.js';
+import {EncodingLookupResult} from '../Common/EncodingLookupResult.js';
+import {MorseEncoding} from './MorseEncoding.js';
 
 export const MORSE_DOT = '.';
 export const MORSE_DASH = '-';

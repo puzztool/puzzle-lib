@@ -1,5 +1,5 @@
-import {CharacterImage} from '../Common/CharacterImage';
-import {InlineSvg} from '../Common/InlineSvg';
+import {CharacterImage} from '../Common/CharacterImage.js';
+import {InlineSvg} from '../Common/InlineSvg.js';
 
 export const NAVAL_FLAGS: readonly CharacterImage[] = [
   new CharacterImage(

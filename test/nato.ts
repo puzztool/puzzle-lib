@@ -4,7 +4,7 @@ import {
   NATO_ALPHABET,
   getNavalFlag,
   NAVAL_FLAGS,
-} from '../src';
+} from '../src/index.js';
 
 describe('Nato', () => {
   it('Entries', () => {

@@ -11,7 +11,7 @@ import {
   semaphoreDirectionToDegrees,
   SemaphoreDirection,
   SemaphoreEncoding,
-} from '../src';
+} from '../src/index.js';
 
 describe('Semaphore', () => {
   describe('lookupSemaphoreEncoding', () => {

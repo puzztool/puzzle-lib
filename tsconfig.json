@@ -3,6 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "skipLibCheck": true
   },
   "include": [

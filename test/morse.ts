@@ -10,7 +10,7 @@ import {
   MorseEncoding,
   MORSE_DOT,
   MORSE_DASH,
-} from '../src';
+} from '../src/index.js';
 
 describe('Morse', () => {
   describe('parseMorseString / morseEncodingToString', () => {

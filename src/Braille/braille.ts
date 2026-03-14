@@ -1,8 +1,8 @@
-import {EncodingCategory} from '../Common/EncodingCategory';
-import {EncodingEntry} from '../Common/EncodingEntry';
-import {EncodingLookupResult} from '../Common/EncodingLookupResult';
-import {BrailleDot} from './BrailleDot';
-import {BrailleEncoding} from './BrailleEncoding';
+import {EncodingCategory} from '../Common/EncodingCategory.js';
+import {EncodingEntry} from '../Common/EncodingEntry.js';
+import {EncodingLookupResult} from '../Common/EncodingLookupResult.js';
+import {BrailleDot} from './BrailleDot.js';
+import {BrailleEncoding} from './BrailleEncoding.js';
 
 // Build the lookup table once
 const BRAILLE_ENTRIES: Array<EncodingEntry<BrailleEncoding>> = [];

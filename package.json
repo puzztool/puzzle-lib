@@ -2,6 +2,7 @@
   "name": "puzzle-lib",
   "version": "2.0.0-beta.1",
   "description": "Library of puzzle-solving algorithms",
+  "type": "module",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [

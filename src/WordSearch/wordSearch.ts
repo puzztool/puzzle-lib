@@ -1,8 +1,8 @@
-import trie = require('trie-prefix-tree');
+import trie from 'trie-prefix-tree';
 
-import {Point} from './Point';
-import {Result} from './Result';
-import {WordSearchDirection} from './WordSearchDirection';
+import {Point} from './Point.js';
+import {Result} from './Result.js';
+import {WordSearchDirection} from './WordSearchDirection.js';
 
 export interface WordSearchOptions {
   grid: string[][];

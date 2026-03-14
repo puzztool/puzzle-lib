@@ -1,4 +1,4 @@
-import {EncodingCategory} from './EncodingCategory';
+import {EncodingCategory} from './EncodingCategory.js';
 
 export class EncodingEntry<T> {
   readonly encoding: T;

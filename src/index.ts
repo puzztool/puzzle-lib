@@ -3,9 +3,9 @@ export {
   getBrailleDot,
   lookupBrailleEncoding,
   toggleBrailleDot,
-} from './Braille/braille';
-export {BrailleDot} from './Braille/BrailleDot';
-export {BrailleEncoding} from './Braille/BrailleEncoding';
+} from './Braille/braille.js';
+export {BrailleDot} from './Braille/BrailleDot.js';
+export {BrailleEncoding} from './Braille/BrailleEncoding.js';
 export {
   autokeyDecrypt,
   autokeyEncrypt,
@@ -15,31 +15,31 @@ export {
   rotateLetter,
   vigenereDecrypt,
   vigenereEncrypt,
-} from './Cipher/cipher';
-export {CharacterImage} from './Common/CharacterImage';
-export {EncodingCategory} from './Common/EncodingCategory';
-export {EncodingEntry} from './Common/EncodingEntry';
-export {EncodingLookupResult} from './Common/EncodingLookupResult';
-export {InlineSvg} from './Common/InlineSvg';
+} from './Cipher/cipher.js';
+export {CharacterImage} from './Common/CharacterImage.js';
+export {EncodingCategory} from './Common/EncodingCategory.js';
+export {EncodingEntry} from './Common/EncodingEntry.js';
+export {EncodingLookupResult} from './Common/EncodingLookupResult.js';
+export {InlineSvg} from './Common/InlineSvg.js';
 export {
   convertCharacter,
   convertString,
   determineCharacterEncoding,
   determineStringEncoding,
-} from './Conversion/conversion';
+} from './Conversion/conversion.js';
 export {
   getAsciiTable,
   getOrdinalTable,
   toAscii,
   toOrdinal,
-} from './Conversion/characterConversion';
-export {CharacterEncoding} from './Conversion/CharacterEncoding';
-export {CharacterTableEntry} from './Conversion/CharacterTableEntry';
+} from './Conversion/characterConversion.js';
+export {CharacterEncoding} from './Conversion/CharacterEncoding.js';
+export {CharacterTableEntry} from './Conversion/CharacterTableEntry.js';
 export {
   sigFigCeil,
   sigFigFloor,
   sigFigRound,
-} from './Conversion/significantFigures';
+} from './Conversion/significantFigures.js';
 export {
   decodeMorse,
   invertAndReverseMorse,
@@ -52,11 +52,11 @@ export {
   MORSE_WORD_DIVIDER,
   parseMorseString,
   reverseMorse,
-} from './Morse/morse';
-export {MorseEncoding} from './Morse/MorseEncoding';
-export {NatoCharacter} from './Nato/NatoCharacter';
-export {lookupNatoPhonetic, NATO_ALPHABET} from './Nato/nato';
-export {getNavalFlag, NAVAL_FLAGS} from './NavalFlags/navalFlags';
+} from './Morse/morse.js';
+export {MorseEncoding} from './Morse/MorseEncoding.js';
+export {NatoCharacter} from './Nato/NatoCharacter.js';
+export {lookupNatoPhonetic, NATO_ALPHABET} from './Nato/nato.js';
+export {getNavalFlag, NAVAL_FLAGS} from './NavalFlags/navalFlags.js';
 export {
   getResistorDisplayValue,
   getResistorValue,
@@ -64,8 +64,8 @@ export {
   hasResistorValue,
   INVALID_RESISTOR,
   RESISTOR_COLOR_TABLE,
-} from './Resistor/resistor';
-export type {ResistorColor} from './Resistor/resistor';
+} from './Resistor/resistor.js';
+export type {ResistorColor} from './Resistor/resistor.js';
 export {
   addSemaphoreDirection,
   decodeSemaphoreStream,
@@ -76,11 +76,11 @@ export {
   lookupSemaphoreEncoding,
   removeSemaphoreDirection,
   semaphoreDirectionToDegrees,
-} from './Semaphore/semaphore';
-export {SemaphoreDirection} from './Semaphore/SemaphoreDirection';
-export {SemaphoreEncoding} from './Semaphore/SemaphoreEncoding';
-export {Point as WordSearchPoint} from './WordSearch/Point';
-export {Result as WordSearchResult} from './WordSearch/Result';
-export {WordSearchDirection} from './WordSearch/WordSearchDirection';
-export {findWords, parseWordSearchGrid} from './WordSearch/wordSearch';
-export type {WordSearchOptions} from './WordSearch/wordSearch';
+} from './Semaphore/semaphore.js';
+export {SemaphoreDirection} from './Semaphore/SemaphoreDirection.js';
+export {SemaphoreEncoding} from './Semaphore/SemaphoreEncoding.js';
+export {Point as WordSearchPoint} from './WordSearch/Point.js';
+export {Result as WordSearchResult} from './WordSearch/Result.js';
+export {WordSearchDirection} from './WordSearch/WordSearchDirection.js';
+export {findWords, parseWordSearchGrid} from './WordSearch/wordSearch.js';
+export type {WordSearchOptions} from './WordSearch/wordSearch.js';
