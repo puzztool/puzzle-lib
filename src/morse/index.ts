@@ -12,5 +12,3 @@ export {
   reverseMorse,
 } from './morse.js';
 export {MorseEncoding} from './morse-encoding.js';
-export {EncodingCategory} from '../common/encoding-category.js';
-export type {EncodingLookupResult} from '../common/encoding-lookup-result.js';

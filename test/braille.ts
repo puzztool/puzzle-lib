@@ -1,6 +1,6 @@
 import {describe, it, expect} from 'vitest';
+import {EncodingCategory} from '../src/common/index.js';
 import {
-  EncodingCategory,
   BrailleDot,
   BrailleEncoding,
   lookupBrailleEncoding,
