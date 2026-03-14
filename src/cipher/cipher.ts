@@ -1,4 +1,4 @@
-import {toOrdinal} from '../Conversion/characterConversion.js';
+import {toOrdinal} from '../conversion/character-conversion.js';
 
 const UPPER_A = 'A'.charCodeAt(0);
 const UPPER_Z = 'Z'.charCodeAt(0);

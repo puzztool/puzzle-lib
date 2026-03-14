@@ -1,4 +1,4 @@
-import {BrailleDot} from './BrailleDot.js';
+import {BrailleDot} from './braille-dot.js';
 
 export enum BrailleEncoding {
   None,

@@ -1,8 +1,8 @@
-import {EncodingCategory} from '../Common/EncodingCategory.js';
-import {EncodingEntry} from '../Common/EncodingEntry.js';
-import {EncodingLookupResult} from '../Common/EncodingLookupResult.js';
-import {SemaphoreDirection} from './SemaphoreDirection.js';
-import {SemaphoreEncoding} from './SemaphoreEncoding.js';
+import {EncodingCategory} from '../common/encoding-category.js';
+import {EncodingEntry} from '../common/encoding-entry.js';
+import {EncodingLookupResult} from '../common/encoding-lookup-result.js';
+import {SemaphoreDirection} from './semaphore-direction.js';
+import {SemaphoreEncoding} from './semaphore-encoding.js';
 
 // Build the lookup table once
 const SEMAPHORE_ENTRIES: Array<EncodingEntry<SemaphoreEncoding>> = [];

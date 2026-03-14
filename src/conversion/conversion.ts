@@ -1,4 +1,4 @@
-import {CharacterEncoding} from './CharacterEncoding.js';
+import {CharacterEncoding} from './character-encoding.js';
 
 const BINARY_REGEX = /^[01]+$/;
 const TERNARY_REGEX = /^[0-2]{3}$/;
