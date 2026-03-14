@@ -20,10 +20,21 @@ function asciiPrintable(index: number): string {
 }
 
 /**
+ * Checks if a token could be valid printable hex.
+ */
+function appearsHexPrintable(input: string): boolean {
+  if (!HEX_REGEX.test(input)) {
+    return false;
+  }
+  const hex = Number.parseInt(input, 16);
+  return hex >= 32 && hex <= 126;
+}
+
+/**
  * Determines the character encoding of a single input token.
  */
 export function determineCharacterEncoding(input: string): CharacterEncoding {
-  // Pure hex: 2 hex chars with at least one a-f letter
+  // Unambiguous hex: 2 hex chars with at least one a-f letter
   if (HEX_REGEX.test(input) && /[a-f]/i.test(input)) {
     return CharacterEncoding.Hexadecimal;
   }
@@ -55,6 +66,11 @@ export function determineCharacterEncoding(input: string): CharacterEncoding {
   }
   if (numeric > 97 && numeric < 123) {
     return CharacterEncoding.Ascii;
+  }
+
+  // All-digit 2-char tokens that aren't decimal but are valid printable hex
+  if (appearsHexPrintable(input)) {
+    return CharacterEncoding.Hexadecimal;
   }
 
   return CharacterEncoding.None;
@@ -134,6 +150,8 @@ function splitString(input: string): string[] {
 
 /**
  * Determines the most common encoding across all tokens in a string.
+ * When hex and decimal encodings are mixed, tries hex for all tokens
+ * and picks whichever produces more printable results.
  */
 export function determineStringEncoding(input: string): CharacterEncoding {
   const encodingCount: {[index: number]: number} = {};
@@ -160,6 +178,29 @@ export function determineStringEncoding(input: string): CharacterEncoding {
       maxEncoding = encoding;
     }
   }
+
+  // Tiebreaker: if we have a mix of hex and decimal (Ascii/Ordinal),
+  // check if interpreting everything as hex produces more printable results.
+  const hasHex = encodingCount[CharacterEncoding.Hexadecimal] > 0;
+  const hasDecimal =
+    (encodingCount[CharacterEncoding.Ascii] ?? 0) > 0 ||
+    (encodingCount[CharacterEncoding.Ordinal] ?? 0) > 0;
+
+  if (hasHex && hasDecimal) {
+    const hexPrintable = parsed.filter(
+      t =>
+        appearsHexPrintable(t) &&
+        convertCharacter(t, CharacterEncoding.Hexadecimal) !== '',
+    ).length;
+    const decPrintable = parsed.filter(
+      t => convertCharacter(t, maxEncoding) !== '',
+    ).length;
+
+    if (hexPrintable > decPrintable) {
+      return CharacterEncoding.Hexadecimal;
+    }
+  }
+
   return maxEncoding;
 }
 

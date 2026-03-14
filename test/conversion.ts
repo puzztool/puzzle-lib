@@ -33,6 +33,15 @@ describe('Conversions', () => {
         CharacterEncoding.None,
       );
       expect(determineStringEncoding('')).toBe(CharacterEncoding.None);
+      // Hex tiebreaker: mix of hex (6c, 6f) and ascii (65, 72) tokens,
+      // but all are valid printable hex so hex wins
+      expect(determineStringEncoding('48 65 6c 6c 6f')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
+      // All-digit tokens that are only valid as hex
+      expect(determineStringEncoding('41 42 43')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
     });
 
     it('convertString - consistent encoding', () => {
@@ -47,6 +56,8 @@ describe('Conversions', () => {
       ).toBe('PLANET');
       expect(convertString('020 120 120', true)).toBe('FOO');
       expect(convertString('48 65 6c 6c 6f', true)).toBe('Hello');
+      // All-digit hex tokens (no a-f) detected via fallback
+      expect(convertString('41 42 43', true)).toBe('ABC');
     });
 
     it('convertString - continuous binary auto-chunking', () => {
@@ -129,8 +140,12 @@ describe('Conversions', () => {
         CharacterEncoding.FiveBitBinary,
       );
       expect(determineCharacterEncoding('1')).toBe(CharacterEncoding.Ordinal);
-      // All-digit hex tokens (no a-f) are detected as decimal, not hex
+      // All-digit hex tokens: prefer decimal when valid, fall back to hex
       expect(determineCharacterEncoding('76')).toBe(CharacterEncoding.Ascii);
+      // 41 is not ordinal (>26) or ASCII (not 65-90), but is valid printable hex
+      expect(determineCharacterEncoding('41')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
     });
 
     it('determineCharacterEncoding - Hexadecimal', () => {
