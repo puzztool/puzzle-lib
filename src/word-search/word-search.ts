@@ -1,7 +1,7 @@
 import trie from 'trie-prefix-tree';
 
 import {Point} from './point.js';
-import {Result} from './result.js';
+import {WordSearchResult} from './result.js';
 import {WordSearchDirection} from './direction.js';
 
 export interface WordSearchOptions {
@@ -35,7 +35,7 @@ export function parseWordSearchGrid(input: string): string[][] {
   return collapseSpaceColumns(grid);
 }
 
-export function findWords(options: WordSearchOptions): Result[] {
+export function findWords(options: WordSearchOptions): WordSearchResult[] {
   const {
     words,
     directions: directionOption = WordSearchDirection.CardinalAndDiagonal,
@@ -61,7 +61,7 @@ export function findWords(options: WordSearchOptions): Result[] {
   const directionVectors = resolveDirections(directionOption);
 
   // Search
-  const results: Result[] = [];
+  const results: WordSearchResult[] = [];
   const numRows = matrix.length;
   for (let yIdx = 0; yIdx < numRows; yIdx++) {
     const lineLength = matrix[yIdx].length;
@@ -113,8 +113,8 @@ function search(
   targets: ReturnType<typeof trie>,
   directions: number[][],
   canBend: boolean,
-): Result[] {
-  const results: Result[] = [];
+): WordSearchResult[] {
+  const results: WordSearchResult[] = [];
   if (canBend) {
     const history: Point[] = [];
     const dfsResults = dfsCheck(
@@ -142,8 +142,8 @@ function dfsCheck(
   matrix: string[][],
   targets: ReturnType<typeof trie>,
   directions: number[][],
-): Result[] {
-  const results: Result[] = [];
+): WordSearchResult[] {
+  const results: WordSearchResult[] = [];
 
   if (visited.has(start)) {
     return results;
@@ -167,7 +167,7 @@ function dfsCheck(
   }
 
   if (wordsWithPrefix.indexOf(currentString) !== -1) {
-    const foundWord = new Result(currentString, history);
+    const foundWord = new WordSearchResult(currentString, history);
     results.push(foundWord);
   }
 
@@ -195,8 +195,8 @@ function lineCheck(
   direction: number[],
   matrix: string[][],
   targets: ReturnType<typeof trie>,
-): Result[] {
-  const results: Result[] = [];
+): WordSearchResult[] {
+  const results: WordSearchResult[] = [];
 
   let currentPoint = start;
   let currentString = '';
@@ -214,7 +214,7 @@ function lineCheck(
     pointHistory.push(p);
 
     if (wordsWithPrefix.indexOf(currentString) !== -1) {
-      const foundWord = new Result(currentString, pointHistory);
+      const foundWord = new WordSearchResult(currentString, pointHistory);
       results.push(foundWord);
     }
     const next: Point = {

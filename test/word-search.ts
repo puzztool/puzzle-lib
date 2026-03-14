@@ -2,7 +2,7 @@ import {describe, it, expect} from 'vitest';
 import {
   findWords,
   parseWordSearchGrid,
-  Result as WordSearchResult,
+  WordSearchResult,
   WordSearchDirection,
 } from '../src/word-search/index.js';
 

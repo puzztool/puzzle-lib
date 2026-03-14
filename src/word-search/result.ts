@@ -1,6 +1,6 @@
 import {Point} from './point.js';
 
-export class Result {
+export class WordSearchResult {
   word: string;
   points: Point[];
   constructor(word: string, wordPoints: Point[]) {
