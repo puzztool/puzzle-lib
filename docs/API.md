@@ -69,10 +69,10 @@ import {
 | Export | Type | Description |
 | --- | --- | --- |
 | `EncodingCategory` | Enum | Category of an encoding entry (Letter, Number, Punctuation, etc.) |
-| `CharacterImage` | Interface | A character with associated image data |
-| `EncodingEntry` | Interface | An entry in an encoding table |
-| `EncodingLookupResult` | Interface | Result of an encoding lookup |
-| `InlineSvg` | Interface | Inline SVG image data |
+| `CharacterImage` | Class | A character with associated image data |
+| `EncodingEntry` | Class | An entry in an encoding table |
+| `EncodingLookupResult` | Class | Result of an encoding lookup |
+| `InlineSvg` | Class | Inline SVG image data |
 
 ## `puzzle-lib/conversion`
 
@@ -108,7 +108,7 @@ import {
 | `toAscii(value)` | Function | Convert a value to its ASCII character |
 | `toOrdinal(value)` | Function | Convert a value to its ordinal character |
 | `CharacterEncoding` | Enum | Supported character encodings |
-| `CharacterTableEntry` | Interface | An entry in a character table |
+| `CharacterTableEntry` | Class | A character table entry with binary, octal, decimal, and hex values |
 | `sigFigCeil(value, figures)` | Function | Ceiling to significant figures |
 | `sigFigFloor(value, figures)` | Function | Floor to significant figures |
 | `sigFigRound(value, figures)` | Function | Round to significant figures |
@@ -165,7 +165,7 @@ import {
 | --- | --- | --- |
 | `lookupNatoPhonetic(char)` | Function | Look up the NATO phonetic word for a letter |
 | `NATO_ALPHABET` | Constant | Array of all 26 NATO phonetic entries |
-| `NatoCharacter` | Interface | A NATO alphabet entry (character + word) |
+| `NatoCharacter` | Class | A NATO alphabet entry (character + word) |
 
 ## `puzzle-lib/naval-flags`
 
@@ -199,7 +199,7 @@ import type { ResistorColor } from 'puzzle-lib/resistor';
 | Export | Type | Description |
 | --- | --- | --- |
 | `getResistorValue(colors)` | Function | Calculate resistance from color bands |
-| `getResistorDisplayValue(value)` | Function | Format a resistance value for display (e.g., "4.7kΩ") |
+| `getResistorDisplayValue(value)` | Function | Format a resistance value for display (e.g., "4.7k") |
 | `hasResistorValue(color)` | Function | Check if a color has a resistance value |
 | `hasResistorTolerance(color)` | Function | Check if a color has a tolerance value |
 | `INVALID_RESISTOR` | Constant | Sentinel value for invalid resistor |
@@ -256,9 +256,9 @@ import type { Point, WordSearchOptions } from 'puzzle-lib/word-search';
 
 | Export | Type | Description |
 | --- | --- | --- |
-| `findWords(grid, words, options?)` | Function | Find words in a grid, returning their positions |
+| `findWords(options)` | Function | Find words in a grid, returning their positions |
 | `parseWordSearchGrid(text)` | Function | Parse a text grid into a 2D character array |
-| `Point` | Interface | A 2D point (row, column) |
+| `Point` | Interface | A 2D point with x and y coordinates |
 | `Result` | Class | A found word with its position and direction |
-| `WordSearchDirection` | Enum | Search directions (horizontal, vertical, diagonal, reverse) |
-| `WordSearchOptions` | Type | Options for word search (e.g., allowed directions) |
+| `WordSearchDirection` | Enum | Search directions (None, Cardinal, Diagonal, CardinalAndDiagonal) |
+| `WordSearchOptions` | Interface | Options for word search (grid, words, directions) |

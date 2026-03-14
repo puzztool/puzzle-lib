@@ -14,6 +14,9 @@ $ npm install puzzle-lib
 
 ## Usage
 
+> **Breaking change in v2:** There is no longer a root `puzzle-lib` import.
+> Use the subpath imports shown below.
+
 puzzle-lib uses [subpath exports](https://nodejs.org/api/packages.html#subpath-exports)
 so you import from the specific module you need:
 
