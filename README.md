@@ -46,7 +46,6 @@ decodeMorse('.---- ..--- ...--'); // '123'
 ```
 
 ```ts
-import { EncodingCategory } from 'puzzle-lib/common';
 import { lookupBrailleEncoding } from 'puzzle-lib/braille';
 
 // Look up a braille encoding

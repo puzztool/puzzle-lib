@@ -21,7 +21,7 @@ import {
 | `decodeBrailleStream(stream)` | Function | Decode a stream of braille encodings into text |
 | `getBrailleDot(encoding, dot)` | Function | Check if a specific dot is set in an encoding |
 | `toggleBrailleDot(encoding, dot)` | Function | Toggle a specific dot in an encoding |
-| `BrailleDot` | Enum | Dot positions (e.g., `BrailleDot.TopLeft`) |
+| `BrailleDot` | Enum | Dot positions (e.g., `BrailleDot.UpperLeft`) |
 | `BrailleEncoding` | Enum | Named braille encodings |
 
 ## `puzzle-lib/cipher`
@@ -248,18 +248,17 @@ Word search grid solver.
 import {
   findWords,
   parseWordSearchGrid,
-  Point,
   Result,
   WordSearchDirection,
 } from 'puzzle-lib/word-search';
-import type { WordSearchOptions } from 'puzzle-lib/word-search';
+import type { Point, WordSearchOptions } from 'puzzle-lib/word-search';
 ```
 
 | Export | Type | Description |
 | --- | --- | --- |
 | `findWords(grid, words, options?)` | Function | Find words in a grid, returning their positions |
 | `parseWordSearchGrid(text)` | Function | Parse a text grid into a 2D character array |
-| `Point` | Class | A 2D point (row, column) |
+| `Point` | Interface | A 2D point (row, column) |
 | `Result` | Class | A found word with its position and direction |
 | `WordSearchDirection` | Enum | Search directions (horizontal, vertical, diagonal, reverse) |
 | `WordSearchOptions` | Type | Options for word search (e.g., allowed directions) |
