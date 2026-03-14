@@ -46,6 +46,7 @@ describe('Conversions', () => {
         ),
       ).toBe('PLANET');
       expect(convertString('020 120 120', true)).toBe('FOO');
+      expect(convertString('48 65 6c 6c 6f', true)).toBe('Hello');
     });
 
     it('convertString - continuous binary auto-chunking', () => {
@@ -128,6 +129,25 @@ describe('Conversions', () => {
         CharacterEncoding.FiveBitBinary,
       );
       expect(determineCharacterEncoding('1')).toBe(CharacterEncoding.Ordinal);
+      // All-digit hex tokens (no a-f) are detected as decimal, not hex
+      expect(determineCharacterEncoding('76')).toBe(CharacterEncoding.Ascii);
+    });
+
+    it('determineCharacterEncoding - Hexadecimal', () => {
+      expect(determineCharacterEncoding('4a')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
+      expect(determineCharacterEncoding('4A')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
+      expect(determineCharacterEncoding('ff')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
+      expect(determineCharacterEncoding('0a')).toBe(
+        CharacterEncoding.Hexadecimal,
+      );
+      // 3+ hex chars don't match (only 2-char tokens supported)
+      expect(determineCharacterEncoding('4a5')).toBe(CharacterEncoding.Latin);
     });
 
     it('convertCharacter', () => {
@@ -143,6 +163,18 @@ describe('Conversions', () => {
       expect(convertCharacter('1000011')).toBe('C');
       expect(convertCharacter('999')).toBe('');
       expect(convertCharacter('136')).toBe('');
+    });
+
+    it('convertCharacter - Hexadecimal', () => {
+      expect(convertCharacter('4a')).toBe('J');
+      expect(convertCharacter('4A')).toBe('J');
+      expect(convertCharacter('41', CharacterEncoding.Hexadecimal)).toBe('A');
+      expect(convertCharacter('5a', CharacterEncoding.Hexadecimal)).toBe('Z');
+      expect(convertCharacter('61', CharacterEncoding.Hexadecimal)).toBe('a');
+      expect(convertCharacter('7a', CharacterEncoding.Hexadecimal)).toBe('z');
+      // Non-printable
+      expect(convertCharacter('01', CharacterEncoding.Hexadecimal)).toBe('');
+      expect(convertCharacter('ff', CharacterEncoding.Hexadecimal)).toBe('');
     });
 
     it('forceCharacterEncoding', () => {

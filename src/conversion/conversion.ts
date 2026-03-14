@@ -2,6 +2,7 @@ import {CharacterEncoding} from './character-encoding.js';
 
 const BINARY_REGEX = /^[01]+$/;
 const TERNARY_REGEX = /^[0-2]{3}$/;
+const HEX_REGEX = /^[0-9a-f]{2}$/i;
 
 function appearsBinary(str: string): boolean {
   return BINARY_REGEX.test(str);
@@ -22,6 +23,11 @@ function asciiPrintable(index: number): string {
  * Determines the character encoding of a single input token.
  */
 export function determineCharacterEncoding(input: string): CharacterEncoding {
+  // Pure hex: 2 hex chars with at least one a-f letter
+  if (HEX_REGEX.test(input) && /[a-f]/i.test(input)) {
+    return CharacterEncoding.Hexadecimal;
+  }
+
   if (input.match(/[a-z]/i)) {
     return CharacterEncoding.Latin;
   }
@@ -75,6 +81,11 @@ export function convertCharacter(
   const baseTen = Number.parseInt(input, 10);
   if (encoding === CharacterEncoding.Ascii) {
     return asciiPrintable(baseTen);
+  }
+
+  if (encoding === CharacterEncoding.Hexadecimal) {
+    const hex = Number.parseInt(input, 16);
+    return asciiPrintable(hex);
   }
 
   const asciiOffset = 64;
