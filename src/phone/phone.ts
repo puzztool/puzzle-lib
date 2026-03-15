@@ -34,7 +34,7 @@ export function lettersToPhone(text: string): string {
  * second, and trigrams for all subsequent letters.
  *
  * @param digits - String of digit characters (e.g., "43556")
- * @param maxResults - Maximum number of results to return (default: 20)
+ * @param maxResults - Maximum number of results to return (default: 20, clamped to [1, 1000])
  * @returns Array of PhoneResult sorted by score (highest first)
  */
 export function phoneToText(digits: string, maxResults = 20): PhoneResult[] {

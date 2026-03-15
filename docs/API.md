@@ -223,12 +223,12 @@ phoneToLetters('2'); // ['a', 'b', 'c']
 lettersToPhone('hello'); // '43556'
 ```
 
-| Export                             | Type     | Description                                              |
-| ---------------------------------- | -------- | -------------------------------------------------------- |
-| `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search |
-| `phoneToLetters(digit)`            | Function | Get the letters mapped to a phone digit (2-9)            |
-| `lettersToPhone(text)`             | Function | Convert text to phone digit sequence                     |
-| `PhoneResult`                      | Type     | A ranked candidate with `text` and `score`               |
+| Export                             | Type     | Description                                                                                                        |
+| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
+| `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search. `maxResults` defaults to 20 and is clamped to [1, 1000]. |
+| `phoneToLetters(digit)`            | Function | Get the letters mapped to a phone digit (2-9)                                                                      |
+| `lettersToPhone(text)`             | Function | Convert text to phone digit sequence                                                                               |
+| `PhoneResult`                      | Type     | A ranked candidate with `text` and `score`                                                                         |
 
 ## `puzzle-lib/pigpen`
 
