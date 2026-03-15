@@ -182,40 +182,27 @@ import {getNavalFlag, NAVAL_FLAGS} from 'puzzle-lib/naval-flags';
 
 ## `puzzle-lib/ngrams`
 
-English letter n-gram frequency data and scoring functions. Data is derived
-from the Google Web Trillion Word Corpus (via Peter Norvig's analysis).
+English letter n-gram scoring functions. Data is derived from the Google
+Web Trillion Word Corpus (via Peter Norvig's analysis). Uses unigram,
+bigram, and trigram frequency tables internally.
 
 ```ts
-import {
-  scoreText,
-  scoreNextLetter,
-  scoreUnigram,
-  scoreBigram,
-  scoreTrigram,
-  UNIGRAM_LOG_PROB,
-} from 'puzzle-lib/ngrams';
+import {scoreText, scoreNextLetter} from 'puzzle-lib/ngrams';
 
-// Score how "English-like" a string is
-scoreText('hello'); // higher score = more English-like
-scoreText('xqzjk'); // lower score
+// Score how "English-like" a string is (higher = more English-like)
+scoreText('hello'); // -5.29...
+scoreText('xqzjk'); // -27.05...
 
-// Get log-probability of a letter
-UNIGRAM_LOG_PROB['e']; // most common English letter
+// Score a letter given preceding context
+scoreNextLetter('th', 'e'); // trigram score for "the"
+scoreNextLetter('t', 'h'); // bigram score for "th"
+scoreNextLetter('', 'e'); // unigram score for "e"
 ```
 
-| Export | Type | Description |
-| --- | --- | --- |
-| `scoreText(text)` | Function | Score a string by English n-gram likelihood |
-| `scoreNextLetter(prev, prevPrev, letter)` | Function | Score a letter given previous context |
-| `scoreUnigram(letter)` | Function | Score a single letter by unigram frequency |
-| `scoreBigram(prev, letter)` | Function | Score a letter pair by bigram frequency |
-| `scoreTrigram(prevPrev, prev, letter)` | Function | Score a letter triple by trigram frequency |
-| `UNIGRAM_LOG_PROB` | Constant | Unigram log-probability table (a-z) |
-| `MIN_UNIGRAM_LOG_PROB` | Constant | Minimum unigram log-probability |
-| `BIGRAM_LOG_PROB` | Constant | Bigram log-probability table |
-| `MIN_BIGRAM_LOG_PROB` | Constant | Minimum bigram log-probability |
-| `TRIGRAM_LOG_PROB` | Constant | Trigram log-probability table (~17K entries) |
-| `MIN_TRIGRAM_LOG_PROB` | Constant | Minimum trigram log-probability |
+| Export                             | Type     | Description                                                                                  |
+| ---------------------------------- | -------- | -------------------------------------------------------------------------------------------- |
+| `scoreText(text)`                  | Function | Score a string by English n-gram likelihood. Non-letter characters are skipped.              |
+| `scoreNextLetter(context, letter)` | Function | Score a letter given preceding context (uses trigram/bigram/unigram based on context length) |
 
 ## `puzzle-lib/phone`
 
@@ -236,14 +223,14 @@ phoneToLetters('2'); // ['a', 'b', 'c']
 lettersToPhone('hello'); // '43556'
 ```
 
-| Export | Type | Description |
-| --- | --- | --- |
+| Export                             | Type     | Description                                              |
+| ---------------------------------- | -------- | -------------------------------------------------------- |
 | `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search |
-| `phoneToLetters(digit)` | Function | Get the letters mapped to a phone digit (2-9) |
-| `lettersToPhone(text)` | Function | Convert text to phone digit sequence |
-| `PHONE_MAPPING` | Constant | Digit-to-letters mapping (2-9) |
-| `LETTER_TO_DIGIT` | Constant | Reverse mapping (letter to digit) |
-| `PhoneResult` | Type | A ranked candidate with `text` and `score` |
+| `phoneToLetters(digit)`            | Function | Get the letters mapped to a phone digit (2-9)            |
+| `lettersToPhone(text)`             | Function | Convert text to phone digit sequence                     |
+| `PHONE_MAPPING`                    | Constant | Digit-to-letters mapping (2-9)                           |
+| `LETTER_TO_DIGIT`                  | Constant | Reverse mapping (letter to digit)                        |
+| `PhoneResult`                      | Type     | A ranked candidate with `text` and `score`               |
 
 ## `puzzle-lib/pigpen`
 

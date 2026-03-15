@@ -1,4 +1,4 @@
-import {scoreNextLetter, scoreUnigram} from '../ngrams/ngrams.js';
+import {scoreNextLetter} from '../ngrams/ngrams.js';
 import {LETTER_TO_DIGIT, PHONE_MAPPING} from './phone-mapping.js';
 
 export interface PhoneResult {
@@ -53,7 +53,7 @@ export function phoneToText(
   // Start with letters from the first digit, scored by unigram frequency
   let candidates: PhoneResult[] = phoneToLetters(validDigits[0]).map(ch => ({
     text: ch,
-    score: scoreUnigram(ch),
+    score: scoreNextLetter('', ch),
   }));
 
   // Expand one digit at a time with beam search
