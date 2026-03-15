@@ -2,6 +2,10 @@ import {BIGRAM_LOG_PROB, MIN_BIGRAM_LOG_PROB} from './bigrams.js';
 import {TRIGRAM_LOG_PROB, MIN_TRIGRAM_LOG_PROB} from './trigrams.js';
 import {UNIGRAM_LOG_PROB, MIN_UNIGRAM_LOG_PROB} from './unigrams.js';
 
+function isLetter(c: string): boolean {
+  return c >= 'a' && c <= 'z';
+}
+
 /**
  * Returns the unigram log-probability for a single letter.
  */
@@ -43,13 +47,27 @@ export function scoreNextLetter(context: string, letter: string): number {
 /**
  * Scores a complete text string by summing n-gram log-probabilities.
  * Uses unigram for the first character, bigram for the second,
- * and trigrams for all subsequent characters.
+ * and trigrams for all subsequent characters. Non-letter characters
+ * are skipped. Input is normalized to lowercase once before scoring.
  */
 export function scoreText(text: string): number {
-  if (text.length === 0) return 0;
-  let score = scoreUnigram(text[0]);
-  for (let i = 1; i < text.length; i++) {
-    score += scoreNextLetter(text.substring(0, i), text[i]);
+  const lower = text.toLowerCase();
+  const letters: string[] = [];
+  for (const c of lower) {
+    if (isLetter(c)) {
+      letters.push(c);
+    }
+  }
+  if (letters.length === 0) return 0;
+  let score = UNIGRAM_LOG_PROB[letters[0]] ?? MIN_UNIGRAM_LOG_PROB;
+  for (let i = 1; i < letters.length; i++) {
+    if (i >= 2) {
+      const key = letters[i - 2] + letters[i - 1] + letters[i];
+      score += TRIGRAM_LOG_PROB[key] ?? MIN_TRIGRAM_LOG_PROB;
+    } else {
+      const key = letters[i - 1] + letters[i];
+      score += BIGRAM_LOG_PROB[key] ?? MIN_BIGRAM_LOG_PROB;
+    }
   }
   return score;
 }
