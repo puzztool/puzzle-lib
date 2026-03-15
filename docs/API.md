@@ -180,6 +180,71 @@ import {getNavalFlag, NAVAL_FLAGS} from 'puzzle-lib/naval-flags';
 | `getNavalFlag(char)` | Function | Look up the naval flag for a letter |
 | `NAVAL_FLAGS`        | Constant | Array of all 26 naval flag entries  |
 
+## `puzzle-lib/ngrams`
+
+English letter n-gram frequency data and scoring functions. Data is derived
+from the Google Web Trillion Word Corpus (via Peter Norvig's analysis).
+
+```ts
+import {
+  scoreText,
+  scoreNextLetter,
+  scoreUnigram,
+  scoreBigram,
+  scoreTrigram,
+  UNIGRAM_LOG_PROB,
+} from 'puzzle-lib/ngrams';
+
+// Score how "English-like" a string is
+scoreText('hello'); // higher score = more English-like
+scoreText('xqzjk'); // lower score
+
+// Get log-probability of a letter
+UNIGRAM_LOG_PROB['e']; // most common English letter
+```
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `scoreText(text)` | Function | Score a string by English n-gram likelihood |
+| `scoreNextLetter(prev, prevPrev, letter)` | Function | Score a letter given previous context |
+| `scoreUnigram(letter)` | Function | Score a single letter by unigram frequency |
+| `scoreBigram(prev, letter)` | Function | Score a letter pair by bigram frequency |
+| `scoreTrigram(prevPrev, prev, letter)` | Function | Score a letter triple by trigram frequency |
+| `UNIGRAM_LOG_PROB` | Constant | Unigram log-probability table (a-z) |
+| `MIN_UNIGRAM_LOG_PROB` | Constant | Minimum unigram log-probability |
+| `BIGRAM_LOG_PROB` | Constant | Bigram log-probability table |
+| `MIN_BIGRAM_LOG_PROB` | Constant | Minimum bigram log-probability |
+| `TRIGRAM_LOG_PROB` | Constant | Trigram log-probability table (~17K entries) |
+| `MIN_TRIGRAM_LOG_PROB` | Constant | Minimum trigram log-probability |
+
+## `puzzle-lib/phone`
+
+Phone keypad (T9) to text conversion using beam search with n-gram scoring.
+
+```ts
+import {phoneToText, phoneToLetters, lettersToPhone} from 'puzzle-lib/phone';
+
+// Convert phone digits to ranked text candidates
+const results = phoneToText('4355');
+results[0].text; // 'HELL' (top candidate)
+results[0].score; // n-gram score
+
+// Get possible letters for a digit
+phoneToLetters('2'); // ['a', 'b', 'c']
+
+// Convert text back to phone digits
+lettersToPhone('hello'); // '43556'
+```
+
+| Export | Type | Description |
+| --- | --- | --- |
+| `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search |
+| `phoneToLetters(digit)` | Function | Get the letters mapped to a phone digit (2-9) |
+| `lettersToPhone(text)` | Function | Convert text to phone digit sequence |
+| `PHONE_MAPPING` | Constant | Digit-to-letters mapping (2-9) |
+| `LETTER_TO_DIGIT` | Constant | Reverse mapping (letter to digit) |
+| `PhoneResult` | Type | A ranked candidate with `text` and `score` |
+
 ## `puzzle-lib/pigpen`
 
 Pigpen cipher encoding, decoding, and segment manipulation.

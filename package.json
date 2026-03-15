@@ -44,9 +44,17 @@
       "types": "./build/src/word-search/index.d.ts",
       "default": "./build/src/word-search/index.js"
     },
-    "./pigpen": {
+"./pigpen": {
       "types": "./build/src/pigpen/index.d.ts",
       "default": "./build/src/pigpen/index.js"
+    },
+    "./ngrams": {
+      "types": "./build/src/ngrams/index.d.ts",
+      "default": "./build/src/ngrams/index.js"
+    },
+    "./phone": {
+      "types": "./build/src/phone/index.d.ts",
+      "default": "./build/src/phone/index.js"
     }
   },
   "files": [
