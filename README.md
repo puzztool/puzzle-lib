@@ -21,9 +21,9 @@ puzzle-lib uses [subpath exports](https://nodejs.org/api/packages.html#subpath-e
 so you import from the specific module you need:
 
 ```ts
-import { caesarRotations, vigenereEncrypt } from 'puzzle-lib/cipher';
-import { decodeMorse } from 'puzzle-lib/morse';
-import { convertString } from 'puzzle-lib/conversion';
+import {caesarRotations, vigenereEncrypt} from 'puzzle-lib/cipher';
+import {decodeMorse} from 'puzzle-lib/morse';
+import {convertString} from 'puzzle-lib/conversion';
 ```
 
 This enables tree-shaking — your bundler only includes the modules you
@@ -32,7 +32,7 @@ actually use.
 ### Quick examples
 
 ```ts
-import { caesarRotations, vigenereEncrypt } from 'puzzle-lib/cipher';
+import {caesarRotations, vigenereEncrypt} from 'puzzle-lib/cipher';
 
 // Get all 26 Caesar cipher rotations
 caesarRotations('hello');
@@ -42,14 +42,15 @@ vigenereEncrypt('hello', 'key'); // 'rijvs'
 ```
 
 ```ts
-import { decodeMorse } from 'puzzle-lib/morse';
+import {decodeMorse} from 'puzzle-lib/morse';
 
 // Decode morse code
 decodeMorse('.---- ..--- ...--'); // '123'
+decodeMorse('.... . .-.. .-.. --- / .-- --- .-. .-.. -..'); // 'HELLO WORLD'
 ```
 
 ```ts
-import { lookupBrailleEncoding } from 'puzzle-lib/braille';
+import {lookupBrailleEncoding} from 'puzzle-lib/braille';
 
 // Look up a braille encoding
 const result = lookupBrailleEncoding(0b101010);
@@ -57,18 +58,18 @@ const result = lookupBrailleEncoding(0b101010);
 
 ## Modules
 
-| Module | Import path | Description |
-| --- | --- | --- |
-| Braille | `puzzle-lib/braille` | Braille encoding/decoding |
-| Cipher | `puzzle-lib/cipher` | Caesar, Vigenère, and Autokey ciphers |
-| Common | `puzzle-lib/common` | Shared types (`EncodingCategory`, `CharacterImage`, etc.) |
-| Conversion | `puzzle-lib/conversion` | Character encoding conversion and ASCII/ordinal tables |
-| Morse | `puzzle-lib/morse` | Morse code encoding/decoding |
-| NATO | `puzzle-lib/nato` | NATO phonetic alphabet lookup |
-| Naval Flags | `puzzle-lib/naval-flags` | International naval signal flags |
-| Resistor | `puzzle-lib/resistor` | Resistor color code calculator |
-| Semaphore | `puzzle-lib/semaphore` | Flag semaphore encoding/decoding |
-| Word Search | `puzzle-lib/word-search` | Word search grid solver |
+| Module      | Import path              | Description                                               |
+| ----------- | ------------------------ | --------------------------------------------------------- |
+| Braille     | `puzzle-lib/braille`     | Braille encoding/decoding                                 |
+| Cipher      | `puzzle-lib/cipher`      | Caesar, Vigenère, and Autokey ciphers                     |
+| Common      | `puzzle-lib/common`      | Shared types (`EncodingCategory`, `CharacterImage`, etc.) |
+| Conversion  | `puzzle-lib/conversion`  | Character encoding conversion and ASCII/ordinal tables    |
+| Morse       | `puzzle-lib/morse`       | Morse code encoding/decoding                              |
+| NATO        | `puzzle-lib/nato`        | NATO phonetic alphabet lookup                             |
+| Naval Flags | `puzzle-lib/naval-flags` | International naval signal flags                          |
+| Resistor    | `puzzle-lib/resistor`    | Resistor color code calculator                            |
+| Semaphore   | `puzzle-lib/semaphore`   | Flag semaphore encoding/decoding                          |
+| Word Search | `puzzle-lib/word-search` | Word search grid solver                                   |
 
 See [docs/API.md](docs/API.md) for the full API reference.
 
