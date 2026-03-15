@@ -33,8 +33,8 @@ describe('Conversions', () => {
         CharacterEncoding.None,
       );
       expect(determineStringEncoding('')).toBe(CharacterEncoding.None);
-      // Hex tiebreaker: mix of hex (6c, 6f) and ascii (65, 72) tokens,
-      // but all are valid printable hex so hex wins
+      // Hex tiebreaker: mix of unambiguous hex (6c, 6f) and ambiguous
+      // all-digit tokens (48, 65), all are valid printable hex so hex wins
       expect(determineStringEncoding('48 65 6c 6c 6f')).toBe(
         CharacterEncoding.Hexadecimal,
       );
@@ -155,9 +155,10 @@ describe('Conversions', () => {
       expect(determineCharacterEncoding('4A')).toBe(
         CharacterEncoding.Hexadecimal,
       );
-      expect(determineCharacterEncoding('ff')).toBe(
-        CharacterEncoding.Hexadecimal,
-      );
+      // Purely alphabetic 2-char tokens are Latin, not hex
+      expect(determineCharacterEncoding('ab')).toBe(CharacterEncoding.Latin);
+      expect(determineCharacterEncoding('be')).toBe(CharacterEncoding.Latin);
+      expect(determineCharacterEncoding('ff')).toBe(CharacterEncoding.Latin);
       expect(determineCharacterEncoding('0a')).toBe(
         CharacterEncoding.Hexadecimal,
       );

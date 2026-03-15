@@ -34,8 +34,8 @@ function appearsHexPrintable(input: string): boolean {
  * Determines the character encoding of a single input token.
  */
 export function determineCharacterEncoding(input: string): CharacterEncoding {
-  // Unambiguous hex: 2 hex chars with at least one a-f letter
-  if (HEX_REGEX.test(input) && /[a-f]/i.test(input)) {
+  // Unambiguous hex: 2 hex chars with at least one a-f letter and at least one digit
+  if (HEX_REGEX.test(input) && /[a-f]/i.test(input) && /[0-9]/.test(input)) {
     return CharacterEncoding.Hexadecimal;
   }
 
@@ -179,14 +179,15 @@ export function determineStringEncoding(input: string): CharacterEncoding {
     }
   }
 
-  // Tiebreaker: if we have a mix of hex and decimal (Ascii/Ordinal),
-  // check if interpreting everything as hex produces more printable results.
+  // Tiebreaker: if we have a mix of hex and decimal (Ascii/Ordinal) and the
+  // most common encoding is a decimal type, check if interpreting everything
+  // as hex produces more printable results.
   const hasHex = encodingCount[CharacterEncoding.Hexadecimal] > 0;
-  const hasDecimal =
-    (encodingCount[CharacterEncoding.Ascii] ?? 0) > 0 ||
-    (encodingCount[CharacterEncoding.Ordinal] ?? 0) > 0;
+  const maxIsDecimal =
+    maxEncoding === CharacterEncoding.Ascii ||
+    maxEncoding === CharacterEncoding.Ordinal;
 
-  if (hasHex && hasDecimal) {
+  if (hasHex && maxIsDecimal) {
     const hexPrintable = parsed.filter(
       t =>
         appearsHexPrintable(t) &&
