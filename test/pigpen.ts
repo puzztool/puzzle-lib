@@ -113,6 +113,50 @@ describe('Pigpen', () => {
       );
       expect(result).toBe(PigpenEncoding.LetterJ);
     });
+
+    it('returns unchanged when adding intercardinal to cardinal', () => {
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.North,
+      );
+      const result = togglePigpenSegment(encoding, PigpenSegment.NorthEast);
+      expect(result).toBe(encoding);
+    });
+
+    it('returns unchanged when adding cardinal to intercardinal', () => {
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.NorthEast,
+      );
+      const result = togglePigpenSegment(encoding, PigpenSegment.North);
+      expect(result).toBe(encoding);
+    });
+
+    it('allows toggling off an incompatible segment', () => {
+      const result = togglePigpenSegment(
+        PigpenEncoding.LetterA,
+        PigpenSegment.East,
+      );
+      expect(result).not.toBe(PigpenEncoding.LetterA);
+    });
+
+    it('allows dot on cardinal encoding', () => {
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.North,
+      );
+      const result = togglePigpenSegment(encoding, PigpenSegment.Dot);
+      expect(result).not.toBe(encoding);
+    });
+
+    it('allows dot on intercardinal encoding', () => {
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.NorthEast,
+      );
+      const result = togglePigpenSegment(encoding, PigpenSegment.Dot);
+      expect(result).not.toBe(encoding);
+    });
   });
 
   describe('hasPigpenSegment', () => {

@@ -80,12 +80,17 @@ export function lookupPigpenEncoding(
 }
 
 /**
- * Toggles a segment flag in an encoding.
+ * Toggles a segment flag in an encoding. Returns the encoding unchanged
+ * if toggling the segment on would mix cardinal and intercardinal segments.
+ * Toggling a segment off or toggling the dot is always allowed.
  */
 export function togglePigpenSegment(
   encoding: PigpenEncoding,
   segment: PigpenSegment,
 ): PigpenEncoding {
+  if (!canTogglePigpenSegment(encoding, segment)) {
+    return encoding;
+  }
   return (encoding ^ segment) as PigpenEncoding;
 }
 
