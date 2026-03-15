@@ -101,6 +101,9 @@ export function convertCharacter(
 
   if (encoding === CharacterEncoding.Hexadecimal) {
     const hex = Number.parseInt(input, 16);
+    if (Number.isNaN(hex)) {
+      return '';
+    }
     return asciiPrintable(hex);
   }
 
