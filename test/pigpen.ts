@@ -228,19 +228,28 @@ describe('Pigpen', () => {
     });
 
     it('allows adding cardinal to existing cardinal', () => {
-      const encoding = PigpenSegment.North as PigpenEncoding;
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.North,
+      );
       expect(canTogglePigpenSegment(encoding, PigpenSegment.East)).toBe(true);
     });
 
     it('blocks intercardinal when cardinal is set', () => {
-      const encoding = PigpenSegment.North as PigpenEncoding;
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.North,
+      );
       expect(canTogglePigpenSegment(encoding, PigpenSegment.NorthEast)).toBe(
         false,
       );
     });
 
     it('blocks cardinal when intercardinal is set', () => {
-      const encoding = PigpenSegment.NorthEast as PigpenEncoding;
+      const encoding = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.NorthEast,
+      );
       expect(canTogglePigpenSegment(encoding, PigpenSegment.North)).toBe(false);
     });
 
@@ -251,8 +260,14 @@ describe('Pigpen', () => {
     });
 
     it('always allows dot', () => {
-      const cardinal = PigpenSegment.North as PigpenEncoding;
-      const intercardinal = PigpenSegment.NorthEast as PigpenEncoding;
+      const cardinal = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.North,
+      );
+      const intercardinal = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.NorthEast,
+      );
       expect(canTogglePigpenSegment(cardinal, PigpenSegment.Dot)).toBe(true);
       expect(canTogglePigpenSegment(intercardinal, PigpenSegment.Dot)).toBe(
         true,
