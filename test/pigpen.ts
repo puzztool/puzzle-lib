@@ -1,5 +1,6 @@
 import {describe, it, expect} from 'vitest';
 import {
+  canTogglePigpenSegment,
   decodePigpenStream,
   hasPigpenSegment,
   isCardinal,
@@ -210,6 +211,52 @@ describe('Pigpen', () => {
 
     it('returns empty for empty stream', () => {
       expect(decodePigpenStream([])).toBe('');
+    });
+  });
+
+  describe('canTogglePigpenSegment', () => {
+    it('allows cardinal segment on empty encoding', () => {
+      expect(
+        canTogglePigpenSegment(PigpenEncoding.None, PigpenSegment.North),
+      ).toBe(true);
+    });
+
+    it('allows intercardinal segment on empty encoding', () => {
+      expect(
+        canTogglePigpenSegment(PigpenEncoding.None, PigpenSegment.NorthEast),
+      ).toBe(true);
+    });
+
+    it('allows adding cardinal to existing cardinal', () => {
+      const encoding = PigpenSegment.North as PigpenEncoding;
+      expect(canTogglePigpenSegment(encoding, PigpenSegment.East)).toBe(true);
+    });
+
+    it('blocks intercardinal when cardinal is set', () => {
+      const encoding = PigpenSegment.North as PigpenEncoding;
+      expect(canTogglePigpenSegment(encoding, PigpenSegment.NorthEast)).toBe(
+        false,
+      );
+    });
+
+    it('blocks cardinal when intercardinal is set', () => {
+      const encoding = PigpenSegment.NorthEast as PigpenEncoding;
+      expect(canTogglePigpenSegment(encoding, PigpenSegment.North)).toBe(false);
+    });
+
+    it('always allows toggling off', () => {
+      expect(
+        canTogglePigpenSegment(PigpenEncoding.LetterA, PigpenSegment.East),
+      ).toBe(true);
+    });
+
+    it('always allows dot', () => {
+      const cardinal = PigpenSegment.North as PigpenEncoding;
+      const intercardinal = PigpenSegment.NorthEast as PigpenEncoding;
+      expect(canTogglePigpenSegment(cardinal, PigpenSegment.Dot)).toBe(true);
+      expect(canTogglePigpenSegment(intercardinal, PigpenSegment.Dot)).toBe(
+        true,
+      );
     });
   });
 });

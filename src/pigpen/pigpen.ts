@@ -114,6 +114,29 @@ export function isIntercardinal(encoding: PigpenEncoding): boolean {
 }
 
 /**
+ * Checks if a segment can be toggled without mixing cardinal and intercardinal
+ * segments. Toggling off and toggling the dot are always allowed.
+ */
+export function canTogglePigpenSegment(
+  encoding: PigpenEncoding,
+  segment: PigpenSegment,
+): boolean {
+  // Toggling off is always allowed
+  if (hasPigpenSegment(encoding, segment)) {
+    return true;
+  }
+  // Dot is always compatible
+  if (segment === PigpenSegment.Dot) {
+    return true;
+  }
+  const segmentIsCardinal = ((segment as number) & CARDINAL_MASK) !== 0;
+  if (segmentIsCardinal) {
+    return !isIntercardinal(encoding);
+  }
+  return !isCardinal(encoding);
+}
+
+/**
  * Decodes an array of pigpen encodings to a string.
  */
 export function decodePigpenStream(encodings: PigpenEncoding[]): string {

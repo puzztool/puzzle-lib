@@ -1,4 +1,5 @@
 export {
+  canTogglePigpenSegment,
   decodePigpenStream,
   hasPigpenSegment,
   isCardinal,

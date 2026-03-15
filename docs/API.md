@@ -219,6 +219,7 @@ decodePigpenStream([PigpenEncoding.LetterH, PigpenEncoding.LetterI]); // 'HI'
 | `lookupPigpenEncoding(encoding)`          | Function | Look up a character by its pigpen encoding     |
 | `decodePigpenStream(encodings)`           | Function | Decode an array of pigpen encodings to text    |
 | `togglePigpenSegment(encoding, segment)`  | Function | Toggle a segment flag in an encoding           |
+| `canTogglePigpenSegment(encoding, segment)` | Function | Check if a segment can be toggled without mixing cardinal/intercardinal |
 | `hasPigpenSegment(encoding, segment)`     | Function | Check if a segment flag is set                 |
 | `isCardinal(encoding)`                    | Function | Check if encoding uses cardinal (grid) segments |
 | `isIntercardinal(encoding)`               | Function | Check if encoding uses intercardinal (X) segments |
