@@ -190,8 +190,8 @@ bigram, and trigram frequency tables internally.
 import {scoreText, scoreNextLetter} from 'puzzle-lib/ngrams';
 
 // Score how "English-like" a string is (higher = more English-like)
-scoreText('hello'); // -5.29...
-scoreText('xqzjk'); // -27.05...
+scoreText('hello'); // higher score (more English-like)
+scoreText('xqzjk'); // lower score (less English-like)
 
 // Score a letter given preceding context
 scoreNextLetter('th', 'e'); // trigram score for "the"
