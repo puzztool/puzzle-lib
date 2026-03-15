@@ -134,8 +134,14 @@ export function canTogglePigpenSegment(
   if (segment === PigpenSegment.Dot) {
     return true;
   }
-  const segmentIsCardinal = ((segment as number) & CARDINAL_MASK) !== 0;
-  if (segmentIsCardinal) {
+  // Reject masks that mix cardinal and intercardinal bits
+  const segmentAsEncoding = segment as number as PigpenEncoding;
+  const segmentHasCardinal = isCardinal(segmentAsEncoding);
+  const segmentHasIntercardinal = isIntercardinal(segmentAsEncoding);
+  if (segmentHasCardinal && segmentHasIntercardinal) {
+    return false;
+  }
+  if (segmentHasCardinal) {
     return !isIntercardinal(encoding);
   }
   return !isCardinal(encoding);

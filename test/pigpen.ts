@@ -157,6 +157,13 @@ describe('Pigpen', () => {
       const result = togglePigpenSegment(encoding, PigpenSegment.Dot);
       expect(result).not.toBe(encoding);
     });
+
+    it('returns unchanged for combined mask with mixed bits', () => {
+      const mixed = (PigpenSegment.North |
+        PigpenSegment.NorthEast) as PigpenSegment;
+      const result = togglePigpenSegment(PigpenEncoding.None, mixed);
+      expect(result).toBe(PigpenEncoding.None);
+    });
   });
 
   describe('hasPigpenSegment', () => {
@@ -316,6 +323,12 @@ describe('Pigpen', () => {
       expect(canTogglePigpenSegment(intercardinal, PigpenSegment.Dot)).toBe(
         true,
       );
+    });
+
+    it('rejects combined mask with both cardinal and intercardinal bits', () => {
+      const mixed = (PigpenSegment.North |
+        PigpenSegment.NorthEast) as PigpenSegment;
+      expect(canTogglePigpenSegment(PigpenEncoding.None, mixed)).toBe(false);
     });
   });
 });
