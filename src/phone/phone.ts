@@ -38,7 +38,8 @@ export function lettersToPhone(text: string): string {
  * @returns Array of PhoneResult sorted by score (highest first)
  */
 export function phoneToText(digits: string, maxResults = 20): PhoneResult[] {
-  const beamWidth = Math.max(100, maxResults);
+  const clampedMax = Math.max(1, Math.min(Math.trunc(maxResults) || 1, 1000));
+  const beamWidth = Math.max(100, clampedMax);
   // Filter to valid digits with letter mappings
   const validDigits = digits.split('').filter(d => PHONE_MAPPING[d]);
 
@@ -72,5 +73,5 @@ export function phoneToText(digits: string, maxResults = 20): PhoneResult[] {
 
   // Final sort and trim
   candidates.sort((a, b) => b.score - a.score);
-  return candidates.slice(0, maxResults);
+  return candidates.slice(0, clampedMax);
 }

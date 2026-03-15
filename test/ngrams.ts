@@ -1,42 +1,25 @@
 import {describe, it, expect} from 'vitest';
 import {scoreNextLetter, scoreText} from '../src/ngrams/index.js';
-import {scoreBigram, scoreTrigram, scoreUnigram} from '../src/ngrams/ngrams.js';
 
-describe('scoreUnigram', () => {
-  it('returns a score for a valid letter', () => {
-    expect(scoreUnigram('e')).toBeGreaterThan(scoreUnigram('z'));
+describe('scoreNextLetter', () => {
+  it('scores common letter higher with no context', () => {
+    expect(scoreNextLetter('', 'e')).toBeGreaterThan(scoreNextLetter('', 'z'));
+  });
+
+  it('scores common bigram higher with one char context', () => {
+    expect(scoreNextLetter('t', 'h')).toBeGreaterThan(
+      scoreNextLetter('q', 'z'),
+    );
+  });
+
+  it('scores common trigram higher with two char context', () => {
+    expect(scoreNextLetter('th', 'e')).toBeGreaterThan(
+      scoreNextLetter('qz', 'x'),
+    );
   });
 
   it('handles uppercase input', () => {
-    expect(scoreUnigram('E')).toBe(scoreUnigram('e'));
-  });
-});
-
-describe('scoreBigram', () => {
-  it('common pair scores higher than uncommon', () => {
-    expect(scoreBigram('t', 'h')).toBeGreaterThan(scoreBigram('q', 'z'));
-  });
-});
-
-describe('scoreTrigram', () => {
-  it('common triple scores higher than uncommon', () => {
-    expect(scoreTrigram('t', 'h', 'e')).toBeGreaterThan(
-      scoreTrigram('q', 'z', 'x'),
-    );
-  });
-});
-
-describe('scoreNextLetter', () => {
-  it('uses unigram with no context', () => {
-    expect(scoreNextLetter('', 'e')).toBe(scoreUnigram('e'));
-  });
-
-  it('uses bigram with one char of context', () => {
-    expect(scoreNextLetter('t', 'h')).toBe(scoreBigram('t', 'h'));
-  });
-
-  it('uses trigram with two+ chars of context', () => {
-    expect(scoreNextLetter('th', 'e')).toBe(scoreTrigram('t', 'h', 'e'));
+    expect(scoreNextLetter('', 'E')).toBe(scoreNextLetter('', 'e'));
   });
 });
 

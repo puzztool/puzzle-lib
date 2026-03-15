@@ -9,14 +9,14 @@ function isLetter(c: string): boolean {
 /**
  * Returns the unigram log-probability for a single letter.
  */
-export function scoreUnigram(a: string): number {
+function scoreUnigram(a: string): number {
   return UNIGRAM_LOG_PROB[a.toLowerCase()] ?? MIN_UNIGRAM_LOG_PROB;
 }
 
 /**
  * Returns the bigram log-probability for a pair of letters.
  */
-export function scoreBigram(a: string, b: string): number {
+function scoreBigram(a: string, b: string): number {
   const key = (a + b).toLowerCase();
   return BIGRAM_LOG_PROB[key] ?? MIN_BIGRAM_LOG_PROB;
 }
@@ -24,7 +24,7 @@ export function scoreBigram(a: string, b: string): number {
 /**
  * Returns the trigram log-probability for three letters.
  */
-export function scoreTrigram(a: string, b: string, c: string): number {
+function scoreTrigram(a: string, b: string, c: string): number {
   const key = (a + b + c).toLowerCase();
   return TRIGRAM_LOG_PROB[key] ?? MIN_TRIGRAM_LOG_PROB;
 }
