@@ -180,6 +180,56 @@ import {getNavalFlag, NAVAL_FLAGS} from 'puzzle-lib/naval-flags';
 | `getNavalFlag(char)` | Function | Look up the naval flag for a letter |
 | `NAVAL_FLAGS`        | Constant | Array of all 26 naval flag entries  |
 
+## `puzzle-lib/ngrams`
+
+English letter n-gram scoring functions. Data is derived from the Google
+Web Trillion Word Corpus (via Peter Norvig's analysis). Uses unigram,
+bigram, and trigram frequency tables internally.
+
+```ts
+import {scoreText, scoreNextLetter} from 'puzzle-lib/ngrams';
+
+// Score how "English-like" a string is (higher = more English-like)
+scoreText('hello'); // higher score (more English-like)
+scoreText('xqzjk'); // lower score (less English-like)
+
+// Score a letter given preceding context
+scoreNextLetter('th', 'e'); // trigram score for "the"
+scoreNextLetter('t', 'h'); // bigram score for "th"
+scoreNextLetter('', 'e'); // unigram score for "e"
+```
+
+| Export                             | Type     | Description                                                                                  |
+| ---------------------------------- | -------- | -------------------------------------------------------------------------------------------- |
+| `scoreText(text)`                  | Function | Score a string by English n-gram likelihood. Non-letter characters are skipped.              |
+| `scoreNextLetter(context, letter)` | Function | Score a letter given preceding context (uses trigram/bigram/unigram based on context length) |
+
+## `puzzle-lib/phone`
+
+Phone keypad (T9) to text conversion using beam search with n-gram scoring.
+
+```ts
+import {phoneToText, phoneToLetters, lettersToPhone} from 'puzzle-lib/phone';
+
+// Convert phone digits to ranked text candidates
+const results = phoneToText('4355');
+results[0].text; // 'hell' (top candidate)
+results[0].score; // n-gram score
+
+// Get possible letters for a digit
+phoneToLetters('2'); // ['a', 'b', 'c']
+
+// Convert text back to phone digits
+lettersToPhone('hello'); // '43556'
+```
+
+| Export                             | Type     | Description                                                                                                        |
+| ---------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------ |
+| `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search. `maxResults` defaults to 20 and is clamped to [1, 1000]. |
+| `phoneToLetters(digit)`            | Function | Get the letters mapped to a phone digit (2-9)                                                                      |
+| `lettersToPhone(text)`             | Function | Convert text to phone digit sequence                                                                               |
+| `PhoneResult`                      | Type     | A ranked candidate with `text` and `score`                                                                         |
+
 ## `puzzle-lib/pigpen`
 
 Pigpen cipher encoding, decoding, and segment manipulation.
