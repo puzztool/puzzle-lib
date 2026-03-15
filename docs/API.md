@@ -180,6 +180,56 @@ import {getNavalFlag, NAVAL_FLAGS} from 'puzzle-lib/naval-flags';
 | `getNavalFlag(char)` | Function | Look up the naval flag for a letter |
 | `NAVAL_FLAGS`        | Constant | Array of all 26 naval flag entries  |
 
+## `puzzle-lib/pigpen`
+
+Pigpen cipher encoding, decoding, and segment manipulation.
+
+Pigpen uses two grids: cardinal (tic-tac-toe shape, letters A-R) and
+intercardinal (X shape, letters S-Z). Encodings are bitmasks of
+`PigpenSegment` values. A dot flag distinguishes the second set of
+letters in each grid (J-R, W-Z).
+
+```ts
+import {
+  canTogglePigpenSegment,
+  decodePigpenStream,
+  hasPigpenSegment,
+  isCardinal,
+  isIntercardinal,
+  lookupPigpenEncoding,
+  PigpenEncoding,
+  PigpenSegment,
+  togglePigpenSegment,
+} from 'puzzle-lib/pigpen';
+
+// Look up a letter by its encoding
+lookupPigpenEncoding(PigpenEncoding.LetterA).exactString; // 'A'
+
+// Toggle segments to build an encoding interactively
+let encoding = PigpenEncoding.None;
+encoding = togglePigpenSegment(encoding, PigpenSegment.East);
+encoding = togglePigpenSegment(encoding, PigpenSegment.South);
+lookupPigpenEncoding(encoding).exactString; // 'A'
+
+// Check if a segment can be toggled (prevents mixing cardinal/intercardinal)
+canTogglePigpenSegment(encoding, PigpenSegment.NorthEast); // false (cardinal already set)
+
+// Decode a stream of encodings
+decodePigpenStream([PigpenEncoding.LetterH, PigpenEncoding.LetterI]); // 'HI'
+```
+
+| Export                                      | Type     | Description                                                                     |
+| ------------------------------------------- | -------- | ------------------------------------------------------------------------------- |
+| `lookupPigpenEncoding(encoding)`            | Function | Look up a character by its pigpen encoding                                      |
+| `decodePigpenStream(encodings)`             | Function | Decode an array of pigpen encodings to text                                     |
+| `togglePigpenSegment(encoding, segment)`    | Function | Toggle a segment flag; returns unchanged if it would mix cardinal/intercardinal |
+| `canTogglePigpenSegment(encoding, segment)` | Function | Check if a segment can be toggled without mixing cardinal/intercardinal         |
+| `hasPigpenSegment(encoding, segment)`       | Function | Check if a segment flag is set                                                  |
+| `isCardinal(encoding)`                      | Function | Check if encoding uses cardinal (grid) segments                                 |
+| `isIntercardinal(encoding)`                 | Function | Check if encoding uses intercardinal (X) segments                               |
+| `PigpenEncoding`                            | Enum     | Named pigpen encodings for all 26 letters                                       |
+| `PigpenSegment`                             | Enum     | Individual segment flags (North, East, Dot, etc.)                               |
+
 ## `puzzle-lib/resistor`
 
 Resistor color code calculator.

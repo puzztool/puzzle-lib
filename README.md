@@ -67,6 +67,7 @@ const result = lookupBrailleEncoding(0b101010);
 | Morse       | `puzzle-lib/morse`       | Morse code encoding/decoding                              |
 | NATO        | `puzzle-lib/nato`        | NATO phonetic alphabet lookup                             |
 | Naval Flags | `puzzle-lib/naval-flags` | International naval signal flags                          |
+| Pigpen      | `puzzle-lib/pigpen`      | Pigpen cipher encoding/decoding                           |
 | Resistor    | `puzzle-lib/resistor`    | Resistor color code calculator                            |
 | Semaphore   | `puzzle-lib/semaphore`   | Flag semaphore encoding/decoding                          |
 | Word Search | `puzzle-lib/word-search` | Word search grid solver                                   |

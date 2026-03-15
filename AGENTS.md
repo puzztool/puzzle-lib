@@ -35,18 +35,52 @@ When adding or changing any public API (new exports, renamed functions, changed 
 
 ## Project Structure
 
-- `src/` — Library source code
-  - `src/Conversion/` — Number/letter encoding conversions (ASCII, binary, ordinal, ternary)
-  - `src/Cipher/` — Cipher implementations (Caesar, Vigenere, Autokey)
-  - `src/Braille/` — Braille encoding/decoding
-  - `src/Morse/` — Morse code encoding/decoding
-  - `src/Semaphore/` — Semaphore flag encoding/decoding
-  - `src/WordSearch/` — Word search grid solver
+- `src/` — Library source code, organized by module (kebab-case directories)
+  - `src/braille/` — Braille encoding/decoding
+  - `src/cipher/` — Cipher implementations (Caesar, Vigenère, Autokey)
+  - `src/common/` — Shared types (EncodingCategory, EncodingEntry, etc.)
+  - `src/conversion/` — Number/letter encoding conversions (ASCII, binary, ordinal, ternary)
+  - `src/morse/` — Morse code encoding/decoding
+  - `src/nato/` — NATO phonetic alphabet
+  - `src/naval-flags/` — International naval signal flags
+  - `src/pigpen/` — Pigpen cipher encoding/decoding
+  - `src/resistor/` — Resistor color code calculator
+  - `src/semaphore/` — Semaphore flag encoding/decoding
+  - `src/word-search/` — Word search grid solver
 - `test/` — Test files (one per module, using Vitest)
-- `src/index.ts` — Public API exports
+- `docs/API.md` — Full API reference
 
 ## Code Style
 
 - Uses [Google TypeScript Style (gts)](https://github.com/google/gts)
 - Prettier formatting is enforced via `gts lint`
-- All public APIs are exported from `src/index.ts`
+- File and folder names under `src/` and `test/` must be **kebab-case** (enforced by `eslint-plugin-check-file`)
+
+## Module Structure (ESM)
+
+This project uses ES modules (`"type": "module"` in `package.json`) with
+[subpath exports](https://nodejs.org/api/packages.html#subpath-exports).
+There is no root entry point — each module is imported independently
+(e.g., `import { decodeMorse } from 'puzzle-lib/morse'`).
+
+**Key conventions:**
+
+- Each module lives in its own kebab-case directory under `src/` (e.g., `src/morse/`)
+- Each module has a barrel export file `index.ts` that re-exports its public API
+- Internal imports between source files use `.js` extensions (e.g., `import {Foo} from './bar.js'`) — this is required for ESM compatibility with TypeScript
+- Tests import from the module's `index.js` (e.g., `from '../src/morse/index.js'`), not from a root entry point
+
+## Adding a New Module
+
+1. Create a kebab-case directory under `src/` (e.g., `src/my-module/`)
+2. Add source files with kebab-case names
+3. Create `src/my-module/index.ts` as the barrel export
+4. Add a subpath export entry in `package.json` under `"exports"`:
+   ```json
+   "./my-module": {
+     "types": "./build/src/my-module/index.d.ts",
+     "default": "./build/src/my-module/index.js"
+   }
+   ```
+5. Add tests in `test/my-module.ts`, importing from `'../src/my-module/index.js'`
+6. Update `README.md` (add to the Modules table) and `docs/API.md` (add a section with imports, signatures, and examples)
