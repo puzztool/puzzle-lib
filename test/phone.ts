@@ -1,10 +1,10 @@
 import {describe, it, expect} from 'vitest';
+import {PHONE_MAPPING} from '../src/phone/phone-mapping.js';
 import {
-  PHONE_MAPPING,
   lettersToPhone,
   phoneToLetters,
   phoneToText,
-} from '../src/phone/index.js';
+} from '../src/phone/phone.js';
 
 describe('Phone', () => {
   describe('PHONE_MAPPING', () => {

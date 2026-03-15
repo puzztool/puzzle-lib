@@ -228,8 +228,6 @@ lettersToPhone('hello'); // '43556'
 | `phoneToText(digits, maxResults?)` | Function | Convert digits to ranked text candidates via beam search |
 | `phoneToLetters(digit)`            | Function | Get the letters mapped to a phone digit (2-9)            |
 | `lettersToPhone(text)`             | Function | Convert text to phone digit sequence                     |
-| `PHONE_MAPPING`                    | Constant | Digit-to-letters mapping (2-9)                           |
-| `LETTER_TO_DIGIT`                  | Constant | Reverse mapping (letter to digit)                        |
 | `PhoneResult`                      | Type     | A ranked candidate with `text` and `score`               |
 
 ## `puzzle-lib/pigpen`
