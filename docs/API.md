@@ -191,6 +191,7 @@ letters in each grid (J-R, W-Z).
 
 ```ts
 import {
+  canTogglePigpenSegment,
   decodePigpenStream,
   hasPigpenSegment,
   isCardinal,
@@ -209,6 +210,9 @@ let encoding = PigpenEncoding.None;
 encoding = togglePigpenSegment(encoding, PigpenSegment.East);
 encoding = togglePigpenSegment(encoding, PigpenSegment.South);
 lookupPigpenEncoding(encoding).exactString; // 'A'
+
+// Check if a segment can be toggled (prevents mixing cardinal/intercardinal)
+canTogglePigpenSegment(encoding, PigpenSegment.NorthEast); // false (cardinal already set)
 
 // Decode a stream of encodings
 decodePigpenStream([PigpenEncoding.LetterH, PigpenEncoding.LetterI]); // 'HI'
