@@ -28,6 +28,11 @@ npm test
 
 `gts lint` enforces both ESLint rules and Prettier formatting. CI runs `npm run lint` separately from tests, so formatting issues will cause CI failures even if tests pass. Running `npm run fix` first will auto-correct most issues.
 
+When adding or changing any public API (new exports, renamed functions, changed signatures), update the following documentation:
+
+- `README.md` — Add or update usage examples in the "Quick Start" section
+- `docs/API.md` — Add or update the relevant module section with imports, function signatures, and examples
+
 ## Project Structure
 
 - `src/` — Library source code
