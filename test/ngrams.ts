@@ -1,11 +1,6 @@
 import {describe, it, expect} from 'vitest';
-import {
-  scoreBigram,
-  scoreNextLetter,
-  scoreText,
-  scoreTrigram,
-  scoreUnigram,
-} from '../src/ngrams/ngrams.js';
+import {scoreNextLetter, scoreText} from '../src/ngrams/index.js';
+import {scoreBigram, scoreTrigram, scoreUnigram} from '../src/ngrams/ngrams.js';
 
 describe('scoreUnigram', () => {
   it('returns a score for a valid letter', () => {

@@ -1,29 +1,17 @@
 import {describe, it, expect} from 'vitest';
-import {PHONE_MAPPING} from '../src/phone/phone-mapping.js';
 import {
   lettersToPhone,
   phoneToLetters,
   phoneToText,
-} from '../src/phone/phone.js';
+} from '../src/phone/index.js';
 
 describe('Phone', () => {
-  describe('PHONE_MAPPING', () => {
-    it('maps digits 2-9 to letters', () => {
-      expect(PHONE_MAPPING['2']).toEqual(['a', 'b', 'c']);
-      expect(PHONE_MAPPING['7']).toEqual(['p', 'q', 'r', 's']);
-      expect(PHONE_MAPPING['9']).toEqual(['w', 'x', 'y', 'z']);
-    });
-
-    it('has no mapping for 0 and 1', () => {
-      expect(PHONE_MAPPING['0']).toBeUndefined();
-      expect(PHONE_MAPPING['1']).toBeUndefined();
-    });
-  });
-
   describe('phoneToLetters', () => {
     it('returns letters for valid digits', () => {
       expect(phoneToLetters('2')).toEqual(['a', 'b', 'c']);
+      expect(phoneToLetters('7')).toEqual(['p', 'q', 'r', 's']);
       expect(phoneToLetters('8')).toEqual(['t', 'u', 'v']);
+      expect(phoneToLetters('9')).toEqual(['w', 'x', 'y', 'z']);
     });
 
     it('returns empty for invalid digits', () => {
