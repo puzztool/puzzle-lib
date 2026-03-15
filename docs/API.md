@@ -213,7 +213,7 @@ import {phoneToText, phoneToLetters, lettersToPhone} from 'puzzle-lib/phone';
 
 // Convert phone digits to ranked text candidates
 const results = phoneToText('4355');
-results[0].text; // 'HELL' (top candidate)
+results[0].text; // 'hell' (top candidate)
 results[0].score; // n-gram score
 
 // Get possible letters for a digit

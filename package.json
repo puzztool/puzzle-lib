@@ -44,7 +44,7 @@
       "types": "./build/src/word-search/index.d.ts",
       "default": "./build/src/word-search/index.js"
     },
-"./pigpen": {
+    "./pigpen": {
       "types": "./build/src/pigpen/index.d.ts",
       "default": "./build/src/pigpen/index.js"
     },
