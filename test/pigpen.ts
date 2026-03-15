@@ -67,9 +67,11 @@ describe('Pigpen', () => {
     it('partial match for incomplete encoding', () => {
       // Just the South segment matches A (E,S), B (W,E,S), C (W,S),
       // D (N,E,S), E (N,E,S,W), F (N,W,S), and dotted variants
-      const result = lookupPigpenEncoding(
-        PigpenSegment.South as unknown as PigpenEncoding,
+      const southOnly = togglePigpenSegment(
+        PigpenEncoding.None,
+        PigpenSegment.South,
       );
+      const result = lookupPigpenEncoding(southOnly);
       expect(result.exact.length).toBe(0);
       expect(result.partial.length).toBeGreaterThan(0);
       const partialLetters = result.partial.map(e => e.display).sort();
@@ -78,7 +80,7 @@ describe('Pigpen', () => {
       expect(partialLetters).toContain('J');
     });
 
-    it('no match for empty encoding', () => {
+    it('all letters are partial matches for empty encoding', () => {
       const result = lookupPigpenEncoding(PigpenEncoding.None);
       expect(result.exact.length).toBe(0);
       // All entries are partial matches of None
