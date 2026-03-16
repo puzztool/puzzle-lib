@@ -56,6 +56,22 @@ export const RESISTOR_COLOR_TABLE: readonly ResistorColor[] = [
   },
 ] as const;
 
+/** Named resistor color constants for self-documenting band selection. */
+export const ResistorColors = {
+  Black: RESISTOR_COLOR_TABLE[0],
+  Brown: RESISTOR_COLOR_TABLE[1],
+  Red: RESISTOR_COLOR_TABLE[2],
+  Orange: RESISTOR_COLOR_TABLE[3],
+  Yellow: RESISTOR_COLOR_TABLE[4],
+  Green: RESISTOR_COLOR_TABLE[5],
+  Blue: RESISTOR_COLOR_TABLE[6],
+  Violet: RESISTOR_COLOR_TABLE[7],
+  Grey: RESISTOR_COLOR_TABLE[8],
+  White: RESISTOR_COLOR_TABLE[9],
+  Gold: RESISTOR_COLOR_TABLE[10],
+  Silver: RESISTOR_COLOR_TABLE[11],
+} as const;
+
 export const INVALID_RESISTOR = -1;
 
 function applyMultiplier(value: number, multiplier: number): number {

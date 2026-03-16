@@ -2,31 +2,27 @@ import {describe, it, expect} from 'vitest';
 import {
   RESISTOR_COLOR_TABLE,
   INVALID_RESISTOR,
+  ResistorColors,
   getResistorValue,
   getResistorDisplayValue,
   hasResistorValue,
   hasResistorTolerance,
 } from '../src/resistor/index.js';
 
-// Helper to look up colors by name
-function color(name: string) {
-  const entry = RESISTOR_COLOR_TABLE.find(c => c.name === name);
-  if (!entry) throw new Error(`Unknown color: ${name}`);
-  return entry;
-}
-
-const BLACK = color('Black');
-const BROWN = color('Brown');
-const RED = color('Red');
-const ORANGE = color('Orange');
-const YELLOW = color('Yellow');
-const GREEN = color('Green');
-const BLUE = color('Blue');
-const VIOLET = color('Violet');
-const GREY = color('Grey');
-const WHITE = color('White');
-const GOLD = color('Gold');
-const SILVER = color('Silver');
+const {
+  Black: BLACK,
+  Brown: BROWN,
+  Red: RED,
+  Orange: ORANGE,
+  Yellow: YELLOW,
+  Green: GREEN,
+  Blue: BLUE,
+  Violet: VIOLET,
+  Grey: GREY,
+  White: WHITE,
+  Gold: GOLD,
+  Silver: SILVER,
+} = ResistorColors;
 
 describe('Resistor', () => {
   it('Valid 3 Color Resistors', () => {
@@ -94,5 +90,20 @@ describe('Resistor', () => {
     expect(getResistorDisplayValue(1200)).toBe('1.2k');
     expect(getResistorDisplayValue(30000000)).toBe('30M');
     expect(getResistorDisplayValue(45900000000)).toBe('45.9G');
+  });
+
+  it('ResistorColors matches RESISTOR_COLOR_TABLE entries', () => {
+    expect(ResistorColors.Black).toBe(RESISTOR_COLOR_TABLE[0]);
+    expect(ResistorColors.Brown).toBe(RESISTOR_COLOR_TABLE[1]);
+    expect(ResistorColors.Red).toBe(RESISTOR_COLOR_TABLE[2]);
+    expect(ResistorColors.Orange).toBe(RESISTOR_COLOR_TABLE[3]);
+    expect(ResistorColors.Yellow).toBe(RESISTOR_COLOR_TABLE[4]);
+    expect(ResistorColors.Green).toBe(RESISTOR_COLOR_TABLE[5]);
+    expect(ResistorColors.Blue).toBe(RESISTOR_COLOR_TABLE[6]);
+    expect(ResistorColors.Violet).toBe(RESISTOR_COLOR_TABLE[7]);
+    expect(ResistorColors.Grey).toBe(RESISTOR_COLOR_TABLE[8]);
+    expect(ResistorColors.White).toBe(RESISTOR_COLOR_TABLE[9]);
+    expect(ResistorColors.Gold).toBe(RESISTOR_COLOR_TABLE[10]);
+    expect(ResistorColors.Silver).toBe(RESISTOR_COLOR_TABLE[11]);
   });
 });
