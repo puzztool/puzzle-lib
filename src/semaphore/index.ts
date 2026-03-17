@@ -1,6 +1,7 @@
 export {
   addSemaphoreDirection,
   decodeSemaphoreStream,
+  encodeSemaphoreStream,
   degreesToSemaphoreDirection,
   directionsToEncoding,
   getEncodingDegrees,

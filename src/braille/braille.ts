@@ -150,6 +150,20 @@ export function getBrailleDot(
 }
 
 /**
+ * Encodes plain text to an array of braille encodings.
+ * Unknown characters map to BrailleEncoding.None.
+ */
+export function encodeBrailleStream(text: string): BrailleEncoding[] {
+  return text
+    .toUpperCase()
+    .split('')
+    .map(ch => {
+      const entry = BRAILLE_ENTRIES.find(e => e.display === ch);
+      return entry ? entry.encoding : BrailleEncoding.None;
+    });
+}
+
+/**
  * Decodes an array of braille encodings to a string, handling number mode.
  */
 export function decodeBrailleStream(encodings: BrailleEncoding[]): string {

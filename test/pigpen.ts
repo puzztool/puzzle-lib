@@ -2,6 +2,7 @@ import {describe, it, expect} from 'vitest';
 import {
   canTogglePigpenSegment,
   decodePigpenStream,
+  encodePigpenStream,
   hasPigpenSegment,
   isCardinal,
   isIntercardinal,
@@ -262,6 +263,35 @@ describe('Pigpen', () => {
 
     it('returns empty for empty stream', () => {
       expect(decodePigpenStream([])).toBe('');
+    });
+  });
+
+  describe('encodePigpenStream', () => {
+    it('basic encoding', () => {
+      expect(encodePigpenStream('ABC')).toEqual([
+        PigpenEncoding.LetterA,
+        PigpenEncoding.LetterB,
+        PigpenEncoding.LetterC,
+      ]);
+    });
+
+    it('unknown character becomes None', () => {
+      expect(encodePigpenStream('A1B')).toEqual([
+        PigpenEncoding.LetterA,
+        PigpenEncoding.None,
+        PigpenEncoding.LetterB,
+      ]);
+    });
+
+    it('round-trips with decodePigpenStream', () => {
+      const original = [
+        PigpenEncoding.LetterH,
+        PigpenEncoding.LetterE,
+        PigpenEncoding.LetterL,
+        PigpenEncoding.LetterL,
+        PigpenEncoding.LetterO,
+      ];
+      expect(encodePigpenStream(decodePigpenStream(original))).toEqual(original);
     });
   });
 

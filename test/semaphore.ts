@@ -2,6 +2,7 @@ import {describe, it, expect} from 'vitest';
 import {
   addSemaphoreDirection,
   decodeSemaphoreStream,
+  encodeSemaphoreStream,
   degreesToSemaphoreDirection,
   directionsToEncoding,
   getEncodingDegrees,
@@ -188,6 +189,22 @@ describe('Semaphore', () => {
         SemaphoreEncoding.LetterB,
       ]);
       expect(result).toBe('A B');
+    });
+
+    it('encodeSemaphoreStream basic', () => {
+      expect(encodeSemaphoreStream('ABC')).toEqual([
+        SemaphoreEncoding.LetterA,
+        SemaphoreEncoding.LetterB,
+        SemaphoreEncoding.LetterC,
+      ]);
+    });
+
+    it('encodeSemaphoreStream unknown character becomes None', () => {
+      expect(encodeSemaphoreStream('A~B')).toEqual([
+        SemaphoreEncoding.LetterA,
+        SemaphoreEncoding.None,
+        SemaphoreEncoding.LetterB,
+      ]);
     });
 
     it('decodeSemaphoreStream with number mode', () => {

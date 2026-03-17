@@ -223,6 +223,20 @@ export function getEncodingDegrees(
 }
 
 /**
+ * Encodes plain text to an array of semaphore encodings.
+ * Unknown characters map to SemaphoreEncoding.None.
+ */
+export function encodeSemaphoreStream(text: string): SemaphoreEncoding[] {
+  return text
+    .toUpperCase()
+    .split('')
+    .map(ch => {
+      const entry = SEMAPHORE_ENTRIES.find(e => e.display === ch);
+      return entry ? entry.encoding : SemaphoreEncoding.None;
+    });
+}
+
+/**
  * Decodes an array of semaphore encodings to a string, handling number mode.
  */
 export function decodeSemaphoreStream(encodings: SemaphoreEncoding[]): string {

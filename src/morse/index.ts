@@ -1,5 +1,6 @@
 export {
   decodeMorse,
+  encodeMorse,
   invertAndReverseMorse,
   invertMorse,
   lookupMorseEncoding,

@@ -1,6 +1,7 @@
 import {describe, it, expect} from 'vitest';
 import {
   decodeMorse,
+  encodeMorse,
   invertMorse,
   reverseMorse,
   invertAndReverseMorse,
@@ -116,6 +117,31 @@ describe('Morse', () => {
   describe('invertAndReverseMorse', () => {
     it('Basic', () => {
       expect(invertAndReverseMorse('. .- --. -')).toBe('EDAT');
+    });
+  });
+
+  describe('encodeMorse', () => {
+    it('SOS', () => {
+      expect(encodeMorse('SOS')).toBe('... --- ...');
+    });
+
+    it('multi-word', () => {
+      expect(encodeMorse('HELLO WORLD')).toBe(
+        '.... . .-.. .-.. ---/.-- --- .-. .-.. -..',
+      );
+    });
+
+    it('unknown character becomes ?', () => {
+      expect(encodeMorse('A~B')).toBe('.- ? -...');
+    });
+
+    it('round-trips with decodeMorse', () => {
+      const original = 'THE QUICK BROWN FOX';
+      expect(decodeMorse(encodeMorse(original))).toBe(original);
+    });
+
+    it('custom dividers', () => {
+      expect(encodeMorse('SOS', '|', '+')).toBe('...|---|...');
     });
   });
 
