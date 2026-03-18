@@ -291,7 +291,9 @@ describe('Pigpen', () => {
         PigpenEncoding.LetterL,
         PigpenEncoding.LetterO,
       ];
-      expect(encodePigpenStream(decodePigpenStream(original))).toEqual(original);
+      expect(encodePigpenStream(decodePigpenStream(original))).toEqual(
+        original,
+      );
     });
   });
 
