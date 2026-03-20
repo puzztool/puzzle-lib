@@ -148,6 +148,20 @@ export function canTogglePigpenSegment(
 }
 
 /**
+ * Encodes plain text to an array of pigpen encodings.
+ * Unknown characters map to PigpenEncoding.None.
+ */
+export function encodePigpenStream(text: string): PigpenEncoding[] {
+  return text
+    .toUpperCase()
+    .split('')
+    .map(ch => {
+      const entry = PIGPEN_ENTRIES.find(e => e.display === ch);
+      return entry ? entry.encoding : PigpenEncoding.None;
+    });
+}
+
+/**
  * Decodes an array of pigpen encodings to a string.
  */
 export function decodePigpenStream(encodings: PigpenEncoding[]): string {

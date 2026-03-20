@@ -292,6 +292,29 @@ export function reverseMorse(
 }
 
 /**
+ * Encodes plain text to a morse string.
+ */
+export function encodeMorse(
+  text: string,
+  characterDivider = MORSE_CHARACTER_DIVIDER,
+  wordDivider = MORSE_WORD_DIVIDER,
+): string {
+  validateDividers(characterDivider, wordDivider);
+  const words = text.toUpperCase().split(' ');
+  return words
+    .map(word =>
+      word
+        .split('')
+        .map(ch => {
+          const entry = MORSE_ENTRIES.find(e => e.display === ch);
+          return entry ? morseEncodingToString(entry.encoding) : '?';
+        })
+        .join(characterDivider),
+    )
+    .join(wordDivider);
+}
+
+/**
  * Inverts dots/dashes and reverses a morse string, then decodes.
  */
 export function invertAndReverseMorse(

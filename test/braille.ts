@@ -3,6 +3,7 @@ import {EncodingCategory} from '../src/common/index.js';
 import {
   BrailleDot,
   BrailleEncoding,
+  encodeBrailleStream,
   lookupBrailleEncoding,
   toggleBrailleDot,
   getBrailleDot,
@@ -134,6 +135,22 @@ describe('Braille', () => {
       encodings.push(BrailleEncoding.None);
       encodings.push(BrailleEncoding.LetterD);
       expect(decodeBrailleStream(encodings)).toBe('#123 D');
+    });
+
+    it('encodeBrailleStream basic', () => {
+      expect(encodeBrailleStream('ABC')).toEqual([
+        BrailleEncoding.LetterA,
+        BrailleEncoding.LetterB,
+        BrailleEncoding.LetterC,
+      ]);
+    });
+
+    it('encodeBrailleStream unknown character becomes None', () => {
+      expect(encodeBrailleStream('A~B')).toEqual([
+        BrailleEncoding.LetterA,
+        BrailleEncoding.None,
+        BrailleEncoding.LetterB,
+      ]);
     });
 
     it('copy independence', () => {

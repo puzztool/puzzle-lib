@@ -1,6 +1,7 @@
 export {
   canTogglePigpenSegment,
   decodePigpenStream,
+  encodePigpenStream,
   hasPigpenSegment,
   isCardinal,
   isIntercardinal,

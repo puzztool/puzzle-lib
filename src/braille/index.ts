@@ -1,5 +1,6 @@
 export {
   decodeBrailleStream,
+  encodeBrailleStream,
   getBrailleDot,
   lookupBrailleEncoding,
   toggleBrailleDot,
