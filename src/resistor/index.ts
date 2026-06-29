@@ -5,5 +5,6 @@ export {
   hasResistorValue,
   INVALID_RESISTOR,
   RESISTOR_COLOR_TABLE,
+  ResistorColors,
 } from './resistor.js';
 export type {ResistorColor} from './resistor.js';

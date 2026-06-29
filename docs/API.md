@@ -288,18 +288,14 @@ Resistor color code calculator.
 import {
   getResistorDisplayValue,
   getResistorValue,
-  hasResistorTolerance,
-  hasResistorValue,
-  INVALID_RESISTOR,
-  RESISTOR_COLOR_TABLE,
+  ResistorColors,
 } from 'puzzle-lib/resistor';
-import type {ResistorColor} from 'puzzle-lib/resistor';
 
-// Calculate resistance from color bands
+// Calculate resistance from color bands using named constants
 const value = getResistorValue([
-  RESISTOR_COLOR_TABLE[4], // Yellow
-  RESISTOR_COLOR_TABLE[7], // Violet
-  RESISTOR_COLOR_TABLE[3], // Orange (multiplier)
+  ResistorColors.Yellow,
+  ResistorColors.Violet,
+  ResistorColors.Orange, // multiplier
 ]);
 getResistorDisplayValue(value); // '47k'
 ```
@@ -312,6 +308,7 @@ getResistorDisplayValue(value); // '47k'
 | `hasResistorTolerance(color)`    | Function | Check if a color has a tolerance value               |
 | `INVALID_RESISTOR`               | Constant | Sentinel value for invalid resistor                  |
 | `RESISTOR_COLOR_TABLE`           | Constant | Full color code reference table                      |
+| `ResistorColors`                 | Constant | Named color constants (e.g., `ResistorColors.Yellow`) |
 | `ResistorColor`                  | Type     | A resistor color band entry                          |
 
 ## `puzzle-lib/semaphore`
