@@ -82,7 +82,7 @@
   },
   "homepage": "https://github.com/puzztool/puzzle-lib#readme",
   "engines": {
-    "node": ">=22"
+    "node": "^22.13.0 || >=24.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",
